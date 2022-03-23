@@ -22,7 +22,7 @@ export class UserDataService {
 
     async create(userData: CreateUserDataDto): Promise<UserData> {
         const newUserData = this.userDataRepository.create({
-            userId: userData.userId,
+            // userId: userData.userId,
             firstName: userData.firstName,
             lastName: userData.lastName,
             school: userData.school,
