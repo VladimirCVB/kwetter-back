@@ -4,10 +4,10 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
 export class UserFollow extends BaseEntity {
-  @OneToOne()
+  @OneToOne(() => UserLog, user => user.id)
   userId!: UserLog;
 
-  @ManyToOne()
+  @ManyToOne(() => UserLog)
   userFollowed: UserLog;
 
   @OneToMany(() => UserLog, userLog => userLog.id)
