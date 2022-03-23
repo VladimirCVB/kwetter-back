@@ -4,7 +4,7 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 @Entity()
 export class UserData extends BaseEntity {
   // @OneToOne()
-  // userId!: string;
+  // userId!: UserLo;
 
   @Property()
   firstName!: string;

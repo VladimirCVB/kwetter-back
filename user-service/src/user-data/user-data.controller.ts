@@ -20,7 +20,7 @@ export class UserDataController {
     constructor(private readonly userDataService: UserDataService) { }
 
     @ApiOperation({ summary: 'Get all user-data information' })
-    @ApiResponse({ status: 200, description: 'Returned all cards' })
+    @ApiResponse({ status: 200, description: 'Returned all user-data' })
     @Get()
     async findAll(): Promise<UserData[]> {
         return this.userDataService.findAll();
