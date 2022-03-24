@@ -3,14 +3,14 @@ import { UserLog } from 'src/user-log/entities/user-log.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
-export class UserFollow extends BaseEntity {
+export class UserMention extends BaseEntity {
   @Property()
   userId!: UserLog;
 
-  @ManyToOne(() => UserLog)
-  userFollowed: UserLog;
+  @OneToOne(() => UserLog)
+  userMentioned!: UserLog;
 
   @Property()
-  userFollowing = new Collection<UserLog>(this);
+  postId!: string;
 
 }
