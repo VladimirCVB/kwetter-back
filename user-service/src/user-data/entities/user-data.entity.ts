@@ -3,8 +3,8 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
 export class UserData extends BaseEntity {
-  // @OneToOne()
-  // userId!: UserLo;
+  @Property()
+  userId!: string;
 
   @Property()
   firstName!: string;

@@ -1,5 +1,5 @@
 export interface CreateUserDataDto {
-    // userId: string;
+    userId: string;
     firstName: string;
     lastName: string;
     school: string;

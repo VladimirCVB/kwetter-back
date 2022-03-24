@@ -5,10 +5,10 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 @Entity()
 export class UserMention extends BaseEntity {
   @Property()
-  userId!: UserLog;
+  userId!: string;
 
-  @OneToOne(() => UserLog)
-  userMentioned!: UserLog;
+  @Property()
+  userMentioned!: string;
 
   @Property()
   postId!: string;

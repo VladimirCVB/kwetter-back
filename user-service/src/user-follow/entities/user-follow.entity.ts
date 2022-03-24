@@ -5,12 +5,12 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 @Entity()
 export class UserFollow extends BaseEntity {
   @Property()
-  userId!: UserLog;
-
-  @ManyToOne(() => UserLog)
-  userFollowed: UserLog;
+  userId!: string;
 
   @Property()
-  userFollowing = new Collection<UserLog>(this);
+  userFollowed: string;
+
+  @Property()
+  userFollowing = new Collection<string>(this);
 
 }

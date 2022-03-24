@@ -1,7 +1,7 @@
-import { UserLog } from "src/user-log/entities/user-log.entity";
+import { UserLog } from 'src/user-log/entities/user-log.entity';
 
 export interface CreateUserMentionDto {
-    userId: UserLog,
-    userMentioned: UserLog,
+    userId: string,
+    userMentioned: string,
     postId: string
 }
