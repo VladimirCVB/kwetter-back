@@ -26,3 +26,4 @@ build-job:       # This job runs in the build stage, which runs first.
     - npm i eslint
     # Run eslint
     - npm lint:check
+    #test
