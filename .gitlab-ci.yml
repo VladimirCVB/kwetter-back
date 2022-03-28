@@ -25,10 +25,11 @@ ES-Lint-Admin:
   script:
     - echo "ES-Lint Admin Started"
     - cd "admin-service"
-    # Install ESLint in this docker container
+    # Install ESLint in this container
     - npm i eslint --save-dev
     # Run ESLint
-    - npm run lint
+    - npm run lint:check
+  allow-failure: true
 
 Test-Admin:
   environment: admin-service
@@ -36,6 +37,52 @@ Test-Admin:
   script:
     - echo "Test Admin Started"
     - cd "admin-service"
+    # Start Testing
+    - npm i
+    - npm i jest
+    - npm test
+
+ES-Lint-User:
+  environment: user-service
+  stage: lint
+  script:
+    - echo "ES-Lint User Started"
+    - cd "user-service"
+    # Install ESLint in this container
+    - npm i eslint --save-dev
+    # Run ESLint
+    - npm run lint:check
+  allow-failure: true
+
+Test-User:
+  environment: user-service
+  stage: test
+  script:
+    - echo "Test User Started"
+    - cd "user-service"
+    # Start Testing
+    - npm i
+    - npm i jest
+    - npm test
+
+ES-Lint-Post:
+  environment: user-service
+  stage: lint
+  script:
+    - echo "ES-Lint Post Started"
+    - cd "post-service"
+    # Install ESLint in this container
+    - npm i eslint --save-dev
+    # Run ESLint
+    - npm run lint:check
+  allow-failure: true
+
+Test-Post:
+  environment: post-service
+  stage: test
+  script:
+    - echo "Test Post Started"
+    - cd "post-service"
     # Start Testing
     - npm i
     - npm i jest
