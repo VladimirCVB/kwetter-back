@@ -26,6 +26,5 @@ eslint:
     # Install ESLint in this docker container
     - npm install -g eslint
     # Configure ESLint (will read your .eslintrc file)
-    - eslint --init
     # Run ESLint
     - npm run lint
