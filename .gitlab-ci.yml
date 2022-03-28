@@ -37,13 +37,11 @@ lint-test-job:   # This job also runs in the test stage.
     - echo "Linting code... This will take about 10 seconds."
     - sleep 10
     - echo "No lint issues found."
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
-    runs-on: ubuntu-latest
-    env:
-      working-directory: ./admin-service
-    strategy:
+  paths:
+      - ./admin-service
+  strategy:
       fail-fast: false
-    steps:
+  steps:
       - name: Checkout Source code
         uses: actions/checkout@v3
 
