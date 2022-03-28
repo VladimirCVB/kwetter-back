@@ -37,7 +37,6 @@ Test-Admin:
     - echo "Test Admin Started"
     - cd "admin-service"
     # Start Testing
-    - npm i
     - npm i jest
     - npm test
 
@@ -59,7 +58,6 @@ Test-User:
     - echo "Test User Started"
     - cd "user-service"
     # Start Testing
-    - npm i
     - npm i jest
     - npm test
 
@@ -81,6 +79,5 @@ Test-Post:
     - echo "Test Post Started"
     - cd "post-service"
     # Start Testing
-    - npm i
     - npm i jest
     - npm test
