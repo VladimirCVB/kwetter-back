@@ -13,19 +13,17 @@
 #
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - test
-  - deploy
+image: node:latest
 
-build-job:       # This job runs in the build stage, which runs first.
-  environment: ./admin-service
-  image: node:latest
-  stage: test
-  script: 
-      - echo "Script started"
-      - cd "admin-service"
-      # install eslint
-      - npm i eslint
-      # Run eslint
-      - node_modules/eslint/bin/eslint.js .
+stages:
+  - lint
+
+eslint:
+  stage: lint
+  script:
+    # Install ESLint in this docker container
+    - npm install -g eslint
+    # Configure ESLint (will read your .eslintrc file)
+    - eslint --init
+    # Run ESLint
+    - eslint
