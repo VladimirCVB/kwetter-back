@@ -29,7 +29,6 @@ ES-Lint-Admin:
     - npm i eslint --save-dev
     # Run ESLint
     - npm run lint:check
-  allow-failure: true
 
 Test-Admin:
   environment: admin-service
@@ -52,7 +51,6 @@ ES-Lint-User:
     - npm i eslint --save-dev
     # Run ESLint
     - npm run lint:check
-  allow-failure: true
 
 Test-User:
   environment: user-service
@@ -75,7 +73,6 @@ ES-Lint-Post:
     - npm i eslint --save-dev
     # Run ESLint
     - npm run lint:check
-  allow-failure: true
 
 Test-Post:
   environment: post-service
