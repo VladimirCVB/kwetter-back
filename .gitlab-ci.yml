@@ -18,13 +18,15 @@ image: node:latest
 stages:
   - lint
 
-eslint:
+ES-Lint-Admin:
+  environment: admin-service
   stage: lint
   script:
-    - echo "Script started"
+    - echo "ES-Lint Admin Started"
     - cd "admin-service"
     # Install ESLint in this docker container
     - npm i eslint --save-dev
-    # Configure ESLint (will read your .eslintrc file)
+    # Run ESLint Check
+    - npm run lint:check
     # Run ESLint
     - npm run lint
