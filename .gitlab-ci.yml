@@ -28,4 +28,4 @@ eslint:
     # Configure ESLint (will read your .eslintrc file)
     - eslint --init
     # Run ESLint
-    - eslint
+    - npm run lint
