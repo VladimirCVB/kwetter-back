@@ -27,8 +27,6 @@ ES-Lint-Admin:
     - cd "admin-service"
     # Install ESLint in this docker container
     - npm i eslint --save-dev
-    # Run ESLint Check
-    - npm run lint:check
     # Run ESLint
     - npm run lint
 
@@ -40,29 +38,3 @@ Test-Admin:
     - cd "admin-service"
     # Start Testing
     - npm test
-
-ES-Lint-Post:
-  environment: post-service
-  stage: lint
-  script:
-    - echo "ES-Lint Post Started"
-    - cd "post-service"
-    # Install ESLint in this docker container
-    - npm i eslint --save-dev
-    # Run ESLint Check
-    - npm run lint:check
-    # Run ESLint
-    - npm run lint
-
-ES-Lint-User:
-  environment: user-service
-  stage: lint
-  script:
-    - echo "ES-Lint User Started"
-    - cd "user-service"
-    # Install ESLint in this docker container
-    - npm i eslint --save-dev
-    # Run ESLint Check
-    - npm run lint:check
-    # Run ESLint
-    - npm run lint
