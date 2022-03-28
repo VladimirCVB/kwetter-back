@@ -23,8 +23,9 @@ eslint:
   script:
     - echo "Script started"
     - cd "admin-service"
+    - npm -g i eslint-cli
     # Install ESLint in this docker container
-    - npm install -g eslint
+    - npm i eslint --save-dev
     # Configure ESLint (will read your .eslintrc file)
     # Run ESLint
     - npm run lint
