@@ -15,8 +15,12 @@
 
 image: node:latest
 
+except:
+  - main
+
 stages:
   - lint
+  - test
 
 ES-Lint-Admin:
   environment: admin-service
@@ -30,6 +34,15 @@ ES-Lint-Admin:
     - npm run lint:check
     # Run ESLint
     - npm run lint
+
+Test-Admin:
+  environment: admin-service
+  stage: test
+  script:
+    - echo "Test Admin Started"
+    - cd "admin-service"
+    # Start Testing
+    - npm test
 
 ES-Lint-Post:
   environment: post-service
