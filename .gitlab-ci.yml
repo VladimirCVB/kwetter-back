@@ -18,11 +18,13 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-include:
-  - 'admin-service/.gitlab-ci.yml'
-
 build-job:       # This job runs in the build stage, which runs first.
   environment: ./admin-service
   image: node:latest
   stage: test
-  script: echo "Script started"
+  before_script:
+    - npm install -g eslint
+  script: 
+      - echo "Script started"
+      - cd "admin-service/src"
+      - npm run lint
