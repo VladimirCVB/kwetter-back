@@ -37,4 +37,6 @@ Test-Admin:
     - echo "Test Admin Started"
     - cd "admin-service"
     # Start Testing
+    - npm i
+    - npm i jest
     - npm test
