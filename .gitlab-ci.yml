@@ -21,6 +21,8 @@ stages:
 eslint:
   stage: lint
   script:
+    - echo "Script started"
+    - cd "admin-service"
     # Install ESLint in this docker container
     - npm install -g eslint
     # Configure ESLint (will read your .eslintrc file)
