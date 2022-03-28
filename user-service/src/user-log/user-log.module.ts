@@ -7,6 +7,6 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 @Module({
   imports: [MikroOrmModule.forFeature([UserLog])],
   providers: [UserLogService],
-  controllers: [UserLogController]
+  controllers: [UserLogController],
 })
 export class UserLogModule {}

@@ -9,7 +9,9 @@ describe('UserAdministratorController', () => {
       controllers: [UserAdministratorController],
     }).compile();
 
-    controller = module.get<UserAdministratorController>(UserAdministratorController);
+    controller = module.get<UserAdministratorController>(
+      UserAdministratorController,
+    );
   });
 
   it('should be defined', () => {

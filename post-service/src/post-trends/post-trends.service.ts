@@ -6,43 +6,44 @@ import { PostTrends } from './entities/post-trends.entity';
 
 @Injectable()
 export class PostTrendsService {
+  constructor(
+    @InjectRepository(PostTrends)
+    private readonly postTrendsRepository: EntityRepository<PostTrends>,
+  ) {}
 
-    constructor(
-        @InjectRepository(PostTrends)
-        private readonly postTrendsRepository: EntityRepository<PostTrends>,
-    ) { }
+  async findAll(): Promise<PostTrends[]> {
+    return await this.postTrendsRepository.findAll();
+  }
 
-    async findAll(): Promise<PostTrends[]> {
-        return await this.postTrendsRepository.findAll();
-    }
+  async findOne(id: string): Promise<PostTrends> {
+    return await this.postTrendsRepository.findOne(id);
+  }
 
-    async findOne(id: string): Promise<PostTrends> {
-        return await this.postTrendsRepository.findOne(id);
-    }
+  async create(postTrends: CreatePostTrendsDto): Promise<PostTrends> {
+    const newPostTrends = this.postTrendsRepository.create({
+      postId: postTrends.postId,
+      trendName: postTrends.trendName,
+    });
+    await this.postTrendsRepository.persistAndFlush(newPostTrends);
+    return newPostTrends;
+  }
 
-    async create(postTrends: CreatePostTrendsDto): Promise<PostTrends> {
-        const newPostTrends = this.postTrendsRepository.create({
-            postId: postTrends.postId,
-            trendName: postTrends.trendName,
+  async update(
+    id: string,
+    postTrendsInfo: CreatePostTrendsDto,
+  ): Promise<PostTrends> {
+    const postTrends = await this.findOne(id);
+    if (!postTrends) throw new NotFoundException('Post trends data not found');
+    wrap(postTrends).assign(postTrendsInfo);
+    await this.postTrendsRepository.flush();
 
-        });
-        await this.postTrendsRepository.persistAndFlush(newPostTrends);
-        return newPostTrends;
-    }
+    return postTrends;
+  }
 
-    async update(id: string, postTrendsInfo: CreatePostTrendsDto): Promise<PostTrends> {
-        const postTrends = await this.findOne(id);
-        if (!postTrends) throw new NotFoundException('Post trends data not found');
-        wrap(postTrends).assign(postTrendsInfo);
-        await this.postTrendsRepository.flush();
+  async delete(id: string): Promise<void> {
+    const postTrends = await this.findOne(id);
+    if (!postTrends) throw new NotFoundException('Post trends data not found');
 
-        return postTrends;
-    }
-
-    async delete(id: string): Promise<void> {
-        const postTrends = await this.findOne(id);
-        if (!postTrends) throw new NotFoundException('Post trends data not found');
-
-        return await this.postTrendsRepository.removeAndFlush(postTrends);
-    }
+    return await this.postTrendsRepository.removeAndFlush(postTrends);
+  }
 }

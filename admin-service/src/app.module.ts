@@ -11,9 +11,10 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     MikroOrmModule.forRoot(),
     ConfigModule.forRoot(),
-    UserManagerModule, 
-    // UserAdministratorModule, 
-    BannedUsersModule],
+    UserManagerModule,
+    // UserAdministratorModule,
+    BannedUsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

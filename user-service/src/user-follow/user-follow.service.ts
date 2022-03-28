@@ -6,44 +6,45 @@ import { UserFollow } from './entities/user-follow.entity';
 
 @Injectable()
 export class UserFollowService {
+  constructor(
+    @InjectRepository(UserFollow)
+    private readonly userFollowRepository: EntityRepository<UserFollow>,
+  ) {}
 
-    constructor(
-        @InjectRepository(UserFollow)
-        private readonly userFollowRepository: EntityRepository<UserFollow>,
-    ) { }
+  async findAll(): Promise<UserFollow[]> {
+    return await this.userFollowRepository.findAll();
+  }
 
-    async findAll(): Promise<UserFollow[]> {
-        return await this.userFollowRepository.findAll();
-    }
+  async findOne(id: string): Promise<UserFollow> {
+    return await this.userFollowRepository.findOne(id);
+  }
 
-    async findOne(id: string): Promise<UserFollow> {
-        return await this.userFollowRepository.findOne(id);
-    }
+  async create(userFollow: CreateUserFollowDto): Promise<UserFollow> {
+    const newUserFollow = this.userFollowRepository.create({
+      userId: userFollow.userId,
+      userFollowed: userFollow.userFollowed,
+      userFollowing: userFollow.userFollowing,
+    });
+    await this.userFollowRepository.persistAndFlush(newUserFollow);
+    return newUserFollow;
+  }
 
-    async create(userFollow: CreateUserFollowDto): Promise<UserFollow> {
-        const newUserFollow = this.userFollowRepository.create({
-            userId: userFollow.userId,
-            userFollowed: userFollow.userFollowed,
-            userFollowing: userFollow.userFollowing,
-        });
-        await this.userFollowRepository.persistAndFlush(newUserFollow);
-        return newUserFollow;
-    }
+  async update(
+    id: string,
+    userDataInfo: CreateUserFollowDto,
+  ): Promise<UserFollow> {
+    const userData = await this.findOne(id);
+    if (!userData) throw new NotFoundException('User follow data not found');
+    wrap(userData).assign(userDataInfo);
+    await this.userFollowRepository.flush();
 
-    async update(id: string, userDataInfo: CreateUserFollowDto): Promise<UserFollow> {
-        const userData = await this.findOne(id);
-        if (!userData) throw new NotFoundException('User follow data not found');
-        wrap(userData).assign(userDataInfo);
-        await this.userFollowRepository.flush();
+    return userData;
+  }
 
-        return userData;
-    }
+  async delete(id: string): Promise<void> {
+    const userData = await this.findOne(id);
+    if (!userData) throw new NotFoundException('User follow data not found');
 
-    async delete(id: string): Promise<void> {
-        const userData = await this.findOne(id);
-        if (!userData) throw new NotFoundException('User follow data not found');
-
-        return await this.userFollowRepository.removeAndFlush(userData);
-    }
-    
+    return await this.userFollowRepository.removeAndFlush(userData);
+  }
 }

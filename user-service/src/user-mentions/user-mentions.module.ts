@@ -7,6 +7,6 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 @Module({
   imports: [MikroOrmModule.forFeature([UserMention])],
   providers: [UserMentionsService],
-  controllers: [UserMentionsController]
+  controllers: [UserMentionsController],
 })
 export class UserMentionsModule {}

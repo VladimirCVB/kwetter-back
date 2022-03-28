@@ -11,7 +11,8 @@ import { PostTrendsModule } from './post-trends/post-trends.module';
     MikroOrmModule.forRoot(),
     ConfigModule.forRoot(),
     PostDataModule,
-    PostTrendsModule],
+    PostTrendsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

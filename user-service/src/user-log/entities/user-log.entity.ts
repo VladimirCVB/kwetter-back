@@ -3,7 +3,6 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
 export class UserLog extends BaseEntity {
-
   @Property()
   userName!: string;
 
@@ -12,5 +11,4 @@ export class UserLog extends BaseEntity {
 
   @Property()
   password!: string;
-
 }

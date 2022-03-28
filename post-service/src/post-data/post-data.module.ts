@@ -7,6 +7,6 @@ import { PostDataService } from './post-data.service';
 @Module({
   imports: [MikroOrmModule.forFeature([PostData])],
   providers: [PostDataService],
-  controllers: [PostDataController]
+  controllers: [PostDataController],
 })
 export class PostDataModule {}

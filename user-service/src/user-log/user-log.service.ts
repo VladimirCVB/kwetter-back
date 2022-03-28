@@ -6,44 +6,42 @@ import { UserLog } from './entities/user-log.entity';
 
 @Injectable()
 export class UserLogService {
+  constructor(
+    @InjectRepository(UserLog)
+    private readonly userLogRepository: EntityRepository<UserLog>,
+  ) {}
 
-    constructor(
-        @InjectRepository(UserLog)
-        private readonly userLogRepository: EntityRepository<UserLog>,
-    ) { }
+  async findAll(): Promise<UserLog[]> {
+    return await this.userLogRepository.findAll();
+  }
 
-    async findAll(): Promise<UserLog[]> {
-        return await this.userLogRepository.findAll();
-    }
+  async findOne(id: string): Promise<UserLog> {
+    return await this.userLogRepository.findOne(id);
+  }
 
-    async findOne(id: string): Promise<UserLog> {
-        return await this.userLogRepository.findOne(id);
-    }
+  async create(userLog: CreateUserLogDto): Promise<UserLog> {
+    const newUserLog = this.userLogRepository.create({
+      userName: userLog.userName,
+      email: userLog.email,
+      password: userLog.password,
+    });
+    await this.userLogRepository.persistAndFlush(newUserLog);
+    return newUserLog;
+  }
 
-    async create(userLog: CreateUserLogDto): Promise<UserLog> {
-        const newUserLog = this.userLogRepository.create({
-            userName: userLog.userName,
-            email: userLog.email,
-            password: userLog.password,
-        });
-        await this.userLogRepository.persistAndFlush(newUserLog);
-        return newUserLog;
-    }
+  async update(id: string, userLogInfo: CreateUserLogDto): Promise<UserLog> {
+    const userLog = await this.findOne(id);
+    if (!userLog) throw new NotFoundException('User log not found');
+    wrap(userLog).assign(userLogInfo);
+    await this.userLogRepository.flush();
 
-    async update(id: string, userLogInfo: CreateUserLogDto): Promise<UserLog> {
-        const userLog = await this.findOne(id);
-        if (!userLog) throw new NotFoundException('User log not found');
-        wrap(userLog).assign(userLogInfo);
-        await this.userLogRepository.flush();
+    return userLog;
+  }
 
-        return userLog;
-    }
+  async delete(id: string): Promise<void> {
+    const userLog = await this.findOne(id);
+    if (!userLog) throw new NotFoundException('User log not found');
 
-    async delete(id: string): Promise<void> {
-        const userLog = await this.findOne(id);
-        if (!userLog) throw new NotFoundException('User log not found');
-
-        return await this.userLogRepository.removeAndFlush(userLog);
-    }
-    
+    return await this.userLogRepository.removeAndFlush(userLog);
+  }
 }

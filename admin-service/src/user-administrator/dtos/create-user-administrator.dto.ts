@@ -1,3 +1,3 @@
 export interface CreateUserAdministratorDto {
-    userId: string;
-  }
+  userId: string;
+}

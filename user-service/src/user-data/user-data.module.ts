@@ -7,6 +7,6 @@ import { UserData } from './entities/user-data.entity';
 @Module({
   imports: [MikroOrmModule.forFeature([UserData])],
   providers: [UserDataService],
-  controllers: [UserDataController]
+  controllers: [UserDataController],
 })
 export class UserDataModule {}

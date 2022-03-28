@@ -1,3 +1,3 @@
 export interface CreateBannedUsersDto {
-    userId: string;
-  }
+  userId: string;
+}

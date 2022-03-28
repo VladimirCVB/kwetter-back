@@ -7,6 +7,6 @@ import { UserFollow } from './entities/user-follow.entity';
 @Module({
   imports: [MikroOrmModule.forFeature([UserFollow])],
   providers: [UserFollowService],
-  controllers: [UserFollowController]
+  controllers: [UserFollowController],
 })
 export class UserFollowModule {}

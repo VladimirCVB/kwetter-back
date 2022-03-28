@@ -7,6 +7,6 @@ import { PostTrends } from './entities/post-trends.entity';
 @Module({
   imports: [MikroOrmModule.forFeature([PostTrends])],
   providers: [PostTrendsService],
-  controllers: [PostTrendsController]
+  controllers: [PostTrendsController],
 })
 export class PostTrendsModule {}

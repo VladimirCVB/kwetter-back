@@ -7,6 +7,6 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 @Module({
   imports: [MikroOrmModule.forFeature([BannedUsers])],
   providers: [BannedUsersService],
-  controllers: [BannedUsersController]
+  controllers: [BannedUsersController],
 })
 export class BannedUsersModule {}

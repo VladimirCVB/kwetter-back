@@ -11,12 +11,13 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
-    ConfigModule.forRoot(), 
-    UserLogModule, 
-    UserDataModule, 
-    UserMentionsModule, 
-    UserFollowModule],
+    ConfigModule.forRoot(),
+    UserLogModule,
+    UserDataModule,
+    UserMentionsModule,
+    UserFollowModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
