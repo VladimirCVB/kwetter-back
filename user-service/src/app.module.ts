@@ -7,6 +7,7 @@ import { UserMentionsModule } from './user-mentions/user-mentions.module';
 import { UserFollowModule } from './user-follow/user-follow.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     UserDataModule,
     UserMentionsModule,
     UserFollowModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

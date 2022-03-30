@@ -6,20 +6,28 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Role } from 'src/auth/models/role.enum';
 import { CreateUserLogDto } from './dtos/create-user-log.dto';
 import { UserLog } from './entities/user-log.entity';
 import { UserLogService } from './user-log.service';
 
 @ApiTags('user-log')
 @Controller('user-log')
+// @UseGuards(JwtAuthGuard)
 export class UserLogController {
   constructor(private readonly userLogService: UserLogService) {}
 
   @ApiOperation({ summary: 'Get all user-log information' })
   @ApiResponse({ status: 200, description: 'Returned all user-log' })
   @Get()
+  @Roles(Role.MANAGER)
+  @UseGuards(RolesGuard)
   async findAll(): Promise<UserLog[]> {
     return this.userLogService.findAll();
   }
