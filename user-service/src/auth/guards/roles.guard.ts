@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { ROLES_KEY } from '../decorators/roles.decorator';
@@ -6,8 +11,7 @@ import { Role } from '../models/role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-
-  constructor(private reflector: Reflector){}
+  constructor(private reflector: Reflector) {}
 
   // canActivate(
   //   context: ExecutionContext,
@@ -17,7 +21,7 @@ export class RolesGuard implements CanActivate {
   //     context.getHandler(),
   //     context.getClass()
   //   ])
-    
+
   //   if(!requiredRoles){
   //     return;
   //   }
@@ -33,16 +37,12 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
-      return roles.some((role) => user.role?.includes(role));
-    
-    try {
 
-      
-      
+    try {
+      const user = request.user;
+      return roles.some((role) => user.role?.includes(role));
     } catch (error) {
       return false;
     }
-    
   }
 }
