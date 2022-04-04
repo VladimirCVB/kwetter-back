@@ -3,6 +3,8 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserManagerDto } from './dtos/create-user-manager.dto';
 import { UserManager } from './entities/user-manager.entity';
+import { AdminCreatedEvent } from './events/admin-created.event';
+import { AdminUpdatedEvent } from './events/admin-updated.event';
 
 @Injectable()
 export class UserManagerService {
@@ -11,40 +13,19 @@ export class UserManagerService {
     private readonly userManagerRepository: EntityRepository<UserManager>,
   ) {}
 
-  async findAll(): Promise<UserManager[]> {
-    return await this.userManagerRepository.findAll();
+  handleGetAdmin(id: string) {
+    console.log(id);
   }
 
-  async findOne(id: string): Promise<UserManager> {
-    return await this.userManagerRepository.findOne(id);
+  handleAdminCreated(bannedCreatedEvent: AdminCreatedEvent) {
+    console.log(bannedCreatedEvent);
   }
 
-  async create(userManager: CreateUserManagerDto): Promise<UserManager> {
-    const newUserManager = this.userManagerRepository.create({
-      userId: userManager.userId,
-    });
-    await this.userManagerRepository.persistAndFlush(newUserManager);
-    return newUserManager;
+  handleUpdateAdmin(bannedUpdatedEvent: AdminUpdatedEvent) {
+    console.log(bannedUpdatedEvent);
   }
 
-  async update(
-    id: string,
-    userManagerInfo: CreateUserManagerDto,
-  ): Promise<UserManager> {
-    const userManager = await this.findOne(id);
-    if (!userManager)
-      throw new NotFoundException('User manager data not found');
-    wrap(userManager).assign(userManagerInfo);
-    await this.userManagerRepository.flush();
-
-    return userManager;
-  }
-
-  async delete(id: string): Promise<void> {
-    const userManager = await this.findOne(id);
-    if (!userManager)
-      throw new NotFoundException('User manager data not found');
-
-    return await this.userManagerRepository.removeAndFlush(userManager);
+  handleDeleteAdmin(id: string) {
+    console.log(id);
   }
 }

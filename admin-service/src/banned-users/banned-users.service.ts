@@ -3,6 +3,8 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBannedUsersDto } from './dtos/create-banned-users.dto';
 import { BannedUsers } from './entities/banned-users.entity';
+import { BannedCreatedEvent } from './events/banned-created.event';
+import { BannedUpdatedEvent } from './events/banned-updated.event';
 
 @Injectable()
 export class BannedUsersService {
@@ -11,40 +13,23 @@ export class BannedUsersService {
     private readonly bannedUsersRepository: EntityRepository<BannedUsers>,
   ) {}
 
-  async findAll(): Promise<BannedUsers[]> {
-    return await this.bannedUsersRepository.findAll();
+  handleGetBanned() {
+    console.log();
   }
 
-  async findOne(id: string): Promise<BannedUsers> {
-    return await this.bannedUsersRepository.findOne(id);
+  handleGetBan(id: string) {
+    console.log(id);
   }
 
-  async create(bannedUsers: CreateBannedUsersDto): Promise<BannedUsers> {
-    const newBannedUsers = this.bannedUsersRepository.create({
-      userId: bannedUsers.userId,
-    });
-    await this.bannedUsersRepository.persistAndFlush(newBannedUsers);
-    return newBannedUsers;
+  handleBanCreated(bannedCreatedEvent: BannedCreatedEvent) {
+    console.log(bannedCreatedEvent);
   }
 
-  async update(
-    id: string,
-    bannedUsersInfo: CreateBannedUsersDto,
-  ): Promise<BannedUsers> {
-    const bannedUsers = await this.findOne(id);
-    if (!bannedUsers)
-      throw new NotFoundException('Banned Users data not found');
-    wrap(bannedUsers).assign(bannedUsersInfo);
-    await this.bannedUsersRepository.flush();
-
-    return bannedUsers;
+  handleUpdateBan(bannedUpdatedEvent: BannedUpdatedEvent) {
+    console.log(bannedUpdatedEvent);
   }
 
-  async delete(id: string): Promise<void> {
-    const bannedUsers = await this.findOne(id);
-    if (!bannedUsers)
-      throw new NotFoundException('Banned Users data not found');
-
-    return await this.bannedUsersRepository.removeAndFlush(bannedUsers);
+  handleDeleteBan(id: string) {
+    console.log(id);
   }
 }

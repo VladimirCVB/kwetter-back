@@ -1,4 +1,4 @@
-export class CreatePostRequest {
+export class CreateAdminRequest {
     userId: string;
     userName: string
 }
