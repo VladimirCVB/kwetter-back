@@ -10,7 +10,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<void> {
-    const user = await this.userLogService.findOne('1');
+    const user = await this.userLogService.findOneToLog(username, password);
   }
 
   async login(user: any) {

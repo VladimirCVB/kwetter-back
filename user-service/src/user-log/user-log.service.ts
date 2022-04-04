@@ -15,6 +15,10 @@ export class UserLogService {
     return await this.userLogRepository.findAll();
   }
 
+  async findOneToLog(username: string, password: string): Promise<UserLog> {
+    return await this.userLogRepository.findOneOrFail( { userName: username, password: password });
+  }
+
   async findOne(id: string): Promise<UserLog> {
     return await this.userLogRepository.findOne(id);
   }

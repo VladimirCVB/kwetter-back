@@ -2,12 +2,9 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  NotFoundException,
+  
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
-import { ROLES_KEY } from '../decorators/roles.decorator';
-import { Role } from '../models/role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
