@@ -10,8 +10,11 @@ export class PostTrendsService {
     private readonly postTrendsRepository: EntityRepository<PostTrends>,
   ) {}
 
+  /**
+   * Retrieve all post trends.
+   * @returns all post trends.
+   */
   async findAll(): Promise<PostTrends[]> {
     return await this.postTrendsRepository.findAll();
   }
-
 }

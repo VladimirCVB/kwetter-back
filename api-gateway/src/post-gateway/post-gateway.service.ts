@@ -16,8 +16,24 @@ export class PostGatewayService {
         this.postingClient.emit('post_created', new PostCreatedEvent('', userId, userName, text, trends));
     }
 
-    getPost(userId: string) {
-        this.postingClient.emit('get_post', userId);
+    getAllPosts() {
+        this.postingClient.emit('get_all_posts', null);
+    }
+
+    getPosts(userIds: string[]) {
+        this.postingClient.emit('get_posts_of_users', userIds);
+    }
+
+    getPostByUserId(userId: string) {
+        this.postingClient.emit('get_posts_by_userId', userId);
+    }
+
+    getPostById(id: string) {
+        this.postingClient.emit('get_post_by_id', id);
+    }
+
+    getPostTrends() {
+        this.postingClient.emit('get_post_trends', null);
     }
 
     updatePost({ id, text, hearts, userName, trends  }: UpdatePostRequest) {

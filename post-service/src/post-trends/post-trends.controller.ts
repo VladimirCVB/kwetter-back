@@ -1,7 +1,4 @@
-import {
-  Controller,
-  Get,
-} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PostTrendsService } from './post-trends.service';
@@ -13,8 +10,8 @@ export class PostTrendsController {
 
   @ApiOperation({ summary: 'Get all post-trends information' })
   @ApiResponse({ status: 200, description: 'Returned all post-trends' })
-  @EventPattern('post_created')
-  handlePostCreated(){
+  @EventPattern('get_post_trends')
+  handlePostCreated() {
     this.postTrendsService.findAll();
   }
 }

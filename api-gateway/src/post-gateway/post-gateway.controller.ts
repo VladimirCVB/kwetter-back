@@ -8,9 +8,29 @@ export class PostGatewayController {
 
   constructor(private readonly postGatewayService: PostGatewayService) { }
 
-  @Get(':id')
-  getPost(@Param('id') userId: string) {
-    this.postGatewayService.getPost(userId);
+  @Get()
+  getAllPosts() {
+    this.postGatewayService.getAllPosts();
+  }
+
+  @Get()
+  getPosts(@Body() userIds: string[]) {
+    this.postGatewayService.getPosts(userIds);
+  }
+
+  @Get()
+  getPostByUserId(@Body() userId: string) {
+    this.postGatewayService.getPostByUserId(userId);
+  }
+
+  @Get()
+  getPostById(@Body() id: string) {
+    this.postGatewayService.getPostById(id);
+  }
+
+  @Get()
+  getPostTrends() {
+    this.postGatewayService.getPostTrends();
   }
 
   @Post()
