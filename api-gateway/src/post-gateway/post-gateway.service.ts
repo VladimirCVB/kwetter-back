@@ -12,16 +12,16 @@ export class PostGatewayService {
         @Inject('POSTING_SERVICE') private readonly postingClient: ClientKafka,
     ) { }
 
-    createPost({ userId, userName }: CreatePostRequest) {
-        this.postingClient.emit('post_created', new PostCreatedEvent('', userId, userName));
+    createPost({ userId, userName, text, trends }: CreatePostRequest) {
+        this.postingClient.emit('post_created', new PostCreatedEvent('', userId, userName, text, trends));
     }
 
     getPost(userId: string) {
         this.postingClient.emit('get_post', userId);
     }
 
-    updatePost({ text, hearts, userName  }: UpdatePostRequest) {
-        this.postingClient.emit('update_post', new PostUpdatedEvent(text, hearts, userName));
+    updatePost({ id, text, hearts, userName, trends  }: UpdatePostRequest) {
+        this.postingClient.emit('update_post', new PostUpdatedEvent(id, text, hearts, userName, trends));
     }
 
     deletePost(postId: string) {

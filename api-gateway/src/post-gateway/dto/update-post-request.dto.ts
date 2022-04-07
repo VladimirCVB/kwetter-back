@@ -1,5 +1,7 @@
 export class UpdatePostRequest {
+    id: string;
     userName: string;
     text: string;
-    hearts: number
+    hearts: number;
+    trends: string[]
 }

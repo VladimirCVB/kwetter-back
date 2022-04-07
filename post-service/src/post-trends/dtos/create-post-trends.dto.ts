@@ -1,4 +1,9 @@
-export interface CreatePostTrendsDto {
+import { IsNotEmpty } from 'class-validator';
+
+export class CreatePostDataDto {
+  @IsNotEmpty()
   postId: string;
-  trendName: string;
+
+  @IsNotEmpty()
+  trends: string[];
 }

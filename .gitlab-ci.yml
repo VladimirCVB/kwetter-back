@@ -13,71 +13,71 @@
 #
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
 
-image: node:latest
+# image: node:latest
 
-stages:
-  - lint
-  - test
+# stages:
+#   - lint
+#   - test
 
-ES-Lint-Admin:
-  environment: admin-service
-  stage: lint
-  script:
-    - echo "ES-Lint Admin Started"
-    - cd "admin-service"
-    # Install ESLint in this container
-    - npm i eslint --save-dev
-    # Run ESLint
-    - npm run lint:check
+# ES-Lint-Admin:
+#   environment: admin-service
+#   stage: lint
+#   script:
+#     - echo "ES-Lint Admin Started"
+#     - cd "admin-service"
+#     # Install ESLint in this container
+#     - npm i eslint --save-dev
+#     # Run ESLint
+#     - npm run lint:check
 
-Test-Admin:
-  environment: admin-service
-  stage: test
-  script:
-    - echo "Test Admin Started"
-    - cd "admin-service"
-    # Start Testing
-    - npm i jest
-    - npm test
+# Test-Admin:
+#   environment: admin-service
+#   stage: test
+#   script:
+#     - echo "Test Admin Started"
+#     - cd "admin-service"
+#     # Start Testing
+#     - npm i jest
+#     - npm test
 
-ES-Lint-User:
-  environment: user-service
-  stage: lint
-  script:
-    - echo "ES-Lint User Started"
-    - cd "user-service"
-    # Install ESLint in this container
-    - npm i eslint --save-dev
-    # Run ESLint
-    - npm run lint:check
+# ES-Lint-User:
+#   environment: user-service
+#   stage: lint
+#   script:
+#     - echo "ES-Lint User Started"
+#     - cd "user-service"
+#     # Install ESLint in this container
+#     - npm i eslint --save-dev
+#     # Run ESLint
+#     - npm run lint:check
 
-Test-User:
-  environment: user-service
-  stage: test
-  script:
-    - echo "Test User Started"
-    - cd "user-service"
-    # Start Testing
-    - npm i jest
-    - npm test
+# Test-User:
+#   environment: user-service
+#   stage: test
+#   script:
+#     - echo "Test User Started"
+#     - cd "user-service"
+#     # Start Testing
+#     - npm i jest
+#     - npm test
 
-ES-Lint-Post:
-  environment: user-service
-  stage: lint
-  script:
-    - echo "ES-Lint Post Started"
-    - cd "post-service"
-    # Install ESLint in this container
-    - npm i eslint --save-dev
-    # Run ESLint
-    - npm run lint:check
+# ES-Lint-Post:
+#   environment: user-service
+#   stage: lint
+#   script:
+#     - echo "ES-Lint Post Started"
+#     - cd "post-service"
+#     # Install ESLint in this container
+#     - npm i eslint --save-dev
+#     # Run ESLint
+#     - npm run lint:check
 
-Test-Post:
-  environment: post-service
-  stage: test
-  script:
-    - echo "Test Post Started"
-    - cd "post-service"
-    # Start Testing
-    - npm i jest
-    - npm test
+# Test-Post:
+#   environment: post-service
+#   stage: test
+#   script:
+#     - echo "Test Post Started"
+#     - cd "post-service"
+#     # Start Testing
+#     - npm i jest
+#     - npm test

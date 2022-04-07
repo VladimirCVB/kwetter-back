@@ -7,9 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateUserManagerDto } from './dtos/create-user-manager.dto';
-import { UserManager } from './entities/user-manager.entity';
+import { ApiTags } from '@nestjs/swagger';
 import { UserManagerService } from './user-manager.service';
 import { EventPattern } from '@nestjs/microservices';
 
@@ -18,6 +16,7 @@ import { EventPattern } from '@nestjs/microservices';
 export class UserManagerController {
   constructor(private readonly userManagerService: UserManagerService) {}
 
+  
   @EventPattern('admin_created')
   handleAdminCreated(data: any){
     this.userManagerService.handleAdminCreated(data.value);
