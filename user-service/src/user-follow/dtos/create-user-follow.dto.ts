@@ -1,7 +1,13 @@
+import { IsNotEmpty } from 'class-validator';
 import { UserLog } from 'src/user-log/entities/user-log.entity';
 
-export interface CreateUserFollowDto {
-  userId: string;
-  userFollowed: string;
-  userFollowing: string;
+export class CreateUserFollowDto {
+  @IsNotEmpty()
+  userId: UserLog;
+
+  @IsNotEmpty()
+  userFollowed: UserLog[];
+
+  @IsNotEmpty()
+  userFollowing: UserLog[];
 }
