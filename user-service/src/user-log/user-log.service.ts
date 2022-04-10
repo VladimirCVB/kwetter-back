@@ -18,7 +18,7 @@ export class UserLogService {
    * Retrieve all user logs.
    * @returns all user logs.
    */
-   async handleGetAllUsers(): Promise<UserLog[]> {
+  async handleGetAllUsers(): Promise<UserLog[]> {
     return await this.userLogRepository.findAll();
   }
 
@@ -36,7 +36,7 @@ export class UserLogService {
    * @param userName user name to find user log by.
    * @returns user log.
    */
-   async handleGetUserByUserName(userName: string): Promise<UserLog> {
+  async handleGetUserByUserName(userName: string): Promise<UserLog> {
     return await this.userLogRepository.findOne(userName);
   }
 
@@ -51,7 +51,7 @@ export class UserLogService {
     const userLog = this.userLogRepository.create({
       userName: userLogCreatedEvent.userName,
       email: userLogCreatedEvent.email,
-      password: userLogCreatedEvent.password
+      password: userLogCreatedEvent.password,
     });
     const userData = this.userDataRepository.create({
       userId: userLog.id,
@@ -71,7 +71,9 @@ export class UserLogService {
   async handleUpdateUser(
     userLogUpdatedEvent: UserLogCreatedEvent,
   ): Promise<UserLog> {
-    const userLogUpdate = await this.handleGetUserByUserName(userLogUpdatedEvent.userName);
+    const userLogUpdate = await this.handleGetUserByUserName(
+      userLogUpdatedEvent.userName,
+    );
     if (!userLogUpdate) throw new NotFoundException('User log data not found');
 
     userLogUpdate.email = userLogUpdatedEvent.email;

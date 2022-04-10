@@ -6,11 +6,7 @@ import { UserGatewayModule } from './user-gateway/user-gateway.module';
 import { AdminGatewayModule } from './admin-gateway/admin-gateway.module';
 
 @Module({
-  imports: [
-    PostGatewayModule,
-    UserGatewayModule,
-    AdminGatewayModule
-  ],
+  imports: [PostGatewayModule, UserGatewayModule, AdminGatewayModule],
   controllers: [AppController],
   providers: [AppService],
 })

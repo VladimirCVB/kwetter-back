@@ -5,30 +5,35 @@ import { UserDataGatewayService } from '../services/user-data-gateway.service';
 
 @Controller('user-data-gateway')
 export class UserDataGatewayController {
-    constructor(private readonly userDataGatewayService: UserDataGatewayService) { }
+  constructor(
+    private readonly userDataGatewayService: UserDataGatewayService,
+  ) {}
 
-    @Get()
-    getAllUsersData() {
-        this.userDataGatewayService.getAllUsersData();
-    }
+  @Get()
+  getAllUsersData() {
+    this.userDataGatewayService.getAllUsersData();
+  }
 
-    @Get()
-    getUserDataById(@Body() userId: string) {
-        this.userDataGatewayService.getUserDataById(userId);
-    }
+  @Get()
+  getUserDataById(@Body() id: string) {
+    this.userDataGatewayService.getUserDataById(id);
+  }
 
-    @Post()
-    createUserData(@Body() createUserDataRequest: CreateUserDataRequest) {
-        this.userDataGatewayService.createUserData(createUserDataRequest);
-    }
+  @Post()
+  createUserData(@Body() createUserDataRequest: CreateUserDataRequest) {
+    this.userDataGatewayService.createUserData(createUserDataRequest);
+  }
 
-    @Put()
-    updateUserData(@Body() updateUserDataRequest: UpdateUserDataRequest) {
-        this.userDataGatewayService.updateUserData(updateUserDataRequest);
-    }
+  @Put()
+  updateUserData(
+    @Body() updateUserDataRequest: UpdateUserDataRequest,
+    id: string,
+  ) {
+    this.userDataGatewayService.updateUserData(updateUserDataRequest, id);
+  }
 
-    @Delete()
-    deleteUserData(@Body() userId: string) {
-        this.userDataGatewayService.deleteUserData(userId);
-    }
+  @Delete()
+  deleteUserData(@Body() id: string) {
+    this.userDataGatewayService.deleteUserData(id);
+  }
 }

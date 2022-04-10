@@ -12,13 +12,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           client: {
             clientId: 'posting',
-            brokers: ['localhost:9092']
+            brokers: ['localhost:9092'],
           },
           consumer: {
             groupId: 'posting-consumer',
-          }
-        }
-      }
+          },
+        },
+      },
     ]),
   ],
   providers: [PostGatewayService],

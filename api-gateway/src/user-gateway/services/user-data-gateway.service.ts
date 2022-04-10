@@ -7,27 +7,49 @@ import { UserDataUpdatedEvent } from '../events/user-data-updated.event';
 
 @Injectable()
 export class UserDataGatewayService {
-    constructor(
-        @Inject('USER_SERVICE') private readonly userDataClient: ClientKafka,
-    ) { }
+  constructor(
+    @Inject('USER_SERVICE') private readonly userDataClient: ClientKafka,
+  ) {}
 
-    getAllUsersData() {
-        this.userDataClient.emit('get_all_users_data', null);
-    }
+  getAllUsersData() {
+    this.userDataClient.emit('get_all_users_data', null);
+  }
 
-    getUserDataById(userId: string) {
-        this.userDataClient.emit('get_user_data_by_id', userId);
-    }
+  getUserDataById(id: string) {
+    this.userDataClient.emit('get_user_data_by_id', id);
+  }
 
-    createUserData({ userId, firstName, lastName, school, bio, web }: CreateUserDataRequest) {
-        this.userDataClient.emit('user_data_created', new UserDataCreatedEvent(userId, firstName, lastName, school, bio, web));
-    }
+  createUserData({
+    userId,
+    firstName,
+    lastName,
+    school,
+    bio,
+    web,
+  }: CreateUserDataRequest) {
+    this.userDataClient.emit(
+      'user_data_created',
+      new UserDataCreatedEvent(userId, firstName, lastName, school, bio, web),
+    );
+  }
 
-    updateUserData({ firstName, lastName, school, bio, web }: UpdateUserDataRequest) {
-        this.userDataClient.emit('update_user_data', new UserDataUpdatedEvent(firstName, lastName, school, bio, web));
-    }
+  updateUserData(
+    { firstName, lastName, school, bio, web }: UpdateUserDataRequest,
+    id: string,
+  ) {
+    this.userDataClient.emit('update_user_data', {
+      userDataUpdatedEvent: new UserDataUpdatedEvent(
+        firstName,
+        lastName,
+        school,
+        bio,
+        web,
+      ),
+      id: id,
+    });
+  }
 
-    deleteUserData(userId: string) {
-        this.userDataClient.emit('delete_user_data', userId);
-    }
+  deleteUserData(id: string) {
+    this.userDataClient.emit('delete_user_data', id);
+  }
 }

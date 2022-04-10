@@ -5,23 +5,30 @@ import { UserMentionCreatedEvent } from '../events/user-mention-created.event';
 
 @Injectable()
 export class UserMentionsGatewayService {
-    constructor(
-        @Inject('USER_SERVICE') private readonly userLogClient: ClientKafka,
-    ) { }
+  constructor(
+    @Inject('USER_SERVICE') private readonly userLogClient: ClientKafka,
+  ) {}
 
-    getUserMention(userId: string) {
-        this.userLogClient.emit('get_user_mention_by_id', userId);
-    }
+  getUserMention(id: string) {
+    this.userLogClient.emit('get_user_mention_by_id', id);
+  }
 
-    createUserMention({ userId, userMentions, postId }: CreateUserMentionRequest) {
-        this.userLogClient.emit('user_mention_created', new UserMentionCreatedEvent(userId, userMentions, postId));
-    }
+  createUserMention({
+    userId,
+    userMentions,
+    postId,
+  }: CreateUserMentionRequest) {
+    this.userLogClient.emit(
+      'user_mention_created',
+      new UserMentionCreatedEvent(userId, userMentions, postId),
+    );
+  }
 
-    updateUserMention({ userId, userMentions, postId }: CreateUserMentionRequest) {
-        this.userLogClient.emit('update_user_mention', new UserMentionCreatedEvent(userId, userMentions, postId));
-    }
+  // updateUserMention({ userId, userMentions, postId }: CreateUserMentionRequest, id: string) {
+  //     this.userLogClient.emit('update_user_mention',{userDataUpdatedEvent: new UserMentionCreatedEvent(userId, userMentions, postId), id: id });
+  // }
 
-    deleteUserMention(userId: string) {
-        this.userLogClient.emit('delete_user_mention', userId);
-    }
+  deleteUserMention(id: string) {
+    this.userLogClient.emit('delete_user_mention', id);
+  }
 }

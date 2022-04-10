@@ -1,6 +1,4 @@
-import {
-  Controller,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { UserLogService } from './user-log.service';
@@ -8,7 +6,7 @@ import { UserLogService } from './user-log.service';
 @ApiTags('user-log')
 @Controller('user-log')
 export class UserLogController {
-  constructor(private readonly userLogService: UserLogService) { }
+  constructor(private readonly userLogService: UserLogService) {}
 
   @EventPattern('get_all_users')
   handleGetAllUsers() {

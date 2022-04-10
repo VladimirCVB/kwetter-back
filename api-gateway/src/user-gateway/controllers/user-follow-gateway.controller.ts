@@ -4,25 +4,27 @@ import { UserFollowGatewayService } from '../services/user-follow-gateway.servic
 
 @Controller('user-follow-gateway')
 export class UserFollowGatewayController {
-    constructor(private readonly userFollowGatewayService: UserFollowGatewayService) { }
+  constructor(
+    private readonly userFollowGatewayService: UserFollowGatewayService,
+  ) {}
 
-    @Get()
-    getUserFollow(@Body() userId: string) {
-        this.userFollowGatewayService.getUserFollow(userId);
-    }
+  @Get()
+  getUserFollow(@Body() userId: string) {
+    this.userFollowGatewayService.getUserFollow(userId);
+  }
 
-    @Post()
-    createUserFollow(@Body() createUserFollowRequest: CreateUserFollowRequest) {
-        this.userFollowGatewayService.createUserFollow(createUserFollowRequest);
-    }
+  @Post()
+  createUserFollow(@Body() createUserFollowRequest: CreateUserFollowRequest) {
+    this.userFollowGatewayService.createUserFollow(createUserFollowRequest);
+  }
 
-    @Put()
-    updateUserFollow(@Body() updateUserFollowRequest: CreateUserFollowRequest) {
-        this.userFollowGatewayService.updateUserFollow(updateUserFollowRequest);
-    }
+  @Put()
+  updateUserFollow(@Body() updateUserFollowRequest: CreateUserFollowRequest) {
+    this.userFollowGatewayService.updateUserFollow(updateUserFollowRequest);
+  }
 
-    @Delete()
-    deleteUserFollow(@Body() userId: string) {
-        this.userFollowGatewayService.deleteUserFollow(userId);
-    }
+  @Delete()
+  deleteUserFollow(@Body() userId: string) {
+    this.userFollowGatewayService.deleteUserFollow(userId);
+  }
 }

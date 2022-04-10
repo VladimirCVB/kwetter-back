@@ -1,3 +1,3 @@
 export class UpdateAdminRequest {
-    userName: string
+  userName: string;
 }

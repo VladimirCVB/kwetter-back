@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Filter,
-  OneToMany,
-  OneToOne,
-  Property,
-} from '@mikro-orm/core';
+import { Entity, Filter, OneToMany, OneToOne, Property } from '@mikro-orm/core';
 import { UserLog } from 'src/user-log/entities/user-log.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 

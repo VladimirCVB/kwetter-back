@@ -7,15 +7,4 @@ export class UserDataCreatedEvent {
     public readonly web: string,
     public readonly bio: string,
   ) {}
-
-  toString() {
-    return JSON.stringify({
-      userId: this.userId,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      school: this.school,
-      web: this.web,
-      bio: this.bio,
-    });
-  }
 }
