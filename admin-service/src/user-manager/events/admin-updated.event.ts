@@ -1,11 +1,9 @@
 export class AdminUpdatedEvent {
-    constructor(
-        public readonly userName: string
-    ) {}
+  constructor(public readonly userName: string) {}
 
-    toString(){
-        return JSON.stringify({
-            userName: this.userName
-        })
-    }
+  toString() {
+    return JSON.stringify({
+      userName: this.userName,
+    });
+  }
 }

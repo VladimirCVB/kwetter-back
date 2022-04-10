@@ -1,0 +1,113 @@
+version: '3'
+services:
+  gateway:
+    build: ./api-gateway
+    restart: always
+    hostname: api-gateway
+    env_file:
+      - ./api-gateway/.env
+    environment:
+      POST_SERVICE_HOST: post-service
+      ADMIN_SERVICE_HOST: admin-service
+      USER_SERVICE_HOST: user-service
+    ports:
+      - "8000:3003"
+    networks:
+      - backend
+    depends_on:
+      - admin-service
+      - post-service
+      - user-service
+
+  admin-service:
+    build: ./admin-service
+    restart: always
+    hostname: admin-service
+    env_file:
+      - ./admin-service/.env
+    environment:
+      DB_HOST: postgres
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
+      DB_NAME: admin-service
+    networks:
+      - backend
+    links:
+      - postgres
+    depends_on:
+      - postgres
+  post-service:
+    build: ./post-service
+    restart: always
+    hostname: post-service
+    env_file:
+      - ./post-service/.env
+    environment:
+      DB_HOST: postgres
+      # REDIS_HOST: redis
+      # REDIS_PORT: 6379
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: post-service
+    networks:
+      - backend
+    links:
+      - postgres
+      # - redis
+    depends_on:
+      - postgres
+      # - redis
+  user-service:
+    build: ./user-service
+    restart: always
+    hostname: user-service
+    env_file:
+      - ./user-service/.env
+    environment:
+      DB_HOST: postgres
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
+      DB_NAME: user-service
+    networks:
+      - backend
+    links:
+      - postgres
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: test_db
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - backend
+
+  # redis:
+  #   container_name: redis
+  #   image: redis:alpine
+  #   command: redis-server # --requirepass ....
+  #   ports:
+  #     - ${REDIS_PORT:-6379}:6379
+  #   volumes:
+  #     - redis:/data
+  #   environment:
+  #     - REDIS_REPLICATION_MODE=master
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #   networks:
+  #     - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres: {}
+  # redis: {}

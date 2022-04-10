@@ -1,8 +1,8 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserMentionDto } from './dtos/create-user-mention.dto';
 import { UserMention } from './entities/user-mention.entity';
+import { UserMentionCreatedEvent } from './events/user-mention-created.event';
 
 @Injectable()
 export class UserMentionsService {
@@ -11,41 +11,67 @@ export class UserMentionsService {
     private readonly userMentionRepository: EntityRepository<UserMention>,
   ) {}
 
-  async findAll(): Promise<UserMention[]> {
-    return await this.userMentionRepository.findAll();
-  }
-
-  async findOne(id: string): Promise<UserMention> {
+  /**
+   * Retrieve user mention data by id.
+   * @param id user id to find user mention data by.
+   * @returns user mention data.
+   */
+  async handleGetUserMention(id: string): Promise<UserMention> {
     return await this.userMentionRepository.findOne(id);
   }
 
-  async create(userMention: CreateUserMentionDto): Promise<UserMention> {
-    const newUserMention = this.userMentionRepository.create({
-      userId: userMention.userId,
-      userMentioned: userMention.userMentioned,
-      postId: userMention.postId,
-    });
-    await this.userMentionRepository.persistAndFlush(newUserMention);
-    return newUserMention;
-  }
-
-  async update(
-    id: string,
-    userMentionInfo: CreateUserMentionDto,
+  /**
+   * Creates a new user mention.
+   * @param userMentionCreatedEvent is the user mention.
+   * @returns the newly created user mention.
+   */
+  async handleCreateUserMention(
+    userMentionCreatedEvent: UserMentionCreatedEvent,
   ): Promise<UserMention> {
-    const userMention = await this.findOne(id);
-    if (!userMention)
-      throw new NotFoundException('User mention data not found');
-    wrap(userMention).assign(userMentionInfo);
-    await this.userMentionRepository.flush();
+    const userMention = this.userMentionRepository.create({
+      userId: userMentionCreatedEvent.userId,
+      userMentiones: userMentionCreatedEvent.userMentions,
+      postId: userMentionCreatedEvent.postId,
+    });
+
+    await this.userMentionRepository.persistAndFlush(userMention);
 
     return userMention;
   }
 
-  async delete(id: string): Promise<void> {
-    const userData = await this.findOne(id);
-    if (!userData) throw new NotFoundException('User mention data not found');
+  /**
+   * Updates a user data.
+   * @param userDataUpdatedEvent is the user data.
+   * @returns the updated user data.
+   */
+  // async handleUpdateUserData(
+  //   userDataUpdatedEvent: UserMentionCreatedEvent,
+  //   id: string
+  // ): Promise<UserMention> {
+  //   const userMentionUpdate = await this.handleGetUserMention(id);
+  //   if (!userMentionUpdate) throw new NotFoundException('User mention not found');
 
-    return await this.userMentionRepository.removeAndFlush(userData);
+  //   userMentionUpdate.userMentiones = userDataUpdatedEvent.userMentions;
+
+  //   await this.userDataRepository.persistAndFlush(userLogUpdate);
+
+  //   return userLogUpdate;
+  // }
+
+  /**
+   * Update deletedAt property of user data.
+   * @param id is the user name of the user.
+   * @returns
+   */
+  async handleDeleteUserMention(id: string): Promise<void> {
+    const userMention = await this.handleGetUserMention(id);
+    if (!userMention) throw new NotFoundException('User mention not found');
+
+    wrap(userMention).assign({
+      ...userMention,
+      deletedAt: new Date(),
+    } as UserMention);
+
+    return await this.userMentionRepository.flush();
   }
 }

@@ -9,7 +9,9 @@ describe('UserGatewayController', () => {
       controllers: [UserMentionsGatewayController],
     }).compile();
 
-    controller = module.get<UserMentionsGatewayController>(UserMentionsGatewayController);
+    controller = module.get<UserMentionsGatewayController>(
+      UserMentionsGatewayController,
+    );
   });
 
   it('should be defined', () => {

@@ -5,8 +5,7 @@ import { PostGatewayService } from './post-gateway.service';
 
 @Controller('post-gateway')
 export class PostGatewayController {
-
-  constructor(private readonly postGatewayService: PostGatewayService) { }
+  constructor(private readonly postGatewayService: PostGatewayService) {}
 
   @Get()
   getAllPosts() {

@@ -9,7 +9,7 @@ export class UserManagerService {
   constructor(
     @InjectRepository(UserManager)
     private readonly userManagerRepository: EntityRepository<UserManager>,
-  ) { }
+  ) {}
 
   /**
    * Retrieve one admin by id.
@@ -21,22 +21,26 @@ export class UserManagerService {
   }
 
   /**
- * Creates a new admin in the database.
- * @param adminCreatedEvent is the admin data.
- * @returns the newly created admin.
- */
-  async handleAdminCreated(adminCreatedEvent: AdminCreatedEvent): Promise<UserManager> {
+   * Creates a new admin in the database.
+   * @param adminCreatedEvent is the admin data.
+   * @returns the newly created admin.
+   */
+  async handleAdminCreated(
+    adminCreatedEvent: AdminCreatedEvent,
+  ): Promise<UserManager> {
     const admin = this.userManagerRepository.create(adminCreatedEvent);
     await this.userManagerRepository.persistAndFlush(admin);
     return admin;
   }
 
   /**
- * Updates an admin.
- * @param adminCreatedEvent is the admin data.
- * @returns the newly created admin.
- */
-  async handleUpdateAdmin(adminCreatedEvent: AdminCreatedEvent): Promise<UserManager> {
+   * Updates an admin.
+   * @param adminCreatedEvent is the admin data.
+   * @returns the newly created admin.
+   */
+  async handleUpdateAdmin(
+    adminCreatedEvent: AdminCreatedEvent,
+  ): Promise<UserManager> {
     const admin = await this.handleGetAdmin(adminCreatedEvent.userId);
     if (!admin) throw new NotFoundException('Admin not found');
 
@@ -47,10 +51,10 @@ export class UserManagerService {
   }
 
   /**
- * Update deletedAt property of an admin.
- * @param adminId is the id of the admin.
- * @returns an admin.
- */
+   * Update deletedAt property of an admin.
+   * @param adminId is the id of the admin.
+   * @returns an admin.
+   */
   async handleDeleteAdmin(adminId: string): Promise<void> {
     const admin = await this.handleGetAdmin(adminId);
     if (!admin) throw new NotFoundException('Admin not found');

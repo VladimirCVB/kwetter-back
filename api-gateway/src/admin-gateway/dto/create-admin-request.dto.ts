@@ -1,4 +1,4 @@
 export class CreateAdminRequest {
-    userId: string;
-    userName: string
+  userId: string;
+  userName: string;
 }

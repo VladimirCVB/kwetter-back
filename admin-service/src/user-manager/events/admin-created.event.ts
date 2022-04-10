@@ -1,13 +1,13 @@
 export class AdminCreatedEvent {
-    constructor(
-        public readonly userId: string,
-        public readonly userName: string
-    ) {}
+  constructor(
+    public readonly userId: string,
+    public readonly userName: string,
+  ) {}
 
-    toString(){
-        return JSON.stringify({
-            userId: this.userId,
-            userName: this.userName
-        })
-    }
+  toString() {
+    return JSON.stringify({
+      userId: this.userId,
+      userName: this.userName,
+    });
+  }
 }

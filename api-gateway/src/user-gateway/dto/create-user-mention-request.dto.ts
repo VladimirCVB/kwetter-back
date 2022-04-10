@@ -1,5 +1,5 @@
 export class CreateUserMentionRequest {
-    userId: string;
-    userMentions: string[];
-    postId: string
+  userId: string;
+  userMentions: string[];
+  postId: string;
 }

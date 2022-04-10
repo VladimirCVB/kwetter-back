@@ -12,16 +12,16 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           client: {
             clientId: 'admin',
-            brokers: ['localhost:9092']
+            brokers: ['localhost:9092'],
           },
           consumer: {
             groupId: 'admin-consumer',
-          }
-        }
-      }
+          },
+        },
+      },
     ]),
   ],
   providers: [AdminGatewayService],
-  controllers: [AdminGatewayController]
+  controllers: [AdminGatewayController],
 })
 export class AdminGatewayModule {}
