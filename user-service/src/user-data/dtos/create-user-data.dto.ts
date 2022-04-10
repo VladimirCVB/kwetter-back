@@ -4,10 +4,8 @@ export class CreateUserDataDto {
   @IsNotEmpty()
   userId: string;
 
-  @IsNotEmpty()
   firstName: string;
 
-  @IsNotEmpty()
   lastName: string;
 
   school: string;

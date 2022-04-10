@@ -2,7 +2,6 @@ import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostTrends } from 'src/post-trends/entities/post-trends.entity';
-import { CreatePostDataDto } from './dtos/create-post-data.dto';
 import { PostData } from './entities/post-data.entity';
 import { PostCreatedEvent } from './events/post-created.event';
 import { PostUpdatedEvent } from './events/post-updated.event';
@@ -103,7 +102,7 @@ export class PostDataService {
 
   /**
    * Update deletedAt property of post data & post trends.
-   * @param postId is the id of the banned user.
+   * @param postId is the id of the post.
    * @returns
    */
   async handleDeletePost(postId: string): Promise<void> {

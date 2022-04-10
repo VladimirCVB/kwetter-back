@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { CreatePostRequest } from './dto/create-post-request.dto';
 import { UpdatePostRequest } from './dto/update-post-request.dto';
 import { PostGatewayService } from './post-gateway.service';

@@ -13,10 +13,10 @@ export class UserData extends BaseEntity {
   userId!: UserLog;
 
   @Property()
-  firstName!: string;
+  firstName: string;
 
   @Property()
-  lastName!: string;
+  lastName: string;
 
   @Property()
   school: string;

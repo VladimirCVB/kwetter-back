@@ -1,64 +1,37 @@
 import {
-  Body,
   Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateUserLogDto } from './dtos/create-user-log.dto';
-import { UserLog } from './entities/user-log.entity';
+import { EventPattern } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 import { UserLogService } from './user-log.service';
 
 @ApiTags('user-log')
 @Controller('user-log')
 export class UserLogController {
-  constructor(private readonly userLogService: UserLogService) {}
+  constructor(private readonly userLogService: UserLogService) { }
 
-  @ApiOperation({ summary: 'Get all user-log information' })
-  @ApiResponse({ status: 200, description: 'Returned all user-log' })
-  @Get()
-  async findAll(): Promise<UserLog[]> {
-    return this.userLogService.findAll();
+  @EventPattern('get_all_users')
+  handleGetAllUsers() {
+    this.userLogService.handleGetAllUsers();
   }
 
-  @ApiOperation({ summary: 'Get user-log by id' })
-  @ApiResponse({ status: 200, description: 'Returned user-log by id' })
-  @ApiResponse({ status: 404, description: 'User-log not found' })
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<UserLog> {
-    return this.userLogService.findOne(id);
+  @EventPattern('get_user_by_id')
+  handleGetUserById(data: any) {
+    this.userLogService.handleGetUserById(data.value);
   }
 
-  @ApiOperation({ summary: 'Create user-log' })
-  @ApiResponse({ status: 201, description: 'User-log created' })
-  @ApiResponse({ status: 400, description: 'Invalid user-log' })
-  @ApiResponse({ status: 409, description: 'User-log already exists' })
-  @Post()
-  async create(@Body() userLog: CreateUserLogDto): Promise<UserLog> {
-    return this.userLogService.create(userLog);
+  @EventPattern('user_log_created')
+  handleUserCreated(data: any) {
+    this.userLogService.handleUserCreated(data.value);
   }
 
-  @ApiOperation({ summary: 'Update user-log' })
-  @ApiResponse({ status: 200, description: 'User-log updated' })
-  @ApiResponse({ status: 400, description: 'Invalid user-log' })
-  @ApiResponse({ status: 404, description: 'User-log not found' })
-  @ApiResponse({ status: 409, description: 'User-log already exists' })
-  @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() userLog: CreateUserLogDto,
-  ): Promise<UserLog> {
-    return this.userLogService.update(id, userLog);
+  @EventPattern('update_user_log')
+  handleUpdateUser(data: any) {
+    this.userLogService.handleUpdateUser(data.value);
   }
 
-  @ApiOperation({ summary: 'Delete user-log information by id' })
-  @ApiResponse({ status: 200, description: 'User-log deleted' })
-  @ApiResponse({ status: 404, description: 'User-log not found' })
-  @Delete(':id')
-  async delete(@Param('id') id: string): Promise<void> {
-    return this.userLogService.delete(id);
+  @EventPattern('delete_user')
+  handleDeleteUser(data: any) {
+    this.userLogService.handleDeleteUser(data.value);
   }
 }
