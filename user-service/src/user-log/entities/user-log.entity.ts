@@ -6,9 +6,9 @@ import {
   OneToOne,
   Property,
 } from '@mikro-orm/core';
-import { UserData } from 'src/user-data/entities/user-data.entity';
-import { UserFollow } from 'src/user-follow/entities/user-follow.entity';
-import { UserMention } from 'src/user-mentions/entities/user-mention.entity';
+import { UserData } from '../../user-data/entities/user-data.entity';
+import { UserFollow } from '../../user-follow/entities/user-follow.entity';
+import { UserMention } from '../../user-mentions/entities/user-mention.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
@@ -27,13 +27,13 @@ export class UserLog extends BaseEntity {
   @Property()
   password!: string;
 
-  @OneToOne({ entity: () => UserData, wrappedReference: true })
+  @OneToOne({ entity: () => UserData, mappedBy: 'userId', hidden: true })
   userData: UserData;
 
-  @OneToOne({ entity: () => UserFollow, wrappedReference: true })
+  @OneToOne({ entity: () => UserFollow, mappedBy: 'userId', hidden: true })
   userFollow: UserFollow;
 
-  @OneToOne({ entity: () => UserMention, wrappedReference: true })
+  @OneToOne({ entity: () => UserMention, mappedBy: 'userId', hidden: true })
   userMention: UserMention;
 
   @OneToMany({

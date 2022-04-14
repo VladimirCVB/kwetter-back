@@ -1,5 +1,5 @@
 import { Entity, Filter, ManyToOne, Property } from '@mikro-orm/core';
-import { PostData } from 'src/post-data/entities/post-data.entity';
+import { PostData } from '../../post-data/entities/post-data.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
@@ -9,14 +9,11 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class PostTrends extends BaseEntity {
-  @Property()
-  postId!: string;
+  @ManyToOne({ entity: () => PostData, wrappedReference: true })
+  postId!: PostData;
 
   @Property()
   trends!: string[];
-
-  @ManyToOne({ entity: () => PostData, wrappedReference: true })
-  lobby!: PostData;
 
   @Property({ nullable: true })
   deletedAt?: Date;

@@ -35,8 +35,8 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "post_id": {
-          "name": "post_id",
+        "user_id": {
+          "name": "user_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -44,21 +44,49 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "trend_name": {
-          "name": "trend_name",
+        "user_name": {
+          "name": "user_name",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "hearts": {
+          "name": "hearts",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
-      "name": "post_trends",
+      "name": "post_data",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "post_trends_pkey",
+          "keyName": "post_data_pkey",
           "columnNames": [
             "id"
           ],
@@ -101,26 +129,8 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "hearts": {
-          "name": "hearts",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "text": {
-          "name": "text",
+        "post_id_id": {
+          "name": "post_id_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -130,19 +140,29 @@
         },
         "trends": {
           "name": "trends",
-          "type": "varchar(255)",
+          "type": "text[]",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "mappedType": "array"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
-      "name": "post_data",
+      "name": "post_trends",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "post_data_pkey",
+          "keyName": "post_trends_pkey",
           "columnNames": [
             "id"
           ],
@@ -152,7 +172,20 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {}
+      "foreignKeys": {
+        "post_trends_post_id_id_foreign": {
+          "constraintName": "post_trends_post_id_id_foreign",
+          "columnNames": [
+            "post_id_id"
+          ],
+          "localTableName": "public.post_trends",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.post_data",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }

@@ -5,5 +5,5 @@ export class CreatePostDataDto {
   postId: string;
 
   @IsNotEmpty()
-  trends: string[];
+  trends: string[] = [];
 }

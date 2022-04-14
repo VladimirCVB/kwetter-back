@@ -1,5 +1,5 @@
 import { Entity, Filter, OneToOne, Property } from '@mikro-orm/core';
-import { UserLog } from 'src/user-log/entities/user-log.entity';
+import { UserLog } from '../../user-log/entities/user-log.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
@@ -9,8 +9,8 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class UserData extends BaseEntity {
-  @OneToOne(() => UserLog, (user) => user.id)
-  userId!: string;
+  @OneToOne({ entity: () => UserLog, wrappedReference: true })
+  userId!: UserLog;
 
   @Property()
   firstName: string;
