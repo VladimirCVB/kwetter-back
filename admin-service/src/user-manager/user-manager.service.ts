@@ -1,8 +1,8 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserManagerDto } from './dtos/create-user-manager.dto';
 import { UserManager } from './entities/user-manager.entity';
+import { AdminCreatedEvent } from './events/admin-created.event';
 
 @Injectable()
 export class UserManagerService {
@@ -11,40 +11,56 @@ export class UserManagerService {
     private readonly userManagerRepository: EntityRepository<UserManager>,
   ) {}
 
-  async findAll(): Promise<UserManager[]> {
-    return await this.userManagerRepository.findAll();
+  /**
+   * Retrieve one admin by id.
+   * @param admin_id is the id of the admin.
+   * @returns an admin.
+   */
+  async handleGetAdmin(admin_id: string): Promise<UserManager> {
+    return await this.userManagerRepository.findOne({ id: admin_id });
   }
 
-  async findOne(id: string): Promise<UserManager> {
-    return await this.userManagerRepository.findOne(id);
-  }
-
-  async create(userManager: CreateUserManagerDto): Promise<UserManager> {
-    const newUserManager = this.userManagerRepository.create({
-      userId: userManager.userId,
-    });
-    await this.userManagerRepository.persistAndFlush(newUserManager);
-    return newUserManager;
-  }
-
-  async update(
-    id: string,
-    userManagerInfo: CreateUserManagerDto,
+  /**
+   * Creates a new admin in the database.
+   * @param adminCreatedEvent is the admin data.
+   * @returns the newly created admin.
+   */
+  async handleAdminCreated(
+    adminCreatedEvent: AdminCreatedEvent,
   ): Promise<UserManager> {
-    const userManager = await this.findOne(id);
-    if (!userManager)
-      throw new NotFoundException('User manager data not found');
-    wrap(userManager).assign(userManagerInfo);
-    await this.userManagerRepository.flush();
-
-    return userManager;
+    const admin = this.userManagerRepository.create(adminCreatedEvent);
+    await this.userManagerRepository.persistAndFlush(admin);
+    return admin;
   }
 
-  async delete(id: string): Promise<void> {
-    const userManager = await this.findOne(id);
-    if (!userManager)
-      throw new NotFoundException('User manager data not found');
+  /**
+   * Updates an admin.
+   * @param adminCreatedEvent is the admin data.
+   * @returns the newly created admin.
+   */
+  async handleUpdateAdmin(
+    adminCreatedEvent: AdminCreatedEvent,
+  ): Promise<UserManager> {
+    const admin = await this.handleGetAdmin(adminCreatedEvent.userId);
+    if (!admin) throw new NotFoundException('Admin not found');
 
-    return await this.userManagerRepository.removeAndFlush(userManager);
+    admin.userName = adminCreatedEvent.userName;
+
+    await this.userManagerRepository.persistAndFlush(admin);
+    return admin;
+  }
+
+  /**
+   * Update deletedAt property of an admin.
+   * @param adminId is the id of the admin.
+   * @returns an admin.
+   */
+  async handleDeleteAdmin(adminId: string): Promise<void> {
+    const admin = await this.handleGetAdmin(adminId);
+    if (!admin) throw new NotFoundException('Admin not found');
+
+    wrap(admin).assign({ ...admin, deletedAt: new Date() } as UserManager);
+
+    return await this.userManagerRepository.flush();
   }
 }

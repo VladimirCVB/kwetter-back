@@ -16,8 +16,8 @@
 image: node:latest
 
 stages:
-  - lint
   - test
+  - lint
 
 ES-Lint-Admin:
   environment: admin-service

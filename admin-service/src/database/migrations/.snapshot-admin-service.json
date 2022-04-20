@@ -43,6 +43,25 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "user_name": {
+          "name": "user_name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "user_manager",
@@ -100,28 +119,9 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        }
-      },
-      "name": "user_administrator",
-      "schema": "public",
-      "indexes": [
-        {
-          "keyName": "user_administrator_pkey",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
+        },
+        "user_name": {
+          "name": "user_name",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -129,34 +129,15 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "created_at": {
-          "name": "created_at",
+        "deleted_at": {
+          "name": "deleted_at",
           "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "length": 6,
           "mappedType": "datetime"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 6,
-          "mappedType": "datetime"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
         }
       },
       "name": "banned_users",

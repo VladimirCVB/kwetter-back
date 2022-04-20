@@ -1,8 +1,8 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserFollowDto } from './dtos/create-user-follow.dto';
 import { UserFollow } from './entities/user-follow.entity';
+import { UserFollowCreatedEvent } from './events/user-follow-created.event';
 
 @Injectable()
 export class UserFollowService {
@@ -11,40 +11,68 @@ export class UserFollowService {
     private readonly userFollowRepository: EntityRepository<UserFollow>,
   ) {}
 
-  async findAll(): Promise<UserFollow[]> {
-    return await this.userFollowRepository.findAll();
-  }
-
-  async findOne(id: string): Promise<UserFollow> {
+  /**
+   * Retrieve user Follow data by id.
+   * @param id user id to find user Follow data by.
+   * @returns user Follow data.
+   */
+  async handleGetUserFollow(id: string): Promise<UserFollow> {
     return await this.userFollowRepository.findOne(id);
   }
 
-  async create(userFollow: CreateUserFollowDto): Promise<UserFollow> {
-    const newUserFollow = this.userFollowRepository.create({
-      userId: userFollow.userId,
-      userFollowed: userFollow.userFollowed,
-      userFollowing: userFollow.userFollowing,
-    });
-    await this.userFollowRepository.persistAndFlush(newUserFollow);
-    return newUserFollow;
-  }
-
-  async update(
-    id: string,
-    userDataInfo: CreateUserFollowDto,
+  /**
+   * Creates a new user Follow.
+   * @param userFollowCreatedEvent is the user Follow.
+   * @returns the newly created user Follow.
+   */
+  async handleCreateUserFollow(
+    userFollowCreatedEvent: UserFollowCreatedEvent,
   ): Promise<UserFollow> {
-    const userData = await this.findOne(id);
-    if (!userData) throw new NotFoundException('User follow data not found');
-    wrap(userData).assign(userDataInfo);
-    await this.userFollowRepository.flush();
+    const userFollow = this.userFollowRepository.create({
+      userId: userFollowCreatedEvent.userId,
+      userFollowed: userFollowCreatedEvent.userFollowed,
+      userFollowing: userFollowCreatedEvent.userFollowing,
+    });
 
-    return userData;
+    await this.userFollowRepository.persistAndFlush(userFollow);
+
+    return userFollow;
   }
 
-  async delete(id: string): Promise<void> {
-    const userData = await this.findOne(id);
-    if (!userData) throw new NotFoundException('User follow data not found');
+  /**
+   * Updates a user data.
+   * @param userDataUpdatedEvent is the user data.
+   * @returns the updated user data.
+   */
+  // async handleUpdateUserFollow(
+  //   userDataUpdatedEvent: UserFollowCreatedEvent,
+  //   id: string
+  // ): Promise<UserFollow> {
+  //   const userFollowUpdate = await this.handleGetUserFollow(id);
+  //   if (!userFollowUpdate) throw new NotFoundException('User Follow not found');
 
-    return await this.userFollowRepository.removeAndFlush(userData);
+  //   userFollowUpdate.userFollowed = userDataUpdatedEvent.userFollowed;
+  //   wrap(userFollowUpdate).assign({ ...userFollowUpdate, userFollowed: userDataUpdatedEvent.userFollowed } as UserFollow);
+
+  //   await this.userDataRepository.persistAndFlush(userLogUpdate);
+
+  //   return userLogUpdate;
+  // }
+
+  /**
+   * Update deletedAt property of user data.
+   * @param id is the user name of the user.
+   * @returns
+   */
+  async handleDeleteUserFollow(id: string): Promise<void> {
+    const userFollow = await this.handleGetUserFollow(id);
+    if (!userFollow) throw new NotFoundException('User Follow not found');
+
+    wrap(userFollow).assign({
+      ...userFollow,
+      deletedAt: new Date(),
+    } as UserFollow);
+
+    return await this.userFollowRepository.flush();
   }
 }

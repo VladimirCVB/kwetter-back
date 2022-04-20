@@ -1,11 +1,20 @@
-import { Entity, Property } from '@mikro-orm/core';
+import { Entity, Filter, ManyToOne, Property } from '@mikro-orm/core';
+import { PostData } from '../../post-data/entities/post-data.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
+@Filter({
+  name: 'isActive',
+  cond: { deletedAt: null },
+  default: true,
+})
 export class PostTrends extends BaseEntity {
-  @Property()
-  postId!: string;
+  @ManyToOne({ entity: () => PostData, wrappedReference: true })
+  postId!: PostData;
 
   @Property()
-  trendName!: string;
+  trends!: string[];
+
+  @Property({ nullable: true })
+  deletedAt?: Date;
 }

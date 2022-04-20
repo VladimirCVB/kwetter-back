@@ -1,16 +1,22 @@
-import { Entity, OneToOne, Property } from '@mikro-orm/core';
+import { Entity, Filter, OneToOne, Property } from '@mikro-orm/core';
+import { UserLog } from '../../user-log/entities/user-log.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
 @Entity()
+@Filter({
+  name: 'isActive',
+  cond: { deletedAt: null },
+  default: true,
+})
 export class UserData extends BaseEntity {
-  @Property()
-  userId!: string;
+  @OneToOne({ entity: () => UserLog, wrappedReference: true })
+  userId!: UserLog;
 
   @Property()
-  firstName!: string;
+  firstName: string;
 
   @Property()
-  lastName!: string;
+  lastName: string;
 
   @Property()
   school: string;
@@ -20,4 +26,7 @@ export class UserData extends BaseEntity {
 
   @Property()
   bio: string;
+
+  @Property({ nullable: true })
+  deletedAt?: Date;
 }

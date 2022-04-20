@@ -1,9 +1,15 @@
-// import { PostTrends } from "src/post-trends/entities/post-trends.entity";
+import { IsNotEmpty } from 'class-validator';
 
-export interface CreatePostDataDto {
+export class CreatePostDataDto {
+  @IsNotEmpty()
   userId: string;
+
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
   hearts: number;
+
+  @IsNotEmpty()
   text: string;
-  trends: string;
-  // testProp: PostTrends;
 }
