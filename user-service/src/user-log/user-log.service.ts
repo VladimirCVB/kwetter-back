@@ -1,51 +1,100 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserLogDto } from './dtos/create-user-log.dto';
+import { UserData } from 'src/user-data/entities/user-data.entity';
 import { UserLog } from './entities/user-log.entity';
+import { UserLogCreatedEvent } from './events/user-log-created.event';
 
 @Injectable()
 export class UserLogService {
   constructor(
     @InjectRepository(UserLog)
     private readonly userLogRepository: EntityRepository<UserLog>,
+    @InjectRepository(UserData)
+    private readonly userDataRepository: EntityRepository<UserData>,
   ) {}
 
-  async findAll(): Promise<UserLog[]> {
+  /**
+   * Retrieve all user logs.
+   * @returns all user logs.
+   */
+  async handleGetAllUsers(): Promise<UserLog[]> {
     return await this.userLogRepository.findAll();
   }
 
-  async findOneToLog(username: string, password: string): Promise<UserLog> {
-    return await this.userLogRepository.findOneOrFail( { userName: username, password: password });
+  /**
+   * Retrieve user log by id.
+   * @param userId user id to find user log by.
+   * @returns user log.
+   */
+  async handleGetUserById(userId: string): Promise<UserLog> {
+    return await this.userLogRepository.findOne(userId);
   }
 
-  async findOne(id: string): Promise<UserLog> {
-    return await this.userLogRepository.findOne(id);
+  /**
+   * Retrieve user log by user name.
+   * @param userName user name to find user log by.
+   * @returns user log.
+   */
+  async handleGetUserByUserName(userName: string): Promise<UserLog> {
+    return await this.userLogRepository.findOne(userName);
   }
 
-  async create(userLog: CreateUserLogDto): Promise<UserLog> {
-    const newUserLog = this.userLogRepository.create({
-      userName: userLog.userName,
-      email: userLog.email,
-      password: userLog.password,
+  /**
+   * Creates a new user log & user data in the database.
+   * @param userLogCreatedEvent is the user log data.
+   * @returns the newly created user log.
+   */
+  async handleUserCreated(
+    userLogCreatedEvent: UserLogCreatedEvent,
+  ): Promise<UserLog> {
+    const userLog = this.userLogRepository.create({
+      userName: userLogCreatedEvent.userName,
+      email: userLogCreatedEvent.email,
+      password: userLogCreatedEvent.password,
     });
-    await this.userLogRepository.persistAndFlush(newUserLog);
-    return newUserLog;
-  }
+    const userData = this.userDataRepository.create({
+      userId: userLog.id,
+    });
 
-  async update(id: string, userLogInfo: CreateUserLogDto): Promise<UserLog> {
-    const userLog = await this.findOne(id);
-    if (!userLog) throw new NotFoundException('User log not found');
-    wrap(userLog).assign(userLogInfo);
-    await this.userLogRepository.flush();
+    await this.userLogRepository.persistAndFlush(userLog);
+    await this.userDataRepository.persistAndFlush(userData);
 
     return userLog;
   }
 
-  async delete(id: string): Promise<void> {
-    const userLog = await this.findOne(id);
+  /**
+   * Updates a user log.
+   * @param userLogUpdatedEvent is the user log data.
+   * @returns the updated user log.
+   */
+  async handleUpdateUser(
+    userLogUpdatedEvent: UserLogCreatedEvent,
+  ): Promise<UserLog> {
+    const userLogUpdate = await this.handleGetUserByUserName(
+      userLogUpdatedEvent.userName,
+    );
+    if (!userLogUpdate) throw new NotFoundException('User log data not found');
+
+    userLogUpdate.email = userLogUpdatedEvent.email;
+    userLogUpdate.password = userLogUpdatedEvent.password;
+
+    await this.userLogRepository.persistAndFlush(userLogUpdate);
+
+    return userLogUpdate;
+  }
+
+  /**
+   * Update deletedAt property of user log data.
+   * @param userName is the user name of the user.
+   * @returns
+   */
+  async handleDeleteUser(userName: string): Promise<void> {
+    const userLog = await this.handleGetUserByUserName(userName);
     if (!userLog) throw new NotFoundException('User log not found');
 
-    return await this.userLogRepository.removeAndFlush(userLog);
+    wrap(userLog).assign({ ...userLog, deletedAt: new Date() } as UserLog);
+
+    return await this.userLogRepository.flush();
   }
 }

@@ -1,64 +1,45 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreatePostDataDto } from './dtos/create-post-data.dto';
-import { PostData } from './entities/post-data.entity';
+import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { PostDataService } from './post-data.service';
+import { EventPattern } from '@nestjs/microservices';
 
 @ApiTags('post-data')
 @Controller('post-data')
 export class PostDataController {
   constructor(private readonly postDataService: PostDataService) {}
 
-  @ApiOperation({ summary: 'Get all post-data information' })
-  @ApiResponse({ status: 200, description: 'Returned all post-data' })
-  @Get()
-  async findAll(): Promise<PostData[]> {
-    return this.postDataService.findAll();
+  @EventPattern('get_all_posts')
+  handleGetAllPosts() {
+    this.postDataService.handleGetAllPosts();
   }
 
-  @ApiOperation({ summary: 'Get post-data by id' })
-  @ApiResponse({ status: 200, description: 'Returned post-data by id' })
-  @ApiResponse({ status: 404, description: 'Post-data not found' })
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<PostData> {
-    return this.postDataService.findOne(id);
+  @EventPattern('get_posts_of_users')
+  handleGetPosts(data: any) {
+    this.postDataService.handleGetPosts(data.value);
   }
 
-  @ApiOperation({ summary: 'Create post-data' })
-  @ApiResponse({ status: 201, description: 'post-data created' })
-  @ApiResponse({ status: 400, description: 'Invalid post-data' })
-  @ApiResponse({ status: 409, description: 'Post-data already exists' })
-  @Post()
-  async create(@Body() postData: CreatePostDataDto): Promise<PostData> {
-    return this.postDataService.create(postData);
+  @EventPattern('get_posts_by_userId')
+  handleGetPostByUserId(data: any) {
+    this.postDataService.handleGetPostByUserId(data.value);
   }
 
-  @ApiOperation({ summary: 'Update post-data' })
-  @ApiResponse({ status: 200, description: 'post-data updated' })
-  @ApiResponse({ status: 400, description: 'Invalid post-data' })
-  @ApiResponse({ status: 404, description: 'Post-data not found' })
-  @ApiResponse({ status: 409, description: 'Post-data already exists' })
-  @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() postData: CreatePostDataDto,
-  ): Promise<PostData> {
-    return this.postDataService.update(id, postData);
+  @EventPattern('get_post_by_id')
+  handleGetPostById(data: any) {
+    this.postDataService.handleGetPostById(data.value);
   }
 
-  @ApiOperation({ summary: 'Delete post-data information by id' })
-  @ApiResponse({ status: 200, description: 'Post-data deleted' })
-  @ApiResponse({ status: 404, description: 'Post-data not found' })
-  @Delete(':id')
-  async delete(@Param('id') id: string): Promise<void> {
-    return this.postDataService.delete(id);
+  @EventPattern('post_created')
+  handlePostCreated(data: any) {
+    this.postDataService.handlePostCreated(data.value);
+  }
+
+  @EventPattern('update_post')
+  handleUpdatePost(data: any) {
+    this.postDataService.handleUpdatePost(data.value);
+  }
+
+  @EventPattern('delete_post')
+  handleDeletePost(data: any) {
+    this.postDataService.handleDeletePost(data.value);
   }
 }

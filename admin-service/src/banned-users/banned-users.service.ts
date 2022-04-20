@@ -1,8 +1,8 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateBannedUsersDto } from './dtos/create-banned-users.dto';
 import { BannedUsers } from './entities/banned-users.entity';
+import { BannedCreatedEvent } from './events/banned-created.event';
 
 @Injectable()
 export class BannedUsersService {
@@ -11,40 +11,67 @@ export class BannedUsersService {
     private readonly bannedUsersRepository: EntityRepository<BannedUsers>,
   ) {}
 
-  async findAll(): Promise<BannedUsers[]> {
+  /**
+   * Retrieve all banned users.
+   * @returns all banned users.
+   */
+  async handleGetBanned(): Promise<BannedUsers[]> {
     return await this.bannedUsersRepository.findAll();
   }
 
-  async findOne(id: string): Promise<BannedUsers> {
-    return await this.bannedUsersRepository.findOne(id);
+  /**
+   * Retrieve one banned user by user-name.
+   * @param banned_name is the userName of the banned.
+   * @returns a banned user.
+   */
+  async handleGetBan(banned_name: string): Promise<BannedUsers> {
+    return await this.bannedUsersRepository.findOne({ userName: banned_name });
   }
 
-  async create(bannedUsers: CreateBannedUsersDto): Promise<BannedUsers> {
-    const newBannedUsers = this.bannedUsersRepository.create({
-      userId: bannedUsers.userId,
-    });
-    await this.bannedUsersRepository.persistAndFlush(newBannedUsers);
-    return newBannedUsers;
-  }
-
-  async update(
-    id: string,
-    bannedUsersInfo: CreateBannedUsersDto,
+  /**
+   * Creates a new banned user in the database.
+   * @param bannedCreatedEvent is the banned user data.
+   * @returns the newly created banned user.
+   */
+  async handleBanCreated(
+    bannedCreatedEvent: BannedCreatedEvent,
   ): Promise<BannedUsers> {
-    const bannedUsers = await this.findOne(id);
-    if (!bannedUsers)
-      throw new NotFoundException('Banned Users data not found');
-    wrap(bannedUsers).assign(bannedUsersInfo);
-    await this.bannedUsersRepository.flush();
-
-    return bannedUsers;
+    const bannedUser = this.bannedUsersRepository.create(bannedCreatedEvent);
+    await this.bannedUsersRepository.persistAndFlush(bannedUser);
+    return bannedUser;
   }
 
-  async delete(id: string): Promise<void> {
-    const bannedUsers = await this.findOne(id);
-    if (!bannedUsers)
-      throw new NotFoundException('Banned Users data not found');
+  /**
+   * Updates a banned user.
+   * @param bannedCreatedEvent is the admin data.
+   * @returns the updated banned user.
+   */
+  async handleUpdateBan(
+    bannedCreatedEvent: BannedCreatedEvent,
+  ): Promise<BannedUsers> {
+    const bannedUser = await this.handleGetBan(bannedCreatedEvent.userId);
+    if (!bannedUser) throw new NotFoundException('Banned user not found');
 
-    return await this.bannedUsersRepository.removeAndFlush(bannedUsers);
+    bannedUser.userName = bannedCreatedEvent.userName;
+
+    await this.bannedUsersRepository.persistAndFlush(bannedUser);
+    return bannedUser;
+  }
+
+  /**
+   * Update deletedAt property of a banned user.
+   * @param bannedId is the id of the banned user.
+   * @returns a banned user.
+   */
+  async handleDeleteBan(bannedId: string): Promise<void> {
+    const bannedUser = await this.handleGetBan(bannedId);
+    if (!bannedUser) throw new NotFoundException('Banned user not found');
+
+    wrap(bannedUser).assign({
+      ...bannedUser,
+      deletedAt: new Date(),
+    } as BannedUsers);
+
+    return await this.bannedUsersRepository.flush();
   }
 }
