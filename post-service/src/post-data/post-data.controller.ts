@@ -1,45 +1,45 @@
 import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostDataService } from './post-data.service';
-import { EventPattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 
 @ApiTags('post-data')
 @Controller('post-data')
 export class PostDataController {
-  constructor(private readonly postDataService: PostDataService) {}
+  constructor(private readonly postDataService: PostDataService) { }
 
-  @EventPattern('get_all_posts')
+  @MessagePattern('get_all_posts')
   handleGetAllPosts() {
-    this.postDataService.handleGetAllPosts();
+    return this.postDataService.handleGetAllPosts();
   }
 
-  @EventPattern('get_posts_of_users')
+  @MessagePattern('get_posts_of_users')
   handleGetPosts(data: any) {
-    this.postDataService.handleGetPosts(data.value);
+    return this.postDataService.handleGetPosts(data.value);
   }
 
-  @EventPattern('get_posts_by_userId')
-  handleGetPostByUserId(data: any) {
-    this.postDataService.handleGetPostByUserId(data.value);
+  @MessagePattern({ cmd: 'get_posts_by_userId' })
+  handleGetPostByUserId(user_id: string) {
+    return this.postDataService.handleGetPostByUserId(user_id);
   }
 
-  @EventPattern('get_post_by_id')
+  @MessagePattern('get_post_by_id')
   handleGetPostById(data: any) {
-    this.postDataService.handleGetPostById(data.value);
+    return this.postDataService.handleGetPostById(data.value);
   }
 
-  @EventPattern('post_created')
+  @MessagePattern('post_created')
   handlePostCreated(data: any) {
-    this.postDataService.handlePostCreated(data.value);
+    return this.postDataService.handlePostCreated(data.value);
   }
 
-  @EventPattern('update_post')
+  @MessagePattern('update_post')
   handleUpdatePost(data: any) {
-    this.postDataService.handleUpdatePost(data.value);
+    return this.postDataService.handleUpdatePost(data.value);
   }
 
-  @EventPattern('delete_post')
+  @MessagePattern('delete_post')
   handleDeletePost(data: any) {
-    this.postDataService.handleDeletePost(data.value);
+    return this.postDataService.handleDeletePost(data.value);
   }
 }

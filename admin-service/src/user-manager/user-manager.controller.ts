@@ -1,30 +1,30 @@
 import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserManagerService } from './user-manager.service';
-import { EventPattern } from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
 @ApiTags('user-manager')
 @Controller('user-manager')
 export class UserManagerController {
   constructor(private readonly userManagerService: UserManagerService) {}
 
-  @EventPattern('admin_created')
+  @MessagePattern('admin_created')
   handleAdminCreated(data: any) {
-    this.userManagerService.handleAdminCreated(data.value);
+    return this.userManagerService.handleAdminCreated(data.value);
   }
 
-  @EventPattern('get_admin')
-  handleGetAdmin(data: any) {
-    this.userManagerService.handleGetAdmin(data.value);
+  @MessagePattern('get_admin')
+  handleGetAdmin(user_id: string) {
+    return this.userManagerService.handleGetAdmin(user_id);
   }
 
-  @EventPattern('update_admin')
+  @MessagePattern('update_admin')
   handleUpdateAdmin(data: any) {
-    this.userManagerService.handleUpdateAdmin(data.value);
+    return this.userManagerService.handleUpdateAdmin(data.value);
   }
 
-  @EventPattern('delete_admin')
+  @MessagePattern('delete_admin')
   handleDeleteAdmin(data: any) {
-    this.userManagerService.handleDeleteAdmin(data.value);
+    return this.userManagerService.handleDeleteAdmin(data.value);
   }
 }

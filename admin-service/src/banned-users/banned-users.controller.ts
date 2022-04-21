@@ -1,35 +1,35 @@
 import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BannedUsersService } from './banned-users.service';
-import { EventPattern } from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
 @ApiTags('banned-users')
 @Controller('banned-users')
 export class BannedUsersController {
   constructor(private readonly bannedUsersService: BannedUsersService) {}
 
-  @EventPattern('ban_created')
+  @MessagePattern('ban_created')
   handleBanCreated(data: any) {
-    this.bannedUsersService.handleBanCreated(data.value);
+    return this.bannedUsersService.handleBanCreated(data.value);
   }
 
-  @EventPattern('get_ban')
+  @MessagePattern('get_ban')
   handleGetBan(data: any) {
-    this.bannedUsersService.handleGetBan(data.value);
+    return this.bannedUsersService.handleGetBan(data.value);
   }
 
-  @EventPattern('get_banned')
+  @MessagePattern('get_banned')
   handleGetBanned() {
-    this.bannedUsersService.handleGetBanned();
+    return this.bannedUsersService.handleGetBanned();
   }
 
-  @EventPattern('update_ban')
+  @MessagePattern('update_ban')
   handleUpdateBan(data: any) {
-    this.bannedUsersService.handleUpdateBan(data.value);
+    return this.bannedUsersService.handleUpdateBan(data.value);
   }
 
-  @EventPattern('delete_ban')
+  @MessagePattern('delete_ban')
   handleDeleteBan(data: any) {
-    this.bannedUsersService.handleDeleteBan(data.value);
+    return this.bannedUsersService.handleDeleteBan(data.value);
   }
 }

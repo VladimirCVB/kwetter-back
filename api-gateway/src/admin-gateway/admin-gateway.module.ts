@@ -8,15 +8,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ClientsModule.register([
       {
         name: 'ADMIN_SERVICE',
-        transport: Transport.KAFKA,
+        transport: Transport.TCP,
         options: {
-          client: {
-            clientId: 'admin',
-            brokers: ['localhost:9092'],
-          },
-          consumer: {
-            groupId: 'admin-consumer',
-          },
+          port: 3003
         },
       },
     ]),

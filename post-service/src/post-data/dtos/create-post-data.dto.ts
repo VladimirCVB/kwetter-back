@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreatePostDataDto {
   @IsNotEmpty()
-  userId: string;
+  user_id: string;
 
   @IsNotEmpty()
   userName: string;

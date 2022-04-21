@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+import { ClientKafka, ClientProxy } from '@nestjs/microservices';
 import { CreateUserLogRequest } from '../dto/create-user-log-request.dto';
 import { UserLogCreatedEvent } from '../events/user-log-created.event';
 
@@ -7,10 +7,10 @@ import { UserLogCreatedEvent } from '../events/user-log-created.event';
 export class UserLogGatewayService {
   constructor(
     @Inject('USER_SERVICE') private readonly userLogClient: ClientKafka,
-  ) {}
+  ) { }
 
   getAllUsers() {
-    this.userLogClient.emit('get_all_users', null);
+    this.userLogClient.emit('get_all_users', {});
   }
 
   getUserById(userId: string) {

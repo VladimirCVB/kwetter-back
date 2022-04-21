@@ -15,7 +15,7 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 })
 export class PostData extends BaseEntity {
   @Property()
-  userId!: string;
+  user_id!: string;
 
   @Property()
   userName!: string;

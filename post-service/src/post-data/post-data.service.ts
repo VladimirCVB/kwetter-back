@@ -14,7 +14,7 @@ export class PostDataService {
 
     @InjectRepository(PostTrends)
     private readonly postTrendsRepository: EntityRepository<PostTrends>,
-  ) {}
+  ) { }
 
   /**
    * Retrieve all posts.
@@ -38,8 +38,8 @@ export class PostDataService {
    * @param userId user id to find posts by.
    * @returns an array of posts.
    */
-  async handleGetPostByUserId(userId: string): Promise<PostData[]> {
-    return await this.postDataRepository.find({ userId: userId });
+  async handleGetPostByUserId(userId: string) {
+    return await this.postDataRepository.find({ user_id: userId });
   }
 
   /**
@@ -60,7 +60,7 @@ export class PostDataService {
     postCreatedEvent: PostCreatedEvent,
   ): Promise<PostData> {
     const postData = this.postDataRepository.create({
-      userId: postCreatedEvent.userId,
+      user_id: postCreatedEvent.userId,
       text: postCreatedEvent.text,
     });
     const postTrends = this.postTrendsRepository.create({

@@ -15,48 +15,48 @@ import { UpdateAdminRequest } from './dto/update-admin-request.dto';
 export class AdminGatewayController {
   constructor(private readonly adminGatewayService: AdminGatewayService) {}
 
-  @Get(':id')
+  @Get('/:id')
   getAdmin(@Param('id') userId: string) {
-    this.adminGatewayService.getAdmin(userId);
+    return this.adminGatewayService.getAdmin(userId);
   }
 
-  @Get()
+  @Get('/banned-users/user')
   getBan(@Body() userId: string) {
-    this.adminGatewayService.getBan(userId);
+    return this.adminGatewayService.getBan(userId);
   }
 
-  @Get()
+  @Get('/banned-users')
   getBanned() {
-    this.adminGatewayService.getBanned();
+    return this.adminGatewayService.getBanned();
   }
 
-  @Post()
+  @Post('/create-admin')
   createAdmin(@Body() createAdminRequest: CreateAdminRequest) {
-    this.adminGatewayService.createAdmin(createAdminRequest);
+    return this.adminGatewayService.createAdmin(createAdminRequest);
   }
 
-  @Post()
+  @Post('/banned-users/create-ban')
   createBan(@Body() createBanRequest: CreateAdminRequest) {
-    this.adminGatewayService.createBan(createBanRequest);
+    return this.adminGatewayService.createBan(createBanRequest);
   }
 
-  @Put()
+  @Put('/update-admin')
   updateAdmin(@Body() updateAdminRequest: UpdateAdminRequest) {
-    this.adminGatewayService.updateAdmin(updateAdminRequest);
+    return this.adminGatewayService.updateAdmin(updateAdminRequest);
   }
 
-  @Put()
+  @Put('/banned-users/update-ban')
   updateBan(@Body() updateBanRequest: UpdateAdminRequest) {
-    this.adminGatewayService.updateBan(updateBanRequest);
+    return this.adminGatewayService.updateBan(updateBanRequest);
   }
 
-  @Delete()
+  @Delete('/delete-admin')
   deleteAdmin(@Body() userId: string) {
-    this.adminGatewayService.deleteAdmin(userId);
+    return this.adminGatewayService.deleteAdmin(userId);
   }
 
-  @Delete()
+  @Delete('/banned-users/delete-banned')
   deleteBan(@Body() userId: string) {
-    this.adminGatewayService.deleteBan(userId);
+    return this.adminGatewayService.deleteBan(userId);
   }
 }

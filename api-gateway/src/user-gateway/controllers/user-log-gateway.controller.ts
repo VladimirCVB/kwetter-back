@@ -6,7 +6,7 @@ import { UserLogGatewayService } from '../services/user-log-gateway.service';
 export class UserLogGatewayController {
   constructor(private readonly userLogGatewayService: UserLogGatewayService) {}
 
-  @Get()
+  @Get('/test')
   getAllUsers() {
     this.userLogGatewayService.getAllUsers();
   }
@@ -17,7 +17,7 @@ export class UserLogGatewayController {
   }
 
   @Post()
-  getUserByCredentials(@Body() email: string, password: string) {
+  getUserByCredentials(@Body() email: string, @Body() password: string) {
     this.userLogGatewayService.getUserByCredentials(email, password);
   }
 

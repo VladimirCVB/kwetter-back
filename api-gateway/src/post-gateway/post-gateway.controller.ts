@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreatePostRequest } from './dto/create-post-request.dto';
 import { UpdatePostRequest } from './dto/update-post-request.dto';
 import { PostGatewayService } from './post-gateway.service';
@@ -9,41 +9,41 @@ export class PostGatewayController {
 
   @Get()
   getAllPosts() {
-    this.postGatewayService.getAllPosts();
+    return this.postGatewayService.getAllPosts();
   }
 
-  @Get()
+  @Get('/feed')
   getPosts(@Body() userIds: string[]) {
-    this.postGatewayService.getPosts(userIds);
+    return this.postGatewayService.getPosts(userIds);
   }
 
-  @Get()
-  getPostByUserId(@Body() userId: string) {
-    this.postGatewayService.getPostByUserId(userId);
+  @Get('/user-posts/:user_id')
+  getPostByUserId(@Param('user_id') user_id: string) {
+    return this.postGatewayService.getPostByUserId(user_id);
   }
 
-  @Get()
+  @Get('/:id')
   getPostById(@Body() id: string) {
-    this.postGatewayService.getPostById(id);
+    return this.postGatewayService.getPostById(id);
   }
 
-  @Get()
+  @Get('/trends')
   getPostTrends() {
-    this.postGatewayService.getPostTrends();
+    return this.postGatewayService.getPostTrends();
   }
 
-  @Post()
+  @Post('/create_post')
   createPost(@Body() createPostRequest: CreatePostRequest) {
-    this.postGatewayService.createPost(createPostRequest);
+    return this.postGatewayService.createPost(createPostRequest);
   }
 
-  @Put()
+  @Put('/update_post/:id')
   updatePost(@Body() updatePostRequest: UpdatePostRequest) {
-    this.postGatewayService.updatePost(updatePostRequest);
+    return this.postGatewayService.updatePost(updatePostRequest);
   }
 
-  @Delete()
-  deletePost(@Body() postId: string) {
-    this.postGatewayService.deletePost(postId);
+  @Delete('/delete/:id')
+  deletePost(@Param() id: string) {
+    return this.postGatewayService.deletePost(id);
   }
 }

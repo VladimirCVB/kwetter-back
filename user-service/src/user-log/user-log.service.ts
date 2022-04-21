@@ -14,6 +14,16 @@ export class UserLogService {
     private readonly userDataRepository: EntityRepository<UserData>,
   ) {}
 
+    /**
+   * Retrieve user log by credentials.
+   * @param userEmail user email to find user log by.
+   * @param userPassword user password to find user log by.
+   * @returns user log.
+   */
+  async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
+    return await this.userLogRepository.findOne({email: userEmail, password: userPassword});
+  }
+
   /**
    * Retrieve all user logs.
    * @returns all user logs.
