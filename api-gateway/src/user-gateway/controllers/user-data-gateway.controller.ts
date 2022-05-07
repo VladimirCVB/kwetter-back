@@ -9,19 +9,19 @@ export class UserDataGatewayController {
     private readonly userDataGatewayService: UserDataGatewayService,
   ) {}
 
-  @Get()
+  @Get('/all')
   getAllUsersData() {
-    this.userDataGatewayService.getAllUsersData();
+    return this.userDataGatewayService.getAllUsersData();
   }
 
   @Get()
   getUserDataById(@Body() id: string) {
-    this.userDataGatewayService.getUserDataById(id);
+    return this.userDataGatewayService.getUserDataById(id);
   }
 
   @Post()
   createUserData(@Body() createUserDataRequest: CreateUserDataRequest) {
-    this.userDataGatewayService.createUserData(createUserDataRequest);
+    return this.userDataGatewayService.createUserData(createUserDataRequest);
   }
 
   @Put()
@@ -29,11 +29,11 @@ export class UserDataGatewayController {
     @Body() updateUserDataRequest: UpdateUserDataRequest,
     id: string,
   ) {
-    this.userDataGatewayService.updateUserData(updateUserDataRequest, id);
+    return this.userDataGatewayService.updateUserData(updateUserDataRequest, id);
   }
 
   @Delete()
   deleteUserData(@Body() id: string) {
-    this.userDataGatewayService.deleteUserData(id);
+    return this.userDataGatewayService.deleteUserData(id);
   }
 }

@@ -8,6 +8,8 @@ import { UserDataGatewayController } from './controllers/user-data-gateway.contr
 import { UserFollowGatewayController } from './controllers/user-follow-gateway.controller';
 import { UserMentionsGatewayController } from './controllers/user-mentions-gateway.controller';
 import { UserLogGatewayController } from './controllers/user-log-gateway.controller';
+import { UserGatewayController } from './user-gateway.controller';
+import { UserGatewayService } from './user-gateway.service';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { UserLogGatewayController } from './controllers/user-log-gateway.control
         name: 'USER_SERVICE',
         transport: Transport.TCP,
         options: {
-          port: 3004
+          port: 3009
         },
       },
     ]),
@@ -26,12 +28,14 @@ import { UserLogGatewayController } from './controllers/user-log-gateway.control
     UserFollowGatewayService,
     UserMentionsGatewayService,
     UserLogGatewayService,
+    UserGatewayService
   ],
   controllers: [
     UserDataGatewayController,
     UserFollowGatewayController,
     UserMentionsGatewayController,
     UserLogGatewayController,
+    UserGatewayController
   ],
 })
 export class UserGatewayModule {}

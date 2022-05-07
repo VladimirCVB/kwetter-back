@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 
 import { ApiTags } from '@nestjs/swagger';
 import { UserDataService } from './user-data.service';
@@ -9,28 +9,28 @@ import { UserDataService } from './user-data.service';
 export class UserDataController {
   constructor(private readonly userDataService: UserDataService) {}
 
-  @EventPattern('get_all_users_data')
+  @MessagePattern('get_all_users_data')
   handleGetAllUsersData() {
-    this.userDataService.handleGetAllUsersData();
+    return this.userDataService.handleGetAllUsersData();
   }
 
-  @EventPattern('get_user_data_by_id')
+  @MessagePattern('get_user_data_by_id')
   handleGetUserDataById(data: any) {
-    this.userDataService.handleGetUserDataById(data.value);
+    return this.userDataService.handleGetUserDataById(data.value);
   }
 
-  @EventPattern('user_data_created')
+  @MessagePattern('user_data_created')
   handleCreateUserData(data: any) {
-    this.userDataService.handleCreateUserData(data.value);
+    return this.userDataService.handleCreateUserData(data.value);
   }
 
-  @EventPattern('update_user_data')
+  @MessagePattern('update_user_data')
   handleUpdateUserData(data: any) {
-    this.userDataService.handleUpdateUserData(data.value[0], data.value[1]);
+    return this.userDataService.handleUpdateUserData(data.value[0], data.value[1]);
   }
 
-  @EventPattern('delete_user_data')
+  @MessagePattern('delete_user_data')
   handleDeleteUserData(data: any) {
-    this.userDataService.handleDeleteUserData(data.value);
+    return this.userDataService.handleDeleteUserData(data.value);
   }
 }

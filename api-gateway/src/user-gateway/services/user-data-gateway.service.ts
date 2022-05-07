@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserDataRequest } from '../dto/create-user-data-request.dto';
 import { UpdateUserDataRequest } from '../dto/update-user-data-request.dto';
 import { UserDataCreatedEvent } from '../events/user-data-created.event';
@@ -8,15 +8,15 @@ import { UserDataUpdatedEvent } from '../events/user-data-updated.event';
 @Injectable()
 export class UserDataGatewayService {
   constructor(
-    @Inject('USER_SERVICE') private readonly userDataClient: ClientKafka,
+    @Inject('USER_SERVICE') private readonly userDataClient: ClientProxy,
   ) {}
 
   getAllUsersData() {
-    this.userDataClient.emit('get_all_users_data', null);
+    return this.userDataClient.send('get_all_users_data', {});
   }
 
   getUserDataById(id: string) {
-    this.userDataClient.emit('get_user_data_by_id', id);
+    return this.userDataClient.send('get_user_data_by_id', id);
   }
 
   createUserData({
@@ -27,7 +27,7 @@ export class UserDataGatewayService {
     bio,
     web,
   }: CreateUserDataRequest) {
-    this.userDataClient.emit(
+    return this.userDataClient.send(
       'user_data_created',
       new UserDataCreatedEvent(userId, firstName, lastName, school, bio, web),
     );
@@ -37,7 +37,7 @@ export class UserDataGatewayService {
     { firstName, lastName, school, bio, web }: UpdateUserDataRequest,
     id: string,
   ) {
-    this.userDataClient.emit('update_user_data', {
+    return this.userDataClient.send('update_user_data', {
       userDataUpdatedEvent: new UserDataUpdatedEvent(
         firstName,
         lastName,
@@ -50,6 +50,6 @@ export class UserDataGatewayService {
   }
 
   deleteUserData(id: string) {
-    this.userDataClient.emit('delete_user_data', id);
+    return this.userDataClient.send('delete_user_data', id);
   }
 }

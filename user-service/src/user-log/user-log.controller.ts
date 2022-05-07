@@ -9,7 +9,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Role } from 'src/auth/models/role.enum';
 import { UserLog } from './entities/user-log.entity';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 import { UserLogService } from './user-log.service';
 
 @ApiTags('user-log')
@@ -23,28 +23,28 @@ export class UserLogController {
   // @ApiOperation({ summary: 'Get all user-log information' })
   // @ApiResponse({ status: 200, description: 'Returned all user-log' })
 
-  @EventPattern('get_all_users')
+  @MessagePattern('get_all_users')
   handleGetAllUsers() {
     return this.userLogService.handleGetAllUsers();
   }
 
-  @EventPattern('get_user_by_id')
-  handleGetUserById(data: any) {
-    this.userLogService.handleGetUserById(data.value);
+  @MessagePattern('get_user_by_id')
+  handleGetUserById(id: string) {
+    return this.userLogService.handleGetUserById(id);
   }
 
-  @EventPattern('user_log_created')
+  @MessagePattern('user_log_created')
   handleUserCreated(data: any) {
-    this.userLogService.handleUserCreated(data.value);
+    return this.userLogService.handleUserCreated(data.value);
   }
 
-  @EventPattern('update_user_log')
+  @MessagePattern('update_user_log')
   handleUpdateUser(data: any) {
-    this.userLogService.handleUpdateUser(data.value);
+    return this.userLogService.handleUpdateUser(data.value);
   }
 
-  @EventPattern('delete_user')
+  @MessagePattern('delete_user')
   handleDeleteUser(data: any) {
-    this.userLogService.handleDeleteUser(data.value);
+    return this.userLogService.handleDeleteUser(data.value);
   }
 }

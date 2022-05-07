@@ -10,21 +10,21 @@ export class UserFollowGatewayController {
 
   @Get()
   getUserFollow(@Body() userId: string) {
-    this.userFollowGatewayService.getUserFollow(userId);
+    return this.userFollowGatewayService.getUserFollow(userId);
   }
 
   @Post()
   createUserFollow(@Body() createUserFollowRequest: CreateUserFollowRequest) {
-    this.userFollowGatewayService.createUserFollow(createUserFollowRequest);
+    return this.userFollowGatewayService.createUserFollow(createUserFollowRequest);
   }
 
   @Put()
   updateUserFollow(@Body() updateUserFollowRequest: CreateUserFollowRequest) {
-    this.userFollowGatewayService.updateUserFollow(updateUserFollowRequest);
+    return this.userFollowGatewayService.updateUserFollow(updateUserFollowRequest);
   }
 
   @Delete()
   deleteUserFollow(@Body() userId: string) {
-    this.userFollowGatewayService.deleteUserFollow(userId);
+    return this.userFollowGatewayService.deleteUserFollow(userId);
   }
 }

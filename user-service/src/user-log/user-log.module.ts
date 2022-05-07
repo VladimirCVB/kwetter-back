@@ -10,7 +10,7 @@ import { UserData } from 'src/user-data/entities/user-data.entity';
   imports: [MikroOrmModule.forFeature([UserLog, UserData])],
   exports: [UserLogService],
   providers: [UserLogService, JwtStrategy],
-
+  controllers: [UserLogController],
 })
 
 export class UserLogModule {}

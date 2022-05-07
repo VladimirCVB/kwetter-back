@@ -10,14 +10,14 @@ export class UserMentionsGatewayController {
 
   @Get()
   getUserMention(@Body() id: string) {
-    this.userMentionGatewayService.getUserMention(id);
+    return this.userMentionGatewayService.getUserMention(id);
   }
 
   @Post()
   createUserMention(
     @Body() createUserMentionsRequest: CreateUserMentionRequest,
   ) {
-    this.userMentionGatewayService.createUserMention(createUserMentionsRequest);
+    return this.userMentionGatewayService.createUserMention(createUserMentionsRequest);
   }
 
   // @Put()
@@ -27,6 +27,6 @@ export class UserMentionsGatewayController {
 
   @Delete()
   deleteUserMention(@Body() id: string) {
-    this.userMentionGatewayService.deleteUserMention(id);
+    return this.userMentionGatewayService.deleteUserMention(id);
   }
 }
