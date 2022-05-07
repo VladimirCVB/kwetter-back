@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateUserDataRequest } from '../dto/create-user-data-request.dto';
 import { UpdateUserDataRequest } from '../dto/update-user-data-request.dto';
 import { UserDataGatewayService } from '../services/user-data-gateway.service';
@@ -14,17 +14,17 @@ export class UserDataGatewayController {
     return this.userDataGatewayService.getAllUsersData();
   }
 
-  @Get()
-  getUserDataById(@Body() id: string) {
+  @Get('/:id')
+  getUserDataById(@Param('id') id: string) {
     return this.userDataGatewayService.getUserDataById(id);
   }
 
-  @Post()
+  @Post('/create-data')
   createUserData(@Body() createUserDataRequest: CreateUserDataRequest) {
     return this.userDataGatewayService.createUserData(createUserDataRequest);
   }
 
-  @Put()
+  @Put('/update-data')
   updateUserData(
     @Body() updateUserDataRequest: UpdateUserDataRequest,
     id: string,
@@ -32,8 +32,8 @@ export class UserDataGatewayController {
     return this.userDataGatewayService.updateUserData(updateUserDataRequest, id);
   }
 
-  @Delete()
-  deleteUserData(@Body() id: string) {
+  @Delete('/delete-data/:id')
+  deleteUserData(@Param('id') id: string) {
     return this.userDataGatewayService.deleteUserData(id);
   }
 }

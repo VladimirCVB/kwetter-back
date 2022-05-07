@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateUserFollowRequest } from '../dto/create-user-follow-request.dto';
 import { UserFollowGatewayService } from '../services/user-follow-gateway.service';
 
@@ -8,23 +8,23 @@ export class UserFollowGatewayController {
     private readonly userFollowGatewayService: UserFollowGatewayService,
   ) {}
 
-  @Get()
-  getUserFollow(@Body() userId: string) {
+  @Get('/:id')
+  getUserFollow(@Param('id') userId: string) {
     return this.userFollowGatewayService.getUserFollow(userId);
   }
 
-  @Post()
+  @Post('/create-follow')
   createUserFollow(@Body() createUserFollowRequest: CreateUserFollowRequest) {
     return this.userFollowGatewayService.createUserFollow(createUserFollowRequest);
   }
 
-  @Put()
+  @Put('/update-follow')
   updateUserFollow(@Body() updateUserFollowRequest: CreateUserFollowRequest) {
     return this.userFollowGatewayService.updateUserFollow(updateUserFollowRequest);
   }
 
-  @Delete()
-  deleteUserFollow(@Body() userId: string) {
+  @Delete('/delete-follow/:id')
+  deleteUserFollow(@Param('id') userId: string) {
     return this.userFollowGatewayService.deleteUserFollow(userId);
   }
 }

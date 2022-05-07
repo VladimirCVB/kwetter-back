@@ -17,23 +17,23 @@ export class UserLogGatewayController {
     return this.userLogGatewayService.getUserById(userId);
   }
 
-  @Post()
+  @Post('/auth')
   getUserByCredentials(@Body() email: string, @Body() password: string) {
     return this.userLogGatewayService.getUserByCredentials(email, password);
   }
 
-  @Post()
+  @Post('/create-log')
   createUser(@Body() createUserRequest: CreateUserLogRequest) {
     return this.userLogGatewayService.createUser(createUserRequest);
   }
 
-  @Put()
+  @Put('/update-log')
   updateUser(@Body() updateUserRequest: CreateUserLogRequest) {
     return this.userLogGatewayService.updateUser(updateUserRequest);
   }
 
-  @Delete()
-  deleteUser(@Body() userId: string) {
+  @Delete('/delete-log/:id')
+  deleteUser(@Param('id') userId: string) {
     return this.userLogGatewayService.deleteUser(userId);
   }
 }

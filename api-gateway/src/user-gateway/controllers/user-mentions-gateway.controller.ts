@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateUserMentionRequest } from '../dto/create-user-mention-request.dto';
 import { UserMentionsGatewayService } from '../services/user-mentions-gateway.service';
 
@@ -8,12 +8,12 @@ export class UserMentionsGatewayController {
     private readonly userMentionGatewayService: UserMentionsGatewayService,
   ) {}
 
-  @Get()
-  getUserMention(@Body() id: string) {
+  @Get('/:id')
+  getUserMention(@Param('id') id: string) {
     return this.userMentionGatewayService.getUserMention(id);
   }
 
-  @Post()
+  @Post('/create-mention')
   createUserMention(
     @Body() createUserMentionsRequest: CreateUserMentionRequest,
   ) {
@@ -25,8 +25,8 @@ export class UserMentionsGatewayController {
   //     this.userMentionGatewayService.updateUserMention(updateUserMentionsRequest);
   // }
 
-  @Delete()
-  deleteUserMention(@Body() id: string) {
+  @Delete('/delete-mention/:id')
+  deleteUserMention(@Param('id') id: string) {
     return this.userMentionGatewayService.deleteUserMention(id);
   }
 }

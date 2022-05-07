@@ -12,19 +12,19 @@ export class UserData extends BaseEntity {
   @OneToOne({ entity: () => UserLog, wrappedReference: true })
   userId!: UserLog;
 
-  @Property()
+  @Property({ nullable: true })
   firstName: string;
 
-  @Property()
+  @Property({ nullable: true })
   lastName: string;
 
-  @Property()
+  @Property({ nullable: true })
   school: string;
 
-  @Property()
+  @Property({ nullable: true })
   web: string;
 
-  @Property()
+  @Property({ nullable: true })
   bio: string;
 
   @Property({ nullable: true })

@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -11,6 +10,7 @@ import { Role } from 'src/auth/models/role.enum';
 import { UserLog } from './entities/user-log.entity';
 import { MessagePattern } from '@nestjs/microservices';
 import { UserLogService } from './user-log.service';
+import { CreateUserLogDto } from './dtos/create-user-log.dto';
 
 @ApiTags('user-log')
 @Controller('user-log')
@@ -23,6 +23,8 @@ export class UserLogController {
   // @ApiOperation({ summary: 'Get all user-log information' })
   // @ApiResponse({ status: 200, description: 'Returned all user-log' })
 
+  @Roles(Role.MANAGER)
+  @UseGuards(RolesGuard)
   @MessagePattern('get_all_users')
   handleGetAllUsers() {
     return this.userLogService.handleGetAllUsers();
@@ -34,8 +36,8 @@ export class UserLogController {
   }
 
   @MessagePattern('user_log_created')
-  handleUserCreated(data: any) {
-    return this.userLogService.handleUserCreated(data.value);
+  handleUserCreated(data: CreateUserLogDto) {
+    return this.userLogService.handleUserCreated(data);
   }
 
   @MessagePattern('update_user_log')
