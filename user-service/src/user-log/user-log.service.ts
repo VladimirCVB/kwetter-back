@@ -12,16 +12,16 @@ export class UserLogService {
     private readonly userLogRepository: EntityRepository<UserLog>,
     @InjectRepository(UserData)
     private readonly userDataRepository: EntityRepository<UserData>,
-  ) {}
+  ) { }
 
-    /**
-   * Retrieve user log by credentials.
-   * @param userEmail user email to find user log by.
-   * @param userPassword user password to find user log by.
-   * @returns user log.
-   */
+  /**
+ * Retrieve user log by credentials.
+ * @param userEmail user email to find user log by.
+ * @param userPassword user password to find user log by.
+ * @returns user log.
+ */
   async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
-    return await this.userLogRepository.findOne({email: userEmail, password: userPassword});
+    return await this.userLogRepository.findOne({ email: userEmail, password: userPassword });
   }
 
   /**

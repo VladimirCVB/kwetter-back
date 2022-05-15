@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka, ClientProxy } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { CreatePostRequest } from './dto/create-post-request.dto';
 import { UpdatePostRequest } from './dto/update-post-request.dto';
 import { PostCreatedEvent } from './events/post-created.event';

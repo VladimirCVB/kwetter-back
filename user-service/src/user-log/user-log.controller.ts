@@ -23,8 +23,15 @@ export class UserLogController {
   // @ApiOperation({ summary: 'Get all user-log information' })
   // @ApiResponse({ status: 200, description: 'Returned all user-log' })
 
-  @Roles(Role.MANAGER)
-  @UseGuards(RolesGuard)
+  // @MessagePattern('log_user')
+  // async handleLogIn(credentials: any) {
+  //   const user = this.userLogService.handleLogInUser(credentials.email, credentials.password);
+  //   if (await user == null) return 'No user!';
+  //   return user;
+  // }
+
+  // @Roles(Role.MANAGER)
+  // @UseGuards(RolesGuard)
   @MessagePattern('get_all_users')
   handleGetAllUsers() {
     return this.userLogService.handleGetAllUsers();

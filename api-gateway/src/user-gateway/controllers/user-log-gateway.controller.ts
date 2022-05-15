@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateUserLogRequest } from '../dto/create-user-log-request.dto';
 import { UserLogGatewayService } from '../services/user-log-gateway.service';
 
@@ -7,6 +8,7 @@ export class UserLogGatewayController {
   constructor(private readonly userLogGatewayService: UserLogGatewayService,
     ) { }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/all')
   getAllUsers() {
     return this.userLogGatewayService.getAllUsers();

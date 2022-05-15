@@ -1,14 +1,12 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { AdminGatewayService } from 'src/admin-gateway/admin-gateway.service';
-import { UserLogGatewayService } from './services/user-log-gateway.service';
+import { Body, Controller, Post } from '@nestjs/common';
 import { UserGatewayService } from './user-gateway.service';
 
 @Controller('user-gateway')
 export class UserGatewayController {
-    constructor(private readonly userGatewayService: UserLogGatewayService) { }
+    constructor(private readonly userGatewayService: UserGatewayService) { }
 
-    @Get()
-    getAdmin() {
-        return this.userGatewayService.getAllUsers();
+    @Post()
+    logIn(@Body() credentials: { email: string, password: string} ) {
+        return this.userGatewayService.logIn(credentials.email, credentials.password);
     }
 }

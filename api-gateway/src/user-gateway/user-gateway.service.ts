@@ -4,10 +4,10 @@ import { ClientProxy } from '@nestjs/microservices';
 @Injectable()
 export class UserGatewayService {
   constructor(
-    @Inject('USER_SERVICE') private readonly adminClient: ClientProxy,
+    @Inject('USER_SERVICE') private readonly userGatewayService: ClientProxy,
   ) { }
 
-  getAdmin() {
-    return this.adminClient.send('get_all_users', {});
+  logIn(email: string, password: string) {
+    return this.userGatewayService.send('log_user', { email, password });
   }
 }

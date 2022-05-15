@@ -12,6 +12,7 @@ export class AuthService {
 
   async logInUser(userEmail: string, password: string) {
     const user = await this.userLogService.handleLogInUser(userEmail, password);
+    if(user == null) return 'No user found';
 
     return this.createAccessToken(user);
   }
