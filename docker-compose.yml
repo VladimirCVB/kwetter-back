@@ -47,7 +47,7 @@ services:
       # REDIS_HOST: redis
       # REDIS_PORT: 6379
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
       DB_NAME: post-service
     networks:
       - backend
@@ -75,7 +75,7 @@ services:
     depends_on:
       - postgres
   postgres:
-    container_name: postgres_container
+    container_name: postgres_container_kwetter
     image: postgres
     environment:
       POSTGRES_USER: postgres

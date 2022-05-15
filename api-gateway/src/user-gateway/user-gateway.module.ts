@@ -18,7 +18,7 @@ import { UserGatewayService } from './user-gateway.service';
         name: 'USER_SERVICE',
         transport: Transport.TCP,
         options: {
-          port: 3009
+          port: 3500
         },
       },
     ]),

@@ -25,23 +25,6 @@ async function bootstrap() {
   });
   await app.startAllMicroservices();
   await app.listen(3001);
-
-  // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  //   {
-  //     transport: Transport.KAFKA,
-  //     options: {
-  //       client: {
-  //         brokers: ['localhost:9092'],
-  //       },
-  //       consumer: {
-  //         groupId: 'posting-consumer',
-  //       },
-  //     },
-  //   },
-  // );
-
-  // app.listen();
 }
 
 bootstrap();
