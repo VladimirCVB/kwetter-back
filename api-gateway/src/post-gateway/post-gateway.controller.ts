@@ -17,9 +17,9 @@ export class PostGatewayController {
     return this.postGatewayService.getPosts(userIds);
   }
 
-  @Get('/user-posts/:user_id')
-  getPostByUserId(@Param('user_id') user_id: string) {
-    return this.postGatewayService.getPostByUserId(user_id);
+  @Get('/user-posts/:userId')
+  getPostByUserId(@Param('userId') userId: string) {
+    return this.postGatewayService.getPostByUserId(userId);
   }
 
   @Get('/:id')

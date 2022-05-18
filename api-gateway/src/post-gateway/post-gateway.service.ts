@@ -26,8 +26,8 @@ export class PostGatewayService {
     return this.postingClient.send('get_posts_of_users', userIds);
   }
 
-  getPostByUserId(user_id: string) {
-    return this.postingClient.send({ cmd: 'get_posts_by_userId' }, user_id);
+  getPostByUserId(userId: string) {
+    return this.postingClient.send({ cmd: 'get_posts_by_userId' }, userId);
   }
 
   getPostById(id: string) {

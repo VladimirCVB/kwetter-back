@@ -5,13 +5,16 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { UserDataCreatedEvent } from './events/user-data-created.event';
 import { UserDataUpdatedEvent } from './events/user-data-updated.event';
+import { UserLog } from 'src/user-log/entities/user-log.entity';
 
 @Injectable()
 export class UserDataService {
   constructor(
     @InjectRepository(UserData)
     private readonly userDataRepository: EntityRepository<UserData>,
-  ) {}
+    @InjectRepository(UserLog)
+    private readonly userLogRepository: EntityRepository<UserLog>,
+  ) { }
 
   /**
    * Retrieve all user data.
@@ -26,8 +29,16 @@ export class UserDataService {
    * @param userId user id to find user data by.
    * @returns user data.
    */
-  async handleGetUserDataById(userId: string): Promise<UserData> {
-    return await this.userDataRepository.findOne(userId);
+  async handleGetUserDataById(userName: string) {
+    const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
+    const userData = await this.userDataRepository.findOne({ userId: userId });
+    
+    return { bio: userData.bio, school: userData.school, web: userData.web, firstName: userData.firstName, id: userId }
+  }
+
+  async handleGetAllUserDataById(userName: string): Promise<UserData> {
+    const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
+    return (await this.userDataRepository.findOne({ userId: userId }));
   }
 
   /**
@@ -56,7 +67,7 @@ export class UserDataService {
     userDataUpdatedEvent: UserDataUpdatedEvent,
     id: string,
   ): Promise<UserData> {
-    const userLogUpdate = await this.handleGetUserDataById(id);
+    const userLogUpdate = await this.handleGetAllUserDataById(id);
     if (!userLogUpdate) throw new NotFoundException('User data not found');
 
     userLogUpdate.firstName = userDataUpdatedEvent.firstName;

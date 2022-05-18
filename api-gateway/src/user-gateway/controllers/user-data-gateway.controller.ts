@@ -21,9 +21,9 @@ export class UserDataGatewayController {
     return this.userDataGatewayService.getAllUsersData();
   }
 
-  @Get('/:id')
-  getUserDataById(@Param('id') id: string) {
-    return this.userDataGatewayService.getUserDataById(id);
+  @Get('/:uname')
+  getUserDataById(@Param('uname') userName: string) {
+    return this.userDataGatewayService.getUserDataById(userName);
   }
 
   @Post('/create-data')

@@ -15,8 +15,8 @@ export class UserDataGatewayService {
     return this.userDataClient.send('get_all_users_data', {});
   }
 
-  getUserDataById(id: string) {
-    return this.userDataClient.send('get_user_data_by_id', id);
+  getUserDataById(userName: string) {
+    return this.userDataClient.send('get_user_data_by_id', userName);
   }
 
   createUserData({
