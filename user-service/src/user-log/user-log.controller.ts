@@ -1,13 +1,7 @@
 import {
   Controller,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { Role } from 'src/auth/models/role.enum';
-import { UserLog } from './entities/user-log.entity';
 import { MessagePattern } from '@nestjs/microservices';
 import { UserLogService } from './user-log.service';
 import { CreateUserLogDto } from './dtos/create-user-log.dto';
@@ -43,7 +37,7 @@ export class UserLogController {
   }
 
   @MessagePattern('user_log_created')
-  handleUserCreated(data: CreateUserLogDto) {
+  handleUserCreated(data: any) {
     return this.userLogService.handleUserCreated(data);
   }
 

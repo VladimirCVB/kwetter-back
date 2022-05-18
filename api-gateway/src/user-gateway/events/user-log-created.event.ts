@@ -3,6 +3,8 @@ export class UserLogCreatedEvent {
     public readonly userName: string,
     public readonly email: string,
     public readonly password: string,
+    public readonly fisrtName: string,
+    public readonly lastName: string,
   ) {}
 
   toString() {
@@ -10,6 +12,8 @@ export class UserLogCreatedEvent {
       userName: this.userName,
       email: this.email,
       password: this.password,
+      fisrtName: this.fisrtName,
+      lastName: this.lastName,
     });
   }
 }

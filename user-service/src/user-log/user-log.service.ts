@@ -4,6 +4,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserData } from 'src/user-data/entities/user-data.entity';
 import { UserLog } from './entities/user-log.entity';
 import { UserLogCreatedEvent } from './events/user-log-created.event';
+import { UserLogUpdatedEvent } from './events/user-log-updated.event';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserLogService {
@@ -21,7 +23,9 @@ export class UserLogService {
  * @returns user log.
  */
   async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
-    return await this.userLogRepository.findOne({ email: userEmail, password: userPassword });
+    const user = await this.userLogRepository.findOne({ email: userEmail });
+    console.log(await bcrypt.compare(userPassword, user.password));
+    if(await bcrypt.compare(userPassword, user.password)) return user;
   }
 
   /**
@@ -57,20 +61,25 @@ export class UserLogService {
    */
   async handleUserCreated(
     userLogCreatedEvent: UserLogCreatedEvent,
-  ): Promise<UserLog> {
+  ): Promise<string> {
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(userLogCreatedEvent.password, salt);
+
     const userLog = this.userLogRepository.create({
       userName: userLogCreatedEvent.userName,
       email: userLogCreatedEvent.email,
-      password: userLogCreatedEvent.password,
+      password: hash,
     });
     const userData = this.userDataRepository.create({
       userId: userLog.id,
+      firstName: userLogCreatedEvent.firstName,
+      lastName: userLogCreatedEvent.lastName
     });
 
     await this.userLogRepository.persistAndFlush(userLog);
     await this.userDataRepository.persistAndFlush(userData);
 
-    return userLog;
+    return userLog.userName;
   }
 
   /**
@@ -79,7 +88,7 @@ export class UserLogService {
    * @returns the updated user log.
    */
   async handleUpdateUser(
-    userLogUpdatedEvent: UserLogCreatedEvent,
+    userLogUpdatedEvent: UserLogUpdatedEvent,
   ): Promise<UserLog> {
     const userLogUpdate = await this.handleGetUserByUserName(
       userLogUpdatedEvent.userName,

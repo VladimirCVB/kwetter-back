@@ -5,6 +5,7 @@ import {
   OneToMany,
   OneToOne,
   Property,
+  Unique,
 } from '@mikro-orm/core';
 import { UserData } from '../../user-data/entities/user-data.entity';
 import { UserFollow } from '../../user-follow/entities/user-follow.entity';
@@ -19,13 +20,18 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
 })
 export class UserLog extends BaseEntity {
   @Property()
+  @Unique()
   userName!: string;
 
   @Property()
+  @Unique()
   email!: string;
 
   @Property()
   password!: string;
+
+  @Property({ columnType: 'text', default: 'regular' })
+  userRole: string;
 
   @OneToOne({ entity: () => UserData, mappedBy: 'userId', hidden: true, nullable: true })
   userData: UserData;

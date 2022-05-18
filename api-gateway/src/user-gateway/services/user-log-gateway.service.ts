@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserLogRequest } from '../dto/create-user-log-request.dto';
 import { UserLogCreatedEvent } from '../events/user-log-created.event';
+import { UserLogUpdatedEvent } from '../events/user-log-updated.event';
 
 @Injectable()
 export class UserLogGatewayService {
@@ -24,17 +25,17 @@ export class UserLogGatewayService {
     });
   }
 
-  createUser({ userName, email, password }: CreateUserLogRequest) {
+  createUser({ userName, email, password, firstName, lastName }: CreateUserLogRequest) {
     return this.userLogClient.send(
       'user_log_created',
-      new UserLogCreatedEvent(userName, email, password),
+      new UserLogCreatedEvent(userName, email, password, firstName, lastName),
     );
   }
 
   updateUser({ userName, email, password }: CreateUserLogRequest) {
     return this.userLogClient.send(
       'update_user_log',
-      new UserLogCreatedEvent(userName, email, password),
+      new UserLogUpdatedEvent(userName, email, password),
     );
   }
 

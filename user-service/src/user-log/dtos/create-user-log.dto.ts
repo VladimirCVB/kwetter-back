@@ -9,4 +9,7 @@ export class CreateUserLogDto {
 
   @IsNotEmpty()
   password: string;
+
+  @IsNotEmpty()
+  userRole: string;
 }

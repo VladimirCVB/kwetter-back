@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateUserMentionRequest } from '../dto/create-user-mention-request.dto';
 import { UserMentionsGatewayService } from '../services/user-mentions-gateway.service';
 
 @Controller('user-mentions-gateway')
+@UseGuards(JwtAuthGuard)
 export class UserMentionsGatewayController {
   constructor(
     private readonly userMentionGatewayService: UserMentionsGatewayService,
