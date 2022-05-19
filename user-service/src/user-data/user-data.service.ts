@@ -29,11 +29,11 @@ export class UserDataService {
    * @param userId user id to find user data by.
    * @returns user data.
    */
-  async handleGetUserDataById(userName: string) {
-    const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
+  async handleGetUserDataById(userId: string) {
+    // const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
     const userData = await this.userDataRepository.findOne({ userId: userId });
     
-    return { bio: userData.bio, school: userData.school, web: userData.web, firstName: userData.firstName, id: userId }
+    return { bio: userData.bio, school: userData.school, web: userData.web, firstName: userData.firstName, lastName: userData.lastName, id: userId }
   }
 
   async handleGetAllUserDataById(userName: string): Promise<UserData> {

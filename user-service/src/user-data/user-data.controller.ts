@@ -15,8 +15,8 @@ export class UserDataController {
   }
 
   @MessagePattern('get_user_data_by_id')
-  handleGetUserDataById(userName: string) {
-    return this.userDataService.handleGetUserDataById(userName);
+  handleGetUserDataById(userId: string) {
+    return this.userDataService.handleGetUserDataById(userId);
   }
 
   @MessagePattern('user_data_created')

@@ -25,7 +25,7 @@ export class UserLogService {
   async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
     const user = await this.userLogRepository.findOne({ email: userEmail });
     console.log(await bcrypt.compare(userPassword, user.password));
-    if(await bcrypt.compare(userPassword, user.password)) return user;
+    if (await bcrypt.compare(userPassword, user.password)) return user;
   }
 
   /**
@@ -51,7 +51,7 @@ export class UserLogService {
    * @returns user log.
    */
   async handleGetUserByUserName(userName: string): Promise<UserLog> {
-    return await this.userLogRepository.findOne(userName);
+    return await this.userLogRepository.findOne({ userName: userName });
   }
 
   /**

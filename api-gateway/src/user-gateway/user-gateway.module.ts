@@ -22,6 +22,15 @@ import { UserGatewayService } from './user-gateway.service';
         },
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'POSTING_SERVICE',
+        transport: Transport.TCP,
+        options: {
+          port: 3001
+        },
+      },
+    ]),
   ],
   providers: [
     UserDataGatewayService,
@@ -37,5 +46,8 @@ import { UserGatewayService } from './user-gateway.service';
     UserLogGatewayController,
     UserGatewayController
   ],
+  exports: [
+    UserGatewayModule
+  ]
 })
 export class UserGatewayModule {}

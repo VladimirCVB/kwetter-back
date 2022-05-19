@@ -9,8 +9,8 @@ export class UserFollowController {
   constructor(private readonly userFollowService: UserFollowService) {}
 
   @MessagePattern('get_user_follow_by_id')
-  handleGetUserFollow(data: any) {
-    return this.userFollowService.handleGetUserFollow(data.value);
+  handleGetUserFollow(userId: string) {
+    return this.userFollowService.handleGetUserFollow(userId);
   }
 
   @MessagePattern('user_follow_created')

@@ -18,9 +18,9 @@ export class PostDataController {
     return this.postDataService.handleGetPosts(data.value);
   }
 
-  @MessagePattern({ cmd: 'get_posts_by_userId' })
-  handleGetPostByUserId(user_id: string) {
-    return this.postDataService.handleGetPostByUserId(user_id);
+  @MessagePattern('get_posts_by_userId')
+  handleGetPostByUserId(userId: string) {
+    return this.postDataService.handleGetPostByUserId(userId);
   }
 
   @MessagePattern('get_post_by_id')

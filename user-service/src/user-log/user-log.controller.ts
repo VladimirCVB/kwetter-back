@@ -25,10 +25,15 @@ export class UserLogController {
   // }
 
   // @Roles(Role.MANAGER)
-  // @UseGuards(RolesGuard)
+  // @UseGuards(RolesGuard) get_user_by_user_name
   @MessagePattern('get_all_users')
   handleGetAllUsers() {
     return this.userLogService.handleGetAllUsers();
+  }
+
+  @MessagePattern('get_user_by_user_name')
+  handleGetUserByUserName(userName: string) {
+    return this.userLogService.handleGetUserByUserName(userName);
   }
 
   @MessagePattern('get_user_by_id')

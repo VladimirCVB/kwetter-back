@@ -1,4 +1,4 @@
-import { Entity, Filter, OneToMany, OneToOne, Property } from '@mikro-orm/core';
+import { Entity, Filter, ManyToOne, OneToMany, OneToOne, Property } from '@mikro-orm/core';
 import { UserLog } from '../../user-log/entities/user-log.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 
@@ -12,10 +12,10 @@ export class UserFollow extends BaseEntity {
   @OneToOne({ entity: () => UserLog, wrappedReference: true })
   userId!: UserLog;
 
-  @OneToMany({ entity: () => UserLog, mappedBy: 'userFollowed', hidden: true })
+  @ManyToOne({ entity: () => UserLog, wrappedReference: true, nullable: true })
   userFollowed: UserLog[];
 
-  @OneToMany({ entity: () => UserLog, mappedBy: 'userFollowing', hidden: true })
+  @ManyToOne({ entity: () => UserLog, wrappedReference: true, nullable: true })
   userFollowing: UserLog[];
 
   @Property({ nullable: true })

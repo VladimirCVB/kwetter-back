@@ -9,7 +9,7 @@ export class UserFollowService {
   constructor(
     @InjectRepository(UserFollow)
     private readonly userFollowRepository: EntityRepository<UserFollow>,
-  ) {}
+  ) { }
 
   /**
    * Retrieve user Follow data by id.
@@ -17,7 +17,7 @@ export class UserFollowService {
    * @returns user Follow data.
    */
   async handleGetUserFollow(id: string): Promise<UserFollow> {
-    return await this.userFollowRepository.findOne(id);
+    return await this.userFollowRepository.findOne({ userId: id });
   }
 
   /**

@@ -33,27 +33,26 @@ export class UserLog extends BaseEntity {
   @Property({ columnType: 'text', default: 'regular' })
   userRole: string;
 
-  @OneToOne({ entity: () => UserData, mappedBy: 'userId', hidden: true, nullable: true })
+  @OneToOne({ entity: () => UserData, mappedBy: 'userId', nullable: true })
   userData: UserData;
 
-  @OneToOne({ entity: () => UserFollow, mappedBy: 'userId', hidden: true, nullable: true })
+  @OneToOne({ entity: () => UserFollow, mappedBy: 'userId', nullable: true })
   userFollow: UserFollow;
 
-  @OneToOne({ entity: () => UserMention, mappedBy: 'userId', hidden: true, nullable: true })
+  @OneToOne({ entity: () => UserMention, mappedBy: 'userId', nullable: true })
   userMention: UserMention;
 
   @OneToMany({
     entity: () => UserMention,
     mappedBy: 'userMentiones',
-    hidden: true,
     nullable: true
   })
   userMentiones: UserMention;
 
-  @ManyToOne({ entity: () => UserFollow, wrappedReference: true, nullable: true })
+  @OneToMany({ entity: () => UserFollow, mappedBy: 'userFollowed' })
   userFollowed!: UserFollow;
 
-  @ManyToOne({ entity: () => UserFollow, wrappedReference: true, nullable: true })
+  @OneToMany({ entity: () => UserFollow, mappedBy: 'userFollowing' })
   userFollowing!: UserFollow;
 
   @Property({ nullable: true })

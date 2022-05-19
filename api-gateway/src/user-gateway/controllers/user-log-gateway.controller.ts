@@ -26,6 +26,12 @@ export class UserLogGatewayController {
     return this.userLogGatewayService.getUserById(userId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/user-name/:uname')
+  getUserByUserName(@Param('uname') userName: string) {
+    return this.userLogGatewayService.getUserByUserName(userName);
+  }
+
   @Post('/auth')
   getUserByCredentials(@Body() email: string, @Body() password: string) {
     return this.userLogGatewayService.getUserByCredentials(email, password);

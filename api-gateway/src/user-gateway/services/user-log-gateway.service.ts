@@ -18,6 +18,10 @@ export class UserLogGatewayService {
     return this.userLogClient.send('get_user_by_id', userId);
   }
 
+  getUserByUserName(userName: string) {
+    return this.userLogClient.send('get_user_by_user_name', userName);
+  }
+
   getUserByCredentials(email: string, password: string) {
     return this.userLogClient.send('get_user_by_credentials', {
       email: email,
