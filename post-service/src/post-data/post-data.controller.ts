@@ -29,8 +29,8 @@ export class PostDataController {
   }
 
   @MessagePattern('post_created')
-  handlePostCreated(data: any) {
-    return this.postDataService.handlePostCreated(data.value);
+  handlePostCreated(postData: any) {
+    return this.postDataService.handlePostCreated(postData);
   }
 
   @MessagePattern('update_post')

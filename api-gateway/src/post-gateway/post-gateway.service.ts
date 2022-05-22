@@ -13,7 +13,7 @@ export class PostGatewayService {
 
   createPost({ userId, userName, text, trends }: CreatePostRequest) {
     return this.postingClient.send(
-      { cmd: 'post_created' },
+      'post_created',
       new PostCreatedEvent('', userId, userName, text, trends),
     );
   }

@@ -3,7 +3,6 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Role } from 'src/auth/models/role.enum';
-import { CreateUserDataRequest } from '../dto/create-user-data-request.dto';
 import { CreateUserLogRequest } from '../dto/create-user-log-request.dto';
 import { UserLogGatewayService } from '../services/user-log-gateway.service';
 
@@ -12,9 +11,8 @@ export class UserLogGatewayController {
   constructor(private readonly userLogGatewayService: UserLogGatewayService,
   ) { }
   
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.MANAGER)
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/all')
   getAllUsers() {
     return this.userLogGatewayService.getAllUsers();

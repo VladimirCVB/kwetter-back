@@ -12,7 +12,10 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '../.env',
+    }),
     UserLogModule,
     UserDataModule,
     UserMentionsModule,

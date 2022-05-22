@@ -10,8 +10,8 @@ export class UserLogGatewayService {
     @Inject('USER_SERVICE') private readonly userLogClient: ClientProxy,
   ) { }
 
-  getAllUsers() {;
-    return this.userLogClient.send('get_all_users', {});
+  getAllUsers() {
+    return this.userLogClient.send('get_all_users_logs', {});
   }
 
   getUserById(userId: string) {

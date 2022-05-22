@@ -8,6 +8,7 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
+
   constructor(private reflector: Reflector) {}
 
   // canActivate(
@@ -30,13 +31,16 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    
     if (!roles) {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-
     try {
-      const user = request.user;
+      const base64Payload = request.headers.authorization.split('.')[1];
+      const payloadBuffer = Buffer.from(base64Payload, 'base64');
+      const user = JSON.parse(payloadBuffer.toString());
+
       return roles.some((role) => user.role?.includes(role));
     } catch (error) {
       return false;

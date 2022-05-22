@@ -32,12 +32,12 @@ export class PostGatewayController {
     return this.postGatewayService.getPostTrends();
   }
 
-  @Post('/create_post')
+  @Post('/create-post')
   createPost(@Body() createPostRequest: CreatePostRequest) {
     return this.postGatewayService.createPost(createPostRequest);
   }
 
-  @Put('/update_post/:id')
+  @Put('/update-post/:id')
   updatePost(@Body() updatePostRequest: UpdatePostRequest) {
     return this.postGatewayService.updatePost(updatePostRequest);
   }

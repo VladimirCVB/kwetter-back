@@ -1,10 +1,9 @@
 import {
   Controller,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { MessagePattern } from '@nestjs/microservices';
 import { UserLogService } from './user-log.service';
-import { CreateUserLogDto } from './dtos/create-user-log.dto';
 
 @ApiTags('user-log')
 @Controller('user-log')
@@ -24,9 +23,7 @@ export class UserLogController {
   //   return user;
   // }
 
-  // @Roles(Role.MANAGER)
-  // @UseGuards(RolesGuard) get_user_by_user_name
-  @MessagePattern('get_all_users')
+  @MessagePattern('get_all_users_logs')
   handleGetAllUsers() {
     return this.userLogService.handleGetAllUsers();
   }

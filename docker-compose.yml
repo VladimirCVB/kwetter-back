@@ -44,8 +44,6 @@ services:
       - ./post-service/.env
     environment:
       DB_HOST: postgres
-      # REDIS_HOST: redis
-      # REDIS_PORT: 6379
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-admin}
       DB_NAME: post-service
@@ -53,10 +51,8 @@ services:
       - backend
     links:
       - postgres
-      # - redis
     depends_on:
       - postgres
-      # - redis
   user-service:
     build: ./user-service
     restart: always
@@ -90,24 +86,9 @@ services:
     networks:
       - backend
 
-  # redis:
-  #   container_name: redis
-  #   image: redis:alpine
-  #   command: redis-server # --requirepass ....
-  #   ports:
-  #     - ${REDIS_PORT:-6379}:6379
-  #   volumes:
-  #     - redis:/data
-  #   environment:
-  #     - REDIS_REPLICATION_MODE=master
-  #     - ALLOW_EMPTY_PASSWORD=yes
-  #   networks:
-  #     - backend
-
 networks:
   backend:
     driver: bridge
 
 volumes:
   postgres: {}
-  # redis: {}

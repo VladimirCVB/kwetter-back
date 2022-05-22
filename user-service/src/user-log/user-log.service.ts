@@ -24,7 +24,6 @@ export class UserLogService {
  */
   async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
     const user = await this.userLogRepository.findOne({ email: userEmail });
-    console.log(await bcrypt.compare(userPassword, user.password));
     if (await bcrypt.compare(userPassword, user.password)) return user;
   }
 
@@ -33,7 +32,21 @@ export class UserLogService {
    * @returns all user logs.
    */
   async handleGetAllUsers(): Promise<UserLog[]> {
-    return await this.userLogRepository.findAll();
+    const users = await this.userLogRepository.findAll();
+    const userDataReturn = [];
+    for (let i = 0; i < users.length; i++) {
+      const element = users[i];
+      const nameOfUser = (await this.userDataRepository.findOne({ userId: element.id })).lastName;
+      
+      userDataReturn[i] = {
+        name: nameOfUser,
+        userName: element.userName,
+        email: element.email,
+        userRole: element.userRole,
+        createdAt: element.createdAt,
+      };
+    }
+    return userDataReturn;
   }
 
   /**
