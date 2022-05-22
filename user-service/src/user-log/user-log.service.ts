@@ -37,7 +37,7 @@ export class UserLogService {
     for (let i = 0; i < users.length; i++) {
       const element = users[i];
       const nameOfUser = (await this.userDataRepository.findOne({ userId: element.id })).lastName;
-      
+
       userDataReturn[i] = {
         name: nameOfUser,
         userName: element.userName,
@@ -114,6 +114,28 @@ export class UserLogService {
     await this.userLogRepository.persistAndFlush(userLogUpdate);
 
     return userLogUpdate;
+  }
+
+  /**
+   * Updates a user log.
+   * @param status the status to change the rights.
+   * @returns the updated user log.
+   */
+  async handleChangeAdminRights(
+    data: any
+  ) {
+    const userLogUpdate = await this.handleGetUserByUserName(
+      data.status.userName,
+    );
+    if (!userLogUpdate) throw new NotFoundException('User log data not found');
+
+    userLogUpdate.userRole = 'manager';
+    if(!data.status.status) userLogUpdate.userRole = 'regular';
+    
+
+    await this.userLogRepository.persistAndFlush(userLogUpdate);
+
+    return true;
   }
 
   /**

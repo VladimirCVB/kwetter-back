@@ -48,6 +48,11 @@ export class UserLogController {
     return this.userLogService.handleUpdateUser(data.value);
   }
 
+  @MessagePattern('change_admin_rights')
+  handleChangeAdminRights(data: { status: boolean, userName: string }) {
+    return this.userLogService.handleChangeAdminRights(data);
+  }
+
   @MessagePattern('delete_user')
   handleDeleteUser(data: any) {
     return this.userLogService.handleDeleteUser(data.value);

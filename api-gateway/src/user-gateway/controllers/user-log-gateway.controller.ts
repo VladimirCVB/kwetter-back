@@ -46,6 +46,13 @@ export class UserLogGatewayController {
     return this.userLogGatewayService.updateUser(updateUserRequest);
   }
 
+  @Roles(Role.MANAGER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/admin/rights')
+  changeAdminRights(@Body() status: boolean, userName: string) {
+    return this.userLogGatewayService.changeAdminRights(status, userName);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Delete('/delete-log/:id')
   deleteUser(@Param('id') userId: string) {

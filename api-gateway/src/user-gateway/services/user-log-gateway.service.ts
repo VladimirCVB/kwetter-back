@@ -43,6 +43,13 @@ export class UserLogGatewayService {
     );
   }
 
+  changeAdminRights(status: boolean, userName: string) {
+    return this.userLogClient.send(
+      'change_admin_rights',
+      { status, userName },
+    );
+  }
+
   deleteUser(userId: string) {
     return this.userLogClient.send('delete_user', userId);
   }
