@@ -18,6 +18,7 @@ import { UserGatewayService } from './user-gateway.service';
         name: 'USER_SERVICE',
         transport: Transport.TCP,
         options: {
+          host: process.env.USER_SERVICE_HOST,
           port: 3500
         },
       },
@@ -27,6 +28,7 @@ import { UserGatewayService } from './user-gateway.service';
         name: 'POSTING_SERVICE',
         transport: Transport.TCP,
         options: {
+          host: process.env.POST_SERVICE_HOST,
           port: 3001
         },
       },

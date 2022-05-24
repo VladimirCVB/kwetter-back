@@ -6,13 +6,15 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './guards/jwt.strategy';
 import { UserLogModule } from 'src/user-log/user-log.module';
 import { RolesGuard } from './guards/roles.guard';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     UserLogModule,
     PassportModule,
+    ConfigModule.forRoot(),
     JwtModule.register({
-      secret: "secret",
+      secret: process.env.SECRET,
       signOptions: { expiresIn: '900s' },
     }),
   ],

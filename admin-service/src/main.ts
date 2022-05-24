@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -19,11 +19,12 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.TCP,
     options: {
-      port: 3003,
+      host: process.env.ADMIN_SERVICE_HOST,
+      port: process.env.TCP,
     },
   });
   await app.startAllMicroservices();
-  await app.listen(3502);
+  await app.listen(process.env.PORT);
 }
 
 bootstrap();

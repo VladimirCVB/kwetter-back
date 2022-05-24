@@ -10,6 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         name: 'POSTING_SERVICE',
         transport: Transport.TCP,
         options: {
+          host: process.env.POST_SERVICE_HOST,
           port: 3001
         },
       },

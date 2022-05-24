@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserLogModule } from './user-log/user-log.module';
@@ -8,13 +8,13 @@ import { UserFollowModule } from './user-follow/user-follow.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { MikroORM } from '@mikro-orm/core';
 
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '../.env',
     }),
     UserLogModule,
     UserDataModule,
@@ -25,4 +25,15 @@ import { AuthModule } from './auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly orm: MikroORM) {}
+
+  async onModuleInit() {
+    const migrator = this.orm.getMigrator();
+    const migrations = await migrator.getPendingMigrations();
+
+    if (migrations && migrations.length > 0) {
+      await migrator.up();
+    }
+  }
+}

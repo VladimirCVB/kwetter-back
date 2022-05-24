@@ -20,11 +20,12 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.TCP,
     options: {
-      port: 3001,
+      host: process.env.POST_SERVICE_HOST,
+      port: process.env.TCP,
     },
   });
   await app.startAllMicroservices();
-  await app.listen(3503);
+  await app.listen(process.env.PORT);
 }
 
 bootstrap();

@@ -5,12 +5,14 @@ import { RolesGuard } from './guards/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './guards/jwt.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     PassportModule,
+    ConfigModule.forRoot(),
     JwtModule.register({
-      secret: "secret",
+      secret: process.env.SECRET,
       signOptions: { expiresIn: '900s' },
     }),
   ],
