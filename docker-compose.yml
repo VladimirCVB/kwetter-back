@@ -14,10 +14,27 @@ services:
       - "8000:3000"
     networks:
       - backend
+      - frontend
     depends_on:
       - user-service
       - admin-service
       - post-service
+
+  frontend-service:
+    # build: ./front
+    build:
+      context: ./front
+      target: 'develop-stage'
+    ports:
+    - '8080:8080'
+    volumes:
+    - './front/:/app'
+    command: /bin/sh -c "npm run serve"
+    restart: always
+    hostname: frontend-service
+    networks:
+      - frontend
+
   user-service:
     build: ./user-service
     restart: always
@@ -126,6 +143,8 @@ services:
 
 networks:
   backend:
+    driver: bridge
+  frontend:
     driver: bridge
 
 volumes:
