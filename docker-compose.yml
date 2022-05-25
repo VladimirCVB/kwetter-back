@@ -2,6 +2,7 @@ version: '3'
 services:
   gateway:
     build: ./api-gateway
+    image: vladimirab/gateway
     restart: always
     hostname: api-gateway
     env_file:
@@ -19,6 +20,8 @@ services:
       - user-service
       - admin-service
       - post-service
+    labels:
+      kompose.service.type: LoadBalancer
 
   frontend-service:
     # build: ./front
@@ -33,9 +36,12 @@ services:
       - "8080:8080"
     networks:
       - frontend
+    labels:
+      kompose.service.type: LoadBalancer
 
   user-service:
     build: ./user-service
+    image: vladimirab/user-service
     restart: always
     hostname: user-service
     env_file:
@@ -49,6 +55,8 @@ services:
       PORT: ${PORT:-3501}
       TCP: ${PORT:-3500}
       USER_SERVICE_HOST: user-service
+    ports:
+      - 3501
     networks:
       - backend
     links:
@@ -57,6 +65,9 @@ services:
     depends_on:
       - postgres
       - kafka
+    labels:
+      kompose.service.type: LoadBalancer
+
   admin-service:
     build: ./admin-service
     restart: always
@@ -77,6 +88,9 @@ services:
       - postgres
     depends_on:
       - postgres
+    labels:
+      kompose.service.type: LoadBalancer
+
   post-service:
     build: ./post-service
     restart: always
@@ -97,6 +111,9 @@ services:
       - postgres
     depends_on:
       - postgres
+    labels:
+      kompose.service.type: LoadBalancer
+
   postgres:
     container_name: postgres_container_kwt
     image: postgres
@@ -139,6 +156,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - backend
+    labels:
+      kompose.service.type: LoadBalancer
 
 networks:
   backend:
