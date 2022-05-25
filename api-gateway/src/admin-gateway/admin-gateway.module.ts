@@ -11,7 +11,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         transport: Transport.TCP,
         options: {
           host: process.env.ADMIN_SERVICE_HOST,
-          port: 3003
+          port: 3003,
         },
       },
     ]),

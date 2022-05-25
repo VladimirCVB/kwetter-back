@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -36,7 +45,10 @@ export class UserDataGatewayController {
     @Body() updateUserDataRequest: UpdateUserDataRequest,
     id: string,
   ) {
-    return this.userDataGatewayService.updateUserData(updateUserDataRequest, id);
+    return this.userDataGatewayService.updateUserData(
+      updateUserDataRequest,
+      id,
+    );
   }
 
   @Delete('/delete-data/:id')

@@ -8,7 +8,7 @@ import { UserLogUpdatedEvent } from '../events/user-log-updated.event';
 export class UserLogGatewayService {
   constructor(
     @Inject('USER_SERVICE') private readonly userLogClient: ClientProxy,
-  ) { }
+  ) {}
 
   getAllUsers() {
     return this.userLogClient.send('get_all_users_logs', {});
@@ -29,7 +29,13 @@ export class UserLogGatewayService {
     });
   }
 
-  createUser({ userName, email, password, firstName, lastName }: CreateUserLogRequest) {
+  createUser({
+    userName,
+    email,
+    password,
+    firstName,
+    lastName,
+  }: CreateUserLogRequest) {
     return this.userLogClient.send(
       'user_log_created',
       new UserLogCreatedEvent(userName, email, password, firstName, lastName),
@@ -44,10 +50,7 @@ export class UserLogGatewayService {
   }
 
   changeAdminRights(status: boolean, userName: string) {
-    return this.userLogClient.send(
-      'change_admin_rights',
-      { status, userName },
-    );
+    return this.userLogClient.send('change_admin_rights', { status, userName });
   }
 
   deleteUser(userId: string) {

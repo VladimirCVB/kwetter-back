@@ -10,7 +10,14 @@ import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
 
 @Module({
-  imports: [PostGatewayModule, UserGatewayModule, AdminGatewayModule, AuthModule, ConfigModule.forRoot(), KafkaModule],
+  imports: [
+    PostGatewayModule,
+    UserGatewayModule,
+    AdminGatewayModule,
+    AuthModule,
+    ConfigModule.forRoot(),
+    KafkaModule,
+  ],
   controllers: [AppController],
   providers: [AppService, TestConsumer],
 })

@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -8,9 +17,8 @@ import { UserLogGatewayService } from '../services/user-log-gateway.service';
 
 @Controller('user-log-gateway')
 export class UserLogGatewayController {
-  constructor(private readonly userLogGatewayService: UserLogGatewayService,
-  ) { }
-  
+  constructor(private readonly userLogGatewayService: UserLogGatewayService) {}
+
   @Roles(Role.MANAGER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/all')

@@ -19,7 +19,7 @@ import { UserGatewayService } from './user-gateway.service';
         transport: Transport.TCP,
         options: {
           host: process.env.USER_SERVICE_HOST,
-          port: 3500
+          port: 3500,
         },
       },
     ]),
@@ -29,7 +29,7 @@ import { UserGatewayService } from './user-gateway.service';
         transport: Transport.TCP,
         options: {
           host: process.env.POST_SERVICE_HOST,
-          port: 3001
+          port: 3001,
         },
       },
     ]),
@@ -39,17 +39,15 @@ import { UserGatewayService } from './user-gateway.service';
     UserFollowGatewayService,
     UserMentionsGatewayService,
     UserLogGatewayService,
-    UserGatewayService
+    UserGatewayService,
   ],
   controllers: [
     UserDataGatewayController,
     UserFollowGatewayController,
     UserMentionsGatewayController,
     UserLogGatewayController,
-    UserGatewayController
+    UserGatewayController,
   ],
-  exports: [
-    UserGatewayModule
-  ]
+  exports: [UserGatewayModule],
 })
 export class UserGatewayModule {}

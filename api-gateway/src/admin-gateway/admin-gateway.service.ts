@@ -38,7 +38,10 @@ export class AdminGatewayService {
   }
 
   updateAdmin({ userName }: UpdateAdminRequest) {
-    return this.adminClient.send('update_admin', new AdminUpdatedEvent(userName));
+    return this.adminClient.send(
+      'update_admin',
+      new AdminUpdatedEvent(userName),
+    );
   }
 
   updateBan({ userName }: UpdateAdminRequest) {

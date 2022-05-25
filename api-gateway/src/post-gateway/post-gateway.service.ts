@@ -9,7 +9,7 @@ import { PostUpdatedEvent } from './events/post-updated.event';
 export class PostGatewayService {
   constructor(
     @Inject('POSTING_SERVICE') private readonly postingClient: ClientProxy,
-  ) { }
+  ) {}
 
   createPost({ userId, userName, text, trends }: CreatePostRequest) {
     return this.postingClient.send(
