@@ -6,10 +6,12 @@ import { UserGatewayModule } from './user-gateway/user-gateway.module';
 import { AdminGatewayModule } from './admin-gateway/admin-gateway.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { KafkaModule } from './kafka/kafka.module';
+import { TestConsumer } from './test.consumer';
 
 @Module({
-  imports: [PostGatewayModule, UserGatewayModule, AdminGatewayModule, AuthModule, ConfigModule.forRoot()],
+  imports: [PostGatewayModule, UserGatewayModule, AdminGatewayModule, AuthModule, ConfigModule.forRoot(), KafkaModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestConsumer],
 })
 export class AppModule {}
