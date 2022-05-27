@@ -14,7 +14,7 @@ export class UserDataService {
     private readonly userDataRepository: EntityRepository<UserData>,
     @InjectRepository(UserLog)
     private readonly userLogRepository: EntityRepository<UserLog>,
-  ) { }
+  ) {}
 
   /**
    * Retrieve all user data.
@@ -32,13 +32,22 @@ export class UserDataService {
   async handleGetUserDataById(userId: string) {
     // const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
     const userData = await this.userDataRepository.findOne({ userId: userId });
-    
-    return { bio: userData.bio, school: userData.school, web: userData.web, firstName: userData.firstName, lastName: userData.lastName, id: userId }
+
+    return {
+      bio: userData.bio,
+      school: userData.school,
+      web: userData.web,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      id: userId,
+    };
   }
 
   async handleGetAllUserDataById(userName: string): Promise<UserData> {
-    const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
-    return (await this.userDataRepository.findOne({ userId: userId }));
+    const userId = (
+      await this.userLogRepository.findOne({ userName: userName })
+    ).id;
+    return await this.userDataRepository.findOne({ userId: userId });
   }
 
   /**

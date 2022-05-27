@@ -1,9 +1,4 @@
-import {
-  Entity,
-  Filter,
-  OneToMany,
-  Property,
-} from '@mikro-orm/core';
+import { Entity, Filter, OneToMany, Property } from '@mikro-orm/core';
 import { PostTrends } from '../../post-trends/entities/post-trends.entity';
 import { BaseEntity } from '../../database/entities/base-entity.entity';
 

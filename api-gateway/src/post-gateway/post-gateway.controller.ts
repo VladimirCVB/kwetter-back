@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreatePostRequest } from './dto/create-post-request.dto';
 import { UpdatePostRequest } from './dto/update-post-request.dto';
 import { PostGatewayService } from './post-gateway.service';
@@ -15,6 +16,11 @@ import { PostGatewayService } from './post-gateway.service';
 export class PostGatewayController {
   constructor(private readonly postGatewayService: PostGatewayService) {}
 
+  @ApiOperation({ summary: 'Get all posts' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all the post data',
+  })
   @Get()
   getAllPosts() {
     return this.postGatewayService.getAllPosts();
@@ -25,6 +31,11 @@ export class PostGatewayController {
     return this.postGatewayService.getPosts(userIds);
   }
 
+  @ApiOperation({ summary: 'Get user posts' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns user posts by userId',
+  })
   @Get('/user-posts/:userId')
   getPostByUserId(@Param('userId') userId: string) {
     return this.postGatewayService.getPostByUserId(userId);
@@ -40,6 +51,11 @@ export class PostGatewayController {
     return this.postGatewayService.getPostTrends();
   }
 
+  @ApiOperation({ summary: 'Create new post' })
+  @ApiResponse({
+    status: 201,
+    description: 'Creates new post',
+  })
   @Post('/create-post')
   createPost(@Body() createPostRequest: CreatePostRequest) {
     return this.postGatewayService.createPost(createPostRequest);

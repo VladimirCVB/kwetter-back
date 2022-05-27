@@ -9,7 +9,7 @@ export class UserFollowService {
   constructor(
     @InjectRepository(UserFollow)
     private readonly userFollowRepository: EntityRepository<UserFollow>,
-  ) { }
+  ) {}
 
   /**
    * Retrieve user Follow data by id.

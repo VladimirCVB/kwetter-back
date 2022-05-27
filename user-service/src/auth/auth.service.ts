@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     private userLogService: UserLogService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async logInUser(userEmail: string, password: string) {
     const user = await this.userLogService.handleLogInUser(userEmail, password);
@@ -23,7 +23,7 @@ export class AuthService {
       userName: user.userName,
       role: user.userRole,
       email: user.email,
-      sub: user.id
+      sub: user.id,
     };
 
     return {

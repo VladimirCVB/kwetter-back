@@ -14,15 +14,18 @@ export class UserLogService {
     private readonly userLogRepository: EntityRepository<UserLog>,
     @InjectRepository(UserData)
     private readonly userDataRepository: EntityRepository<UserData>,
-  ) { }
+  ) {}
 
   /**
- * Retrieve user log by credentials.
- * @param userEmail user email to find user log by.
- * @param userPassword user password to find user log by.
- * @returns user log.
- */
-  async handleLogInUser(userEmail: string, userPassword: string): Promise<UserLog> {
+   * Retrieve user log by credentials.
+   * @param userEmail user email to find user log by.
+   * @param userPassword user password to find user log by.
+   * @returns user log.
+   */
+  async handleLogInUser(
+    userEmail: string,
+    userPassword: string,
+  ): Promise<UserLog> {
     const user = await this.userLogRepository.findOne({ email: userEmail });
     if (await bcrypt.compare(userPassword, user.password)) return user;
   }
@@ -36,7 +39,9 @@ export class UserLogService {
     const userDataReturn = [];
     for (let i = 0; i < users.length; i++) {
       const element = users[i];
-      const nameOfUser = (await this.userDataRepository.findOne({ userId: element.id })).lastName;
+      const nameOfUser = (
+        await this.userDataRepository.findOne({ userId: element.id })
+      ).lastName;
 
       userDataReturn[i] = {
         name: nameOfUser,
@@ -86,7 +91,7 @@ export class UserLogService {
     const userData = this.userDataRepository.create({
       userId: userLog.id,
       firstName: userLogCreatedEvent.firstName,
-      lastName: userLogCreatedEvent.lastName
+      lastName: userLogCreatedEvent.lastName,
     });
 
     await this.userLogRepository.persistAndFlush(userLog);
@@ -121,17 +126,14 @@ export class UserLogService {
    * @param status the status to change the rights.
    * @returns the updated user log.
    */
-  async handleChangeAdminRights(
-    data: any
-  ) {
+  async handleChangeAdminRights(data: any) {
     const userLogUpdate = await this.handleGetUserByUserName(
       data.status.userName,
     );
     if (!userLogUpdate) throw new NotFoundException('User log data not found');
 
     userLogUpdate.userRole = 'manager';
-    if(!data.status.status) userLogUpdate.userRole = 'regular';
-    
+    if (!data.status.status) userLogUpdate.userRole = 'regular';
 
     await this.userLogRepository.persistAndFlush(userLogUpdate);
 

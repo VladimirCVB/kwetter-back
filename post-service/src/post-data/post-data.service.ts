@@ -14,7 +14,7 @@ export class PostDataService {
 
     @InjectRepository(PostTrends)
     private readonly postTrendsRepository: EntityRepository<PostTrends>,
-  ) { }
+  ) {}
 
   /**
    * Retrieve all posts.
@@ -63,7 +63,7 @@ export class PostDataService {
       user_id: postCreatedEvent.userId,
       userName: postCreatedEvent.userName,
       text: postCreatedEvent.text,
-      hearts: 0
+      hearts: 0,
     });
     const postTrends = this.postTrendsRepository.create({
       postId: postData.id,

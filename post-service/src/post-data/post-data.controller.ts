@@ -6,7 +6,7 @@ import { MessagePattern } from '@nestjs/microservices';
 @ApiTags('post-data')
 @Controller('post-data')
 export class PostDataController {
-  constructor(private readonly postDataService: PostDataService) { }
+  constructor(private readonly postDataService: PostDataService) {}
 
   @MessagePattern('get_all_posts')
   handleGetAllPosts() {

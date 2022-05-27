@@ -26,7 +26,10 @@ export class UserDataController {
 
   @MessagePattern('update_user_data')
   handleUpdateUserData(data: any) {
-    return this.userDataService.handleUpdateUserData(data.value[0], data.value[1]);
+    return this.userDataService.handleUpdateUserData(
+      data.value[0],
+      data.value[1],
+    );
   }
 
   @MessagePattern('delete_user_data')

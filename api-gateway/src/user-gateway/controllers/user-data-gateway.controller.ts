@@ -8,6 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -25,21 +26,41 @@ export class UserDataGatewayController {
 
   @Roles(Role.MANAGER)
   @UseGuards(RolesGuard)
+  @ApiOperation({ summary: 'Get all users' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all user log data to admin',
+  })
   @Get('/all')
   getAllUsersData() {
     return this.userDataGatewayService.getAllUsersData();
   }
 
+  @ApiOperation({ summary: 'Get user data by userName' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns user data by userName',
+  })
   @Get('/:uname')
   getUserDataById(@Param('uname') userName: string) {
     return this.userDataGatewayService.getUserDataById(userName);
   }
 
+  @ApiOperation({ summary: 'Create new user data' })
+  @ApiResponse({
+    status: 201,
+    description: 'Creates new user data entry',
+  })
   @Post('/create-data')
   createUserData(@Body() createUserDataRequest: CreateUserDataRequest) {
     return this.userDataGatewayService.createUserData(createUserDataRequest);
   }
 
+  @ApiOperation({ summary: 'Update user data' })
+  @ApiResponse({
+    status: 204,
+    description: 'Updates user data',
+  })
   @Put('/update-data')
   updateUserData(
     @Body() updateUserDataRequest: UpdateUserDataRequest,
@@ -51,6 +72,12 @@ export class UserDataGatewayController {
     );
   }
 
+  @ApiOperation({ summary: 'Delete user data' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Deletes user data by userName, without removing the entries in the database',
+  })
   @Delete('/delete-data/:id')
   deleteUserData(@Param('id') id: string) {
     return this.userDataGatewayService.deleteUserData(id);

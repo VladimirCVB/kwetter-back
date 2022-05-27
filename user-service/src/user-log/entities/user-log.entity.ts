@@ -1,7 +1,6 @@
 import {
   Entity,
   Filter,
-  ManyToOne,
   OneToMany,
   OneToOne,
   Property,
@@ -45,7 +44,7 @@ export class UserLog extends BaseEntity {
   @OneToMany({
     entity: () => UserMention,
     mappedBy: 'userMentiones',
-    nullable: true
+    nullable: true,
   })
   userMentiones: UserMention;
 

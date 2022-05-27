@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka, ClientProxy } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { CreateAdminRequest } from './dto/create-admin-request.dto';
 import { UpdateAdminRequest } from './dto/update-admin-request.dto';
 import { AdminCreatedEvent } from './events/admin-created.event';

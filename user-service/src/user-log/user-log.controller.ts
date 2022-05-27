@@ -1,27 +1,12 @@
-import {
-  Controller,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MessagePattern } from '@nestjs/microservices';
 import { UserLogService } from './user-log.service';
 
 @ApiTags('user-log')
 @Controller('user-log')
-// @UseGuards(JwtAuthGuard)
 export class UserLogController {
-  constructor(private readonly userLogService: UserLogService) { }
-
-  // @Roles(Role.MANAGER)
-  // @UseGuards(RolesGuard)
-  // @ApiOperation({ summary: 'Get all user-log information' })
-  // @ApiResponse({ status: 200, description: 'Returned all user-log' })
-
-  // @MessagePattern('log_user')
-  // async handleLogIn(credentials: any) {
-  //   const user = this.userLogService.handleLogInUser(credentials.email, credentials.password);
-  //   if (await user == null) return 'No user!';
-  //   return user;
-  // }
+  constructor(private readonly userLogService: UserLogService) {}
 
   @MessagePattern('get_all_users_logs')
   handleGetAllUsers() {
@@ -49,7 +34,7 @@ export class UserLogController {
   }
 
   @MessagePattern('change_admin_rights')
-  handleChangeAdminRights(data: { status: boolean, userName: string }) {
+  handleChangeAdminRights(data: { status: boolean; userName: string }) {
     return this.userLogService.handleChangeAdminRights(data);
   }
 

@@ -12,5 +12,4 @@ import { UserData } from 'src/user-data/entities/user-data.entity';
   providers: [UserLogService, JwtStrategy],
   controllers: [UserLogController],
 })
-
 export class UserLogModule {}

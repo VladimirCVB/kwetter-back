@@ -1,21 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { INestApplication } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
 
-  const config = new DocumentBuilder()
-    .setTitle('User service API')
-    .setDescription('The user service API')
-    .setVersion('1.0')
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  loadOpenAPI(app);
 
   app.connectMicroservice({
     transport: Transport.TCP,
@@ -26,6 +19,20 @@ async function bootstrap() {
   });
   await app.startAllMicroservices();
   await app.listen(process.env.PORT);
+}
+
+function loadOpenAPI(app: INestApplication) {
+  const config = new DocumentBuilder()
+    .setTitle('User-Service')
+    .setDescription(
+      'This service is responsible for handling user data and user accounts',
+    )
+    .setVersion('alpha')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/docs/user-service', app, document);
 }
 
 bootstrap();
