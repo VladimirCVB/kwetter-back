@@ -1,0 +1,6 @@
+kubectl scale statefulset,deployment --all --replicas=0
+kubectl apply -f .
+kubectl get po
+kubectl get deploy
+kubectl delete deploy <deployment name>
+kubectl create -f <file>

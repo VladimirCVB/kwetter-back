@@ -22,6 +22,7 @@ services:
       - post-service
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'gateway'
 
   frontend-service:
     # build: ./front
@@ -38,6 +39,7 @@ services:
       - frontend
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'font-end'
 
   user-service:
     build: ./user-service
@@ -67,6 +69,7 @@ services:
       - kafka
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'users'
 
   admin-service:
     build: ./admin-service
@@ -90,6 +93,7 @@ services:
       - postgres
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'admin'
 
   post-service:
     build: ./post-service
@@ -113,6 +117,7 @@ services:
       - postgres
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'post'
 
   postgres:
     container_name: postgres_container_kwt
@@ -129,6 +134,9 @@ services:
     restart: unless-stopped
     networks:
       - backend
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.service.expose: 'postgres'
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -140,6 +148,9 @@ services:
       - 22181:2181
     networks:
       - backend
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.service.expose: 'zookeeper'
   kafka:
     image: confluentinc/cp-kafka:latest
     restart: unless-stopped
@@ -158,6 +169,7 @@ services:
       - backend
     labels:
       kompose.service.type: LoadBalancer
+      kompose.service.expose: 'kafka'
 
 networks:
   backend:
