@@ -8,16 +8,7 @@
           <h1 class="font-bold text-4xl mb-5">Description</h1>
         </div>
         <button
-          class="
-            bg-white
-            text-black
-            p-2
-            w-full
-            rounded-xl
-            hover:bg-black hover:text-white
-            ease-in-out
-            duration-200
-          "
+          class="bg-white text-black p-2 w-full rounded-xl hover:bg-black hover:text-white ease-in-out duration-200"
         >
           Edit Description
         </button>
@@ -60,17 +51,7 @@
               placeholder="Write your message here..."
             ></textarea>
             <input
-              class="
-                hover:bg-black hover:text-white
-                cursor-pointer
-                block
-                bg-white
-                text-black
-                rounded-lg
-                w-full
-                ease-in-out
-                duration-200
-              "
+              class="hover:bg-black hover:text-white cursor-pointer block bg-white text-black rounded-lg w-full ease-in-out duration-200"
               type="submit"
               value="Create New Post"
             />
@@ -234,12 +215,12 @@ export default {
               res.data.id,
             tokenConfig
           )
-          .then((res) => {
-            this.userProfile.website = res.data.userData.web;
-            this.userProfile.study = res.data.userData.school;
-            this.userProfile.bio = res.data.userData.bio;
+          .then((profileRes) => {
+            this.userProfile.website = profileRes.data.userData.web;
+            this.userProfile.study = profileRes.data.userData.school;
+            this.userProfile.bio = profileRes.data.userData.bio;
 
-            this.userPosts = res.data.postData;
+            this.userPosts = profileRes.data.postData;
             this.formatDates(this.userPosts);
           });
       });

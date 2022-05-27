@@ -12,14 +12,7 @@
         <div
           v-for="mention in mentions"
           :key="mention.userName"
-          class="
-            grid grid-cols-3
-            bg-white
-            shadow-2xl
-            text-black
-            mt-4
-            rounded-xl
-          "
+          class="grid grid-cols-3 bg-white shadow-2xl text-black mt-4 rounded-xl"
         >
           <div>
             <img width="75" height="75" class="p-1" :src="mention.userImage" />
@@ -63,17 +56,7 @@
               placeholder="Write your message here..."
             ></textarea>
             <input
-              class="
-                hover:bg-black hover:text-white
-                cursor-pointer
-                block
-                bg-white
-                text-black
-                rounded-lg
-                w-full
-                ease-in-out
-                duration-200
-              "
+              class="hover:bg-black hover:text-white cursor-pointer block bg-white text-black rounded-lg w-full ease-in-out duration-200"
               type="submit"
               value="Create New Post"
             />
@@ -207,7 +190,6 @@ export default {
   },
 
   mounted() {
-    const userName = this.$route.params.userName;
     const userData = jwt_decode(this.$cookie.get("kwetterToken"));
     this.userName = userData.userName;
 

@@ -1,18 +1,7 @@
 <template>
   <header
     v-if="$route.meta.header != 0"
-    class="
-      bg-blue-600
-      p-2
-      pl-5
-      pr-5
-      text-white
-      font-mono
-      shadow-xl
-      sticky
-      top-0
-      w-full
-    "
+    class="bg-blue-600 p-2 pl-5 pr-5 text-white font-mono shadow-xl sticky top-0 w-full"
   >
     <table class="w-full">
       <tbody>
@@ -27,7 +16,9 @@
             class="inline-block mr-2"
             :src="'/public/Logo.png'"
           />
-          <router-link to="/feed" class="font-bold text-xl">Kwetter</router-link>
+          <router-link to="/feed" class="font-bold text-xl"
+            >Kwetter</router-link
+          >
         </tr>
         <tr class="sm:float-right sm:block hidden">
           <router-link
@@ -96,7 +87,7 @@ export default {
     const userData = jwt_decode(this.$cookie.get("kwetterToken"));
     this.userProfile.name = userData.userName;
 
-    if(userData.role == 'manager') this.userProfile.role = 1;
+    if (userData.role == "manager") this.userProfile.role = 1;
   },
 };
 </script>

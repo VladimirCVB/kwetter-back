@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import RegistrationView from '../views/RegistrationView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import RegistrationView from "../views/RegistrationView.vue";
 
 function getCookie(name) {
   // Split cookie string and get all individual name=value pairs in an array
@@ -25,54 +25,57 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'registration',
+      path: "/",
+      name: "registration",
       component: RegistrationView,
       meta: {
-        header: 0
-      }
+        header: 0,
+      },
     },
     {
-      path: '/profile/:userName',
-      name: 'profile',
+      path: "/profile/:userName",
+      name: "profile",
       beforeEnter: () => {
-        if (!getCookie('kwetterToken')) return router.push({ name: 'registration' });
+        if (!getCookie("kwetterToken"))
+          return router.push({ name: "registration" });
       },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ProfileView.vue')
+      component: () => import("../views/ProfileView.vue"),
     },
     {
-      path: '/feed',
-      name: 'feed',
+      path: "/feed",
+      name: "feed",
       beforeEnter: () => {
-        if (!getCookie('kwetterToken')) return router.push({ name: 'registration' });
+        if (!getCookie("kwetterToken"))
+          return router.push({ name: "registration" });
       },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/FeedView.vue')
+      component: () => import("../views/FeedView.vue"),
     },
     {
-      path: '/administrator',
-      name: 'administrator',
+      path: "/administrator",
+      name: "administrator",
       beforeEnter: () => {
-        if (!getCookie('kwetterToken')) return router.push({ name: 'registration' });
+        if (!getCookie("kwetterToken"))
+          return router.push({ name: "registration" });
       },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AdminView.vue')
+      component: () => import("../views/AdminView.vue"),
     },
     {
-      path: '/management',
-      name: 'management',
+      path: "/management",
+      name: "management",
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AdminView.vue')
-    }
+      component: () => import("../views/AdminView.vue"),
+    },
     // {
     //   path: '/second',
     //   name: 'registration',
@@ -81,7 +84,7 @@ const router = createRouter({
     //     header: 1
     //   }
     // },
-  ]
-})
+  ],
+});
 
-export default router
+export default router;

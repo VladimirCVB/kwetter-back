@@ -1,5 +1,4 @@
-//const cookie = require('tiny-cookie')
-import cookie from 'tiny-cookie'
+import cookie from "tiny-cookie";
 const vueCookie = {
   // Main functions
   get: (name) => cookie.get(name),
@@ -8,9 +7,9 @@ const vueCookie = {
 
   // More functions
   delete: (name, options) => cookie.remove(name, options), // alias of remove
-  getAll: () => cookie.getAll()
-}
+  getAll: () => cookie.getAll(),
+};
 
 export default (app) => {
-  app.config.globalProperties.$cookie = vueCookie
-}
+  app.config.globalProperties.$cookie = vueCookie;
+};

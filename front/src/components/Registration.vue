@@ -98,19 +98,21 @@ export default {
     logUser() {
       const logInFields = [this.logIn.email, this.logIn.password];
       const validFields = this.completedFields(logInFields, 0);
-      
+
       if (validFields) {
         axios
           .post("http://localhost:3000/api/user-gateway", this.logIn)
           .then((res) => {
-            this.$cookie.set("kwetterToken", res.data.access_token, { expires: '900s' });
+            this.$cookie.set("kwetterToken", res.data.access_token, {
+              expires: "900s",
+            });
 
             const userName = jwt_decode(res.data.access_token).userName;
-            this.$router.push('/profile/' + userName);
+            this.$router.push("/profile/" + userName);
             console.log(res);
           })
           .catch((error) => {
-            alert('Credentials not matching! Try again!');
+            alert("Credentials not matching! Try again!");
             console.log(error);
           })
           .finally(() => {
@@ -126,9 +128,7 @@ export default {
   <div class="grid grid-cols-2 divide-x w-full h-screen">
     <!-- Logo and Image -->
     <div
-      class="
-        bg-[url('/public/registration-background.jpg')] bg-no-repeat bg-cover
-      "
+      class="bg-[url('/public/registration-background.jpg')] bg-no-repeat bg-cover"
     >
       <div class="w-full h-full bg-blue-500 bg-opacity-40">
         <img
@@ -137,14 +137,7 @@ export default {
           :src="'/public/Logo.png'"
         />
         <h1
-          class="
-            font-bold
-            text-7xl
-            bg-gradient-to-r
-            from-cyan-500
-            to-white
-            text-black
-          "
+          class="font-bold text-7xl bg-gradient-to-r from-cyan-500 to-white text-black"
         >
           Kwetter
         </h1>
@@ -236,22 +229,7 @@ export default {
           >You need to input a correct email address!</label
         >
         <input
-          class="
-            rounded-md
-            mt-10
-            w-full
-            bg-blue-600
-            text-white
-            cursor-pointer
-            text-lg
-            hover:bg-green-500
-            hover:text-black
-            hover:bg-solid
-            hover:border-transparent
-            hover:text-white
-            ease-in-out
-            duration-200
-          "
+          class="rounded-md mt-10 w-full bg-blue-600 text-white cursor-pointer text-lg hover:bg-green-500 hover:text-black hover:bg-solid hover:border-transparent hover:text-white ease-in-out duration-200"
           @click="
             completedFields(
               [
@@ -306,22 +284,7 @@ export default {
           >You must enter a correct email address!</label
         >
         <input
-          class="
-            rounded-md
-            mt-10
-            w-full
-            bg-blue-600
-            text-white
-            cursor-pointer
-            text-lg
-            hover:bg-green-500
-            hover:text-black
-            hover:bg-solid
-            hover:border-transparent
-            hover:text-white
-            ease-in-out
-            duration-200
-          "
+          class="rounded-md mt-10 w-full bg-blue-600 text-white cursor-pointer text-lg hover:bg-green-500 hover:text-black hover:bg-solid hover:border-transparent hover:text-white ease-in-out duration-200"
           type="submit"
           value="Log In"
         />

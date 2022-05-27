@@ -1,9 +1,9 @@
 <template>
   <div>
-      <AdminControl />
+    <AdminControl />
   </div>
 </template>
 
 <script setup>
-import AdminControl from '@/components/Admin/AdminControl.vue'
+import AdminControl from "@/components/Admin/AdminControl.vue";
 </script>

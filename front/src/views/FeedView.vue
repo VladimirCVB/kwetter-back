@@ -1,9 +1,9 @@
 <template>
   <div>
-      <FeedPosts />
+    <FeedPosts />
   </div>
 </template>
 
 <script setup>
-import FeedPosts from '@/components/Feed/FeedPosts.vue'
+import FeedPosts from "@/components/Feed/FeedPosts.vue";
 </script>

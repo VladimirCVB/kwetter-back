@@ -12,14 +12,7 @@
         <div
           v-for="user in users"
           :key="user.userName"
-          class="
-            grid grid-cols-7
-            bg-white
-            shadow-2xl
-            text-black
-            mt-4
-            rounded-xl
-          "
+          class="grid grid-cols-7 bg-white shadow-2xl text-black mt-4 rounded-xl"
         >
           <div class="col-start-1 col-span-1">
             <img width="75" height="75" class="p-1" src="/public/Logo.png" />
@@ -37,30 +30,14 @@
           </div>
           <div class="col-start-6">
             <button
-              class="
-                bg-black
-                rounded-lg
-                text-white
-                p-1
-                m-1
-                hover:bg-blue-600
-                duration-200
-              "
+              class="bg-black rounded-lg text-white p-1 m-1 hover:bg-blue-600 duration-200"
               v-if="user.userRole != 'manager' && self != user.userName"
               @click="changeAdminRights(true, user.userName)"
             >
               Set Administrator
             </button>
             <button
-              class="
-                bg-red-600
-                rounded-lg
-                text-white
-                p-1
-                m-1
-                hover:bg-blue-600
-                duration-200
-              "
+              class="bg-red-600 rounded-lg text-white p-1 m-1 hover:bg-blue-600 duration-200"
               v-if="user.userRole == 'manager' && self != user.userName"
               @click="changeAdminRights(false, user.userName)"
             >

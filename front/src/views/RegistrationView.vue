@@ -1,10 +1,9 @@
 <template>
   <div>
-      <Registration />
+    <Registration />
   </div>
 </template>
 
 <script setup>
-import Registration from '@/components/Registration.vue'
+import Registration from "@/components/Registration.vue";
 </script>
-
