@@ -30,7 +30,6 @@ export class UserDataService {
    * @returns user data.
    */
   async handleGetUserDataById(userId: string) {
-    // const userId = (await this.userLogRepository.findOne({ userName: userName })).id;
     const userData = await this.userDataRepository.findOne({ userId: userId });
 
     return {

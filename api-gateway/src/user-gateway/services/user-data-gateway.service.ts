@@ -29,7 +29,7 @@ export class UserDataGatewayService {
   }: CreateUserDataRequest) {
     return this.userDataClient.send(
       'user_data_created',
-      new UserDataCreatedEvent(userId, firstName, lastName, school, bio, web),
+      new UserDataCreatedEvent(userId, firstName, lastName, school, web, bio),
     );
   }
 
@@ -42,8 +42,8 @@ export class UserDataGatewayService {
         firstName,
         lastName,
         school,
-        bio,
         web,
+        bio,
       ),
       id: id,
     });

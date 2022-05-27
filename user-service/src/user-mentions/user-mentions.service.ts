@@ -40,25 +40,6 @@ export class UserMentionsService {
   }
 
   /**
-   * Updates a user data.
-   * @param userDataUpdatedEvent is the user data.
-   * @returns the updated user data.
-   */
-  // async handleUpdateUserData(
-  //   userDataUpdatedEvent: UserMentionCreatedEvent,
-  //   id: string
-  // ): Promise<UserMention> {
-  //   const userMentionUpdate = await this.handleGetUserMention(id);
-  //   if (!userMentionUpdate) throw new NotFoundException('User mention not found');
-
-  //   userMentionUpdate.userMentiones = userDataUpdatedEvent.userMentions;
-
-  //   await this.userDataRepository.persistAndFlush(userLogUpdate);
-
-  //   return userLogUpdate;
-  // }
-
-  /**
    * Update deletedAt property of user data.
    * @param id is the user name of the user.
    * @returns

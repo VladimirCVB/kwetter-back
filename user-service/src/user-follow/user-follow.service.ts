@@ -40,26 +40,6 @@ export class UserFollowService {
   }
 
   /**
-   * Updates a user data.
-   * @param userDataUpdatedEvent is the user data.
-   * @returns the updated user data.
-   */
-  // async handleUpdateUserFollow(
-  //   userDataUpdatedEvent: UserFollowCreatedEvent,
-  //   id: string
-  // ): Promise<UserFollow> {
-  //   const userFollowUpdate = await this.handleGetUserFollow(id);
-  //   if (!userFollowUpdate) throw new NotFoundException('User Follow not found');
-
-  //   userFollowUpdate.userFollowed = userDataUpdatedEvent.userFollowed;
-  //   wrap(userFollowUpdate).assign({ ...userFollowUpdate, userFollowed: userDataUpdatedEvent.userFollowed } as UserFollow);
-
-  //   await this.userDataRepository.persistAndFlush(userLogUpdate);
-
-  //   return userLogUpdate;
-  // }
-
-  /**
    * Update deletedAt property of user data.
    * @param id is the user name of the user.
    * @returns
