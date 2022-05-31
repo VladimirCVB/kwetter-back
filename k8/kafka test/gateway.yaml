@@ -38,6 +38,8 @@ spec:
         image: vladimirab/gateway
         imagePullPolicy: Always
         env:
+        - name: PORT
+          value: "3000"
         - name: USER_SERVICE_HOST
           value: user-service-service
         - name: ADMIN_SERVICE_HOST
@@ -48,8 +50,6 @@ spec:
           value: kafka-service
         - name: KAFKA_PORT
           value: "9092"
-        - name: PORT
-          value: "3000"
         - name: SECRET
           value: "secret"
         ports:
