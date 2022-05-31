@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: post-service-service
+  labels:
+    app: post-service-service
+spec:
+  type: NodePort
+  ports:
+  - port: 3503
+    name: post-service-service
+    targetPort: 3503
+  selector:
+    app: post-service-service
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service-deployment
+  labels:
+    app: post-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-service-deployment
+  template:
+    metadata:
+      labels:
+        app: post-service-deployment
+    spec:
+      containers:
+      - name: post-service
+        image: vladimirab/post-service
+        imagePullPolicy: Always
+        env:
+        - name: DB_NAME
+          value: "post-service"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "postgres"
+        - name: TCP
+          value: "3001"
+        - name: DB_HOST
+          value: postgres
+        - name: PORT
+          value: "3503"
+        ports:
+        - containerPort: 3503
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"

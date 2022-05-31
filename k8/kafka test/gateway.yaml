@@ -1,30 +1,63 @@
-kind: Deployment
-apiVersion: apps/v1
+apiVersion: v1
+kind: Service
 metadata:
-  name: gateway
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: api-gateway-service
+  labels:
+    app: api-gateway-service
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    name: api-gateway-service
+    targetPort: 3000
+  selector:
+    app: api-gateway-service
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+  labels:
+    app: api-gateway-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-        app: gateway
+      app: api-gateway-deployment
   template:
     metadata:
       labels:
-        app: gateway
+        app: api-gateway-deployment
     spec:
       containers:
-      - name: gateway
+      - name: api-gateway
         image: vladimirab/gateway
-        ports:
-        - containerPort: 3000
+        imagePullPolicy: Always
         env:
         - name: USER_SERVICE_HOST
-          value: "localhost"
+          value: user-service-service
+        - name: ADMIN_SERVICE_HOST
+          value: post-service-service
+        - name: POST_SERVICE_HOST
+          value: admin-service-service
         - name: KAFKA_HOST
-          value: "192.168.1.240"
+          value: kafka-service
         - name: KAFKA_PORT
-          value: "30718"
+          value: "9092"
         - name: PORT
           value: "3000"
         - name: SECRET
           value: "secret"
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
