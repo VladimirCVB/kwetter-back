@@ -13,6 +13,7 @@ const config = {
   migrations: {
     path: './dist/database/migrations',
     pathTs: './src/database/migrations',
+    disableForeignKeys: false,
   },
   logger: logger.log.bind(logger),
   user: process.env.DB_USER,

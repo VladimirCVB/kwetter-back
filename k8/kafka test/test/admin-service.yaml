@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: admin-service-service
+  labels:
+    app: admin-service-service
+spec:
+  type: NodePort
+  ports:
+  - port: 3502
+    name: admin-service-service
+    targetPort: 3502
+  selector:
+    app: admin-service-service
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service-deployment
+  labels:
+    app: admin-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-service-deployment
+  template:
+    metadata:
+      labels:
+        app: admin-service-deployment
+    spec:
+      containers:
+      - name: admin-service
+        image: vladimirab/admin-service
+        imagePullPolicy: Always
+        env:
+        - name: DB_NAME
+          value: "admin-service"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "postgres"
+        - name: TCP
+          value: "3003"
+        - name: DB_HOST
+          value: 34.90.122.185
+        - name: PORT
+          value: "3502"
+        ports:
+        - containerPort: 3502
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
