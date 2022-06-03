@@ -47,7 +47,7 @@ spec:
         - name: TCP
           value: "3001"
         - name: DB_HOST
-          value: postgres
+          value: 34.90.122.185
         - name: PORT
           value: "3503"
         ports:
