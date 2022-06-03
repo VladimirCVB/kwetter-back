@@ -1,17 +1,17 @@
-name: User Service Pipeline
+name: Admin Service Pipeline
 on:
   push:
     paths:
-      - user-service/**
-      - .github/workflows/user-service.yml
+      - admin-service/**
+      - .github/workflows/admin-service.yml
       - .github/workflows/composite/build/action.yml
       - .github/workflows/composite/deploy/action.yml
 
 env:
-  SERVICE_NAME: user-service
+  SERVICE_NAME: admin-service
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_ZONE: europe-west4
-  DEPLOYMENT_NAME: user-service-deployment
+  DEPLOYMENT_NAME: admin-service-deployment
   GKE_CLUSTER: kwetter
 
 jobs:
