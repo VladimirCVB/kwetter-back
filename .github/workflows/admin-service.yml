@@ -39,6 +39,7 @@ jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout Source code
         uses: actions/checkout@v3
@@ -57,7 +58,6 @@ jobs:
         run: |
           npm run test
         working-directory: admin-service/
-      continue-on-error: true
   
   build:
     needs: [eslint]
