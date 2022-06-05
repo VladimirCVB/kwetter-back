@@ -24,7 +24,7 @@ metadata:
   labels:
     app: admin-service-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: admin-service-deployment
@@ -43,11 +43,11 @@ spec:
         - name: DB_USER
           value: "postgres"
         - name: DB_PASSWORD
-          value: "postgres"
+          value: "admin"
         - name: TCP
           value: "3003"
         - name: DB_HOST
-          value: 34.90.122.185
+          value: 10.0.192.3
         - name: PORT
           value: "3502"
         ports:

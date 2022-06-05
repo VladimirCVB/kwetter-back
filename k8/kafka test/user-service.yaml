@@ -24,7 +24,7 @@ metadata:
   labels:
     app: user-service-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: user-service-deployment
@@ -43,15 +43,19 @@ spec:
         - name: DB_USER
           value: "postgres"
         - name: DB_PASSWORD
-          value: "postgres"
+          value: "admin"
         - name: SECRET
           value: "secret"
         - name: TCP
           value: "3500"
         - name: DB_HOST
-          value: 34.90.122.185
+          value: 10.0.192.3
         - name: PORT
           value: "3501"
+        - name: KAFKA_HOST
+          value: kafka-service
+        - name: KAFKA_PORT
+          value: "9092"
         ports:
         - containerPort: 3501
         resources:

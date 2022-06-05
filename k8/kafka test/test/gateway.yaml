@@ -1,34 +1,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
   name: api-gateway-service
   labels:
-    app: api-gateway
+    name: api-gateway
 spec:
-  type: LoadBalancer
   ports:
   - port: 3000
-    name: api-gateway-service
-    # targetPort: 3000
+    name: api-gateway-service-port
     protocol: TCP
   selector:
     app: api-gateway
+  type: LoadBalancer
 
 ---
 
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: api-gateway-deployment
-  labels:
-    app: api-gateway-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: api-gateway
+        app: api-gateway
   template:
     metadata:
       labels:
@@ -37,7 +32,8 @@ spec:
       containers:
       - name: api-gateway
         image: vladimirab/api-gateway
-        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
         env:
         - name: PORT
           value: "3000"
@@ -53,12 +49,3 @@ spec:
           value: "9092"
         - name: SECRET
           value: "secret"
-        ports:
-        - containerPort: 3000
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
-            cpu: "250m"
