@@ -37,6 +37,7 @@ jobs:
         working-directory: admin-service/
 
   test:
+    needs: [eslint]
     name: Testing
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -60,7 +61,7 @@ jobs:
         working-directory: admin-service/
   
   build:
-    needs: [eslint]
+    needs: [test]
     if: success()
     name: Build staging
     runs-on: ubuntu-latest
