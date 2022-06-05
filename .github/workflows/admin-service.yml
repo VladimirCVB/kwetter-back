@@ -30,11 +30,11 @@ jobs:
       - name: Install
         run: |
           npm i
-        working-directory: admin-service/**
+        working-directory: admin-service/
 
       - name: Check linting
         run: npm run lint:check
-        working-directory: admin-service/**
+        working-directory: admin-service/
 
   
   build:
