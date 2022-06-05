@@ -1,0 +1,77 @@
+name: API Gateway Pipeline
+on:
+  push:
+    paths:
+      - api-gateway/**
+      - .github/workflows/api-gateway.yml
+      - .github/workflows/composite/build/action.yml
+      - .github/workflows/composite/deploy/action.yml
+
+env:
+  SERVICE_NAME: api-gateway
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_ZONE: europe-west4
+  DEPLOYMENT_NAME: api-gateway-deployment
+  GKE_CLUSTER: kwetter
+
+jobs:
+  eslint:
+    name: ES-Lint Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: |
+          npm i
+        working-directory: api-gateway/
+
+      - name: Check linting
+        run: npm run lint:check
+        working-directory: api-gateway/
+
+  test:
+    needs: [eslint]
+    name: Testing
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout Source code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: |
+          npm i
+        working-directory: api-gateway/
+
+      - name: Test
+        run: |
+          npm run test
+        working-directory: api-gateway/
+  
+  build:
+    needs: [test]
+    if: success()
+    name: Build staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+
+      - name: Build and Push
+        uses: ./.github/workflows/composite/build
+        with:
+          service_name: ${{ env.SERVICE_NAME }}
+          project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
+          registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
