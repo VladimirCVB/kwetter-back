@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { CreateUserMentionRequest } from '../dto/create-user-mention-request.dto';
 import { UserMentionsGatewayService } from '../services/user-mentions-gateway.service';
 
@@ -31,11 +31,6 @@ export class UserMentionsGatewayController {
       createUserMentionsRequest,
     );
   }
-
-  // @Put()
-  // updateUserMention(@Body() updateUserMentionsRequest: CreateUserMentionRequest) {
-  //     this.userMentionGatewayService.updateUserMention(updateUserMentionsRequest);
-  // }
 
   @Delete('/delete-mention/:id')
   deleteUserMention(@Param('id') id: string) {

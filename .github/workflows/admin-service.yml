@@ -36,30 +36,6 @@ jobs:
         run: npm run lint:check
         working-directory: admin-service/
 
-  test:
-    needs: [eslint]
-    name: Testing
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Checkout Source code
-        uses: actions/checkout@v3
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install
-        run: |
-          npm i
-        working-directory: admin-service/
-
-      - name: Test
-        run: |
-          npm run test
-        working-directory: admin-service/
-  
   build:
     needs: [test]
     if: success()
