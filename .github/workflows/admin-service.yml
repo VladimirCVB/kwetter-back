@@ -16,7 +16,7 @@ env:
 
 jobs:
   eslint:
-    name: Check linting and formatting
+    name: ES-Lint Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source code
@@ -35,20 +35,29 @@ jobs:
       - name: Check linting
         run: npm run lint:check
         working-directory: admin-service/
-  
-  sonarcloud:
+
+  test:
+    name: Testing
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        # Disabling shallow clone is recommended for improving relevancy of reporting
-        fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Checkout Source code
+        uses: actions/checkout@v3
 
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: |
+          npm i
+        working-directory: admin-service/
+
+      - name: Test
+        run: |
+          npm run test
+        working-directory: admin-service/
   
   build:
     needs: [eslint]
@@ -65,21 +74,3 @@ jobs:
           service_name: ${{ env.SERVICE_NAME }}
           project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
           registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
-
-  deploy:
-    needs: [build]
-    if: success()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v1
-
-      - name: Deploy to GKE
-        uses: ./.github/workflows/composite/deploy
-        with:
-          service_account_key: ${{ secrets.GOOGLE_KUBERNETES_SERVICE_ACCOUNT }}
-          project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_ZONE }}
-          credentials: ${{ secrets.GOOGLE_KUBERNETES_SERVICE_ACCOUNT }}
-          deploy_name: ${{ env.DEPLOYMENT_NAME }}
