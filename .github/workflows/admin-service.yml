@@ -16,7 +16,7 @@ env:
 
 jobs:
   eslint:
-    name: ✨ Check linting and formatting
+    name: Check linting and formatting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source code
@@ -30,9 +30,11 @@ jobs:
       - name: Install
         run: |
           npm i
+        working-directory: admin-service/**
 
       - name: Check linting
         run: npm run lint:check
+        working-directory: admin-service/**
 
   
   build:
