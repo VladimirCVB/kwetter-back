@@ -108,9 +108,10 @@ export default {
         },
       };
 
+      const apiHost = import.meta.env.VITE_API_HOST;
       axios
         .put(
-          "http://localhost:3000/api/user-log-gateway/admin/rights",
+          `http://${apiHost}/api/user-log-gateway/admin/rights`,
           { status, userName },
           tokenConfig
         )
@@ -135,8 +136,9 @@ export default {
       },
     };
 
+    const apiHost = import.meta.env.VITE_API_HOST;
     axios
-      .get("http://localhost:3000/api/user-log-gateway/all", tokenConfig)
+      .get(`http://${apiHost}/api/user-log-gateway/all`, tokenConfig)
       .then((res) => {
         //Perform Success Action
         console.log(res);

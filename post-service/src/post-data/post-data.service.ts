@@ -1,6 +1,7 @@
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConsumerService } from 'src/kafka/consumer.service';
 import { PostTrends } from 'src/post-trends/entities/post-trends.entity';
 import { PostData } from './entities/post-data.entity';
 import { PostCreatedEvent } from './events/post-created.event';
@@ -14,6 +15,8 @@ export class PostDataService {
 
     @InjectRepository(PostTrends)
     private readonly postTrendsRepository: EntityRepository<PostTrends>,
+
+    private readonly consumerService: ConsumerService
   ) {}
 
   /**
@@ -100,6 +103,36 @@ export class PostDataService {
 
     await this.postTrendsRepository.persistAndFlush(postTrends);
     return postDataUpdate;
+  }
+
+  async onModuleInit() {
+    await this.consumerService.consume(
+      { topic: 'deleteUser' },
+      {
+        eachMessage: async ({ topic, partition, message }) => {
+          this.handleDeleteAllPostData(message.value.toString());
+          console.log('working', message.value.toString());
+        },
+      },
+    );
+  }
+
+  /**
+   * Update deletedAt property of post data & post trends.
+   * @param userId is the id of the user who created the post.
+   * @returns
+   */
+   async handleDeleteAllPostData(userId: string): Promise<void> {
+    const postData = await this.postDataRepository.find({user_id: userId});
+
+    for(let i = 0; i < postData.length; i++){
+      postData[i].userName = '';
+      postData[i].text = '';
+
+      wrap(postData[i]).assign({ ...postData[i], deletedAt: new Date() } as PostData);
+    }
+
+    return await this.postDataRepository.flush();
   }
 
   /**

@@ -9,6 +9,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MikroORM } from '@mikro-orm/core';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MikroORM } from '@mikro-orm/core';
     UserMentionsModule,
     UserFollowModule,
     AuthModule,
+    KafkaModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -53,6 +53,7 @@ export default {
   },
 
   mounted() {
+    this.userName = this.$route.params.userName;
     const userName = this.$route.params.userName;
     //console.log(jwt_decode(this.$cookie.get("kwetterToken")))
 
@@ -62,15 +63,16 @@ export default {
       },
     };
 
+    const apiHost = import.meta.env.VITE_API_HOST;
     axios
       .get(
-        "http://localhost:3000/api/user-log-gateway/user-name/" + userName,
+        `http://${apiHost}/api/user-log-gateway/user-name/` + userName,
         tokenConfig
       )
       .then((res) => {
         axios
           .get(
-            "http://localhost:3000/api/user-gateway/user-profile/" +
+            `http://${apiHost}/api/user-gateway/user-profile/` +
               res.data.id,
             tokenConfig
           )

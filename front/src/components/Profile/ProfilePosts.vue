@@ -174,8 +174,9 @@ export default {
         trends: [],
       };
 
+      const apiHost = import.meta.env.VITE_API_HOST;
       axios
-        .post("http://localhost:3000/api/post-gateway/create-post", postData)
+        .post(`http://${apiHost}/api/post-gateway/create-post`, postData)
         .then((res) => {
           //Perform Success Action
           console.log(res);
@@ -203,15 +204,16 @@ export default {
       },
     };
 
+    const apiHost = import.meta.env.VITE_API_HOST;
     axios
       .get(
-        "http://localhost:3000/api/user-log-gateway/user-name/" + userName,
+        `http://${apiHost}/api/user-log-gateway/user-name/` + userName,
         tokenConfig
       )
       .then((res) => {
         axios
           .get(
-            "http://localhost:3000/api/user-gateway/user-profile/" +
+            `http://${apiHost}/api/user-gateway/user-profile/` +
               res.data.id,
             tokenConfig
           )

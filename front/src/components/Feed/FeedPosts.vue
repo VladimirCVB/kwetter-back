@@ -171,8 +171,9 @@ export default {
         trends: [],
       };
 
+      const apiHost = import.meta.env.VITE_API_HOST;
       axios
-        .post("http://localhost:3000/api/post-gateway/create-post", postData)
+        .post(`http://${apiHost}/api/post-gateway/create-post`, postData)
         .then((res) => {
           //Perform Success Action
           console.log(res);
@@ -193,8 +194,9 @@ export default {
     const userData = jwt_decode(this.$cookie.get("kwetterToken"));
     this.userName = userData.userName;
 
+    const apiHost = import.meta.env.VITE_API_HOST;
     axios
-      .get("http://localhost:3000/api/post-gateway/feed")
+      .get(`http://${apiHost}/api/post-gateway/feed`)
       .then((res) => {
         //Perform Success Action
         this.feedPosts = res.data;

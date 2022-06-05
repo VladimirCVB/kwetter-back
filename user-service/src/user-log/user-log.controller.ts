@@ -39,7 +39,7 @@ export class UserLogController {
   }
 
   @MessagePattern('delete_user')
-  handleDeleteUser(data: any) {
-    return this.userLogService.handleDeleteUser(data.value);
+  handleDeleteUser(userName: string) {
+    return this.userLogService.handleDeleteUser(userName);
   }
 }

@@ -72,12 +72,12 @@ export default {
       const validFields = this.completedFields(registrationFields, 0);
       const validEmail = this.isValidEmail(this.register.email, 0);
 
-      console.log(this.register);
 
       if (validEmail && validFields) {
+        const apiHost = import.meta.env.VITE_API_HOST;
         axios
           .post(
-            "http://localhost:3000/api/user-log-gateway/create-log",
+            `http://${apiHost}/api/user-log-gateway/create-log`,
             this.register
           )
           .then((res) => {
@@ -100,8 +100,9 @@ export default {
       const validFields = this.completedFields(logInFields, 0);
 
       if (validFields) {
+        const apiHost = import.meta.env.VITE_API_HOST;
         axios
-          .post("http://localhost:3000/api/user-gateway", this.logIn)
+          .post(`http://${apiHost}/api/user-gateway`, this.logIn)
           .then((res) => {
             this.$cookie.set("kwetterToken", res.data.access_token, {
               expires: "900s",

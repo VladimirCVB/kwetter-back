@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PostDataModule } from './post-data/post-data.module';
 import { PostTrendsModule } from './post-trends/post-trends.module';
 import { MikroORM } from '@mikro-orm/core';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { MikroORM } from '@mikro-orm/core';
     ConfigModule.forRoot(),
     PostDataModule,
     PostTrendsModule,
+    KafkaModule
   ],
   controllers: [AppController],
   providers: [AppService],

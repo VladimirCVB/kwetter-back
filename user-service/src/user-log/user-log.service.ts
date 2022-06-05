@@ -6,6 +6,7 @@ import { UserLog } from './entities/user-log.entity';
 import { UserLogCreatedEvent } from './events/user-log-created.event';
 import { UserLogUpdatedEvent } from './events/user-log-updated.event';
 import * as bcrypt from 'bcrypt';
+import { ProducerService } from 'src/kafka/producer.service';
 
 @Injectable()
 export class UserLogService {
@@ -14,6 +15,7 @@ export class UserLogService {
     private readonly userLogRepository: EntityRepository<UserLog>,
     @InjectRepository(UserData)
     private readonly userDataRepository: EntityRepository<UserData>,
+    private readonly producerService: ProducerService
   ) {}
 
   /**
@@ -145,12 +147,33 @@ export class UserLogService {
    * @param userName is the user name of the user.
    * @returns
    */
-  async handleDeleteUser(userName: string): Promise<void> {
+  async handleDeleteUser(userName: string) {
     const userLog = await this.handleGetUserByUserName(userName);
     if (!userLog) throw new NotFoundException('User log not found');
 
-    wrap(userLog).assign({ ...userLog, deletedAt: new Date() } as UserLog);
+    const userData = await this.userDataRepository.findOne({ userId: userLog.id });
 
-    return await this.userLogRepository.flush();
+    userLog.email = '';
+    userLog.userName = '';
+    userData.bio = '';
+    userData.school = '';
+    userData.firstName = '';
+    userData.lastName = '';
+    userData.web = '';
+
+    wrap(userLog).assign({ ...userLog, deletedAt: new Date() } as UserLog);
+    wrap(userData).assign({ ...userData, deletedAt: new Date() } as UserData);
+
+    await this.producerService.produce({
+      topic: 'deleteUser',
+      messages: [
+        {
+          value: userLog.id,
+        },
+      ],
+    });
+
+    // await this.userDataRepository.flush();
+    return true; // await this.userLogRepository.flush();
   }
 }

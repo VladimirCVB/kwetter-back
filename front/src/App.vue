@@ -9,6 +9,7 @@
 
 <script>
 import Header from "./assets/General/Header.vue";
+console.log(import.meta.env.VITE_KEY);
 
 export default {
   name: "App",
