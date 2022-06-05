@@ -36,7 +36,7 @@ jobs:
 
   
   build:
-    needs: [testing]
+    needs: [eslint]
     if: success()
     name: Build staging
     runs-on: ubuntu-latest
