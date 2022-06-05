@@ -38,7 +38,6 @@ jobs:
 
   test:
     name: Testing
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source code
@@ -58,6 +57,8 @@ jobs:
         run: |
           npm run test
         working-directory: admin-service/
+        continue-on-error: true
+      continue-on-error: true
   
   build:
     needs: [eslint]
