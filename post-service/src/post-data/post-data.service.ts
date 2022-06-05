@@ -16,7 +16,7 @@ export class PostDataService {
     @InjectRepository(PostTrends)
     private readonly postTrendsRepository: EntityRepository<PostTrends>,
 
-    private readonly consumerService: ConsumerService
+    private readonly consumerService: ConsumerService,
   ) {}
 
   /**
@@ -109,7 +109,7 @@ export class PostDataService {
     await this.consumerService.consume(
       { topic: 'deleteUser' },
       {
-        eachMessage: async ({ topic, partition, message }) => {
+        eachMessage: async ({ message }) => {
           this.handleDeleteAllPostData(message.value.toString());
           console.log('working', message.value.toString());
         },
@@ -122,14 +122,17 @@ export class PostDataService {
    * @param userId is the id of the user who created the post.
    * @returns
    */
-   async handleDeleteAllPostData(userId: string): Promise<void> {
-    const postData = await this.postDataRepository.find({user_id: userId});
+  async handleDeleteAllPostData(userId: string): Promise<void> {
+    const postData = await this.postDataRepository.find({ user_id: userId });
 
-    for(let i = 0; i < postData.length; i++){
+    for (let i = 0; i < postData.length; i++) {
       postData[i].userName = '';
       postData[i].text = '';
 
-      wrap(postData[i]).assign({ ...postData[i], deletedAt: new Date() } as PostData);
+      wrap(postData[i]).assign({
+        ...postData[i],
+        deletedAt: new Date(),
+      } as PostData);
     }
 
     return await this.postDataRepository.flush();

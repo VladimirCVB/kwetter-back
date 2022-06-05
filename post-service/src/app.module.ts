@@ -14,7 +14,7 @@ import { KafkaModule } from './kafka/kafka.module';
     ConfigModule.forRoot(),
     PostDataModule,
     PostTrendsModule,
-    KafkaModule
+    KafkaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

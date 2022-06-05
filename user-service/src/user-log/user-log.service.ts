@@ -15,7 +15,7 @@ export class UserLogService {
     private readonly userLogRepository: EntityRepository<UserLog>,
     @InjectRepository(UserData)
     private readonly userDataRepository: EntityRepository<UserData>,
-    private readonly producerService: ProducerService
+    private readonly producerService: ProducerService,
   ) {}
 
   /**
@@ -151,7 +151,9 @@ export class UserLogService {
     const userLog = await this.handleGetUserByUserName(userName);
     if (!userLog) throw new NotFoundException('User log not found');
 
-    const userData = await this.userDataRepository.findOne({ userId: userLog.id });
+    const userData = await this.userDataRepository.findOne({
+      userId: userLog.id,
+    });
 
     userLog.email = '';
     userLog.userName = '';

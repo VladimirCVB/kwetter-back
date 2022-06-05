@@ -22,7 +22,7 @@ import { KafkaModule } from './kafka/kafka.module';
     UserMentionsModule,
     UserFollowModule,
     AuthModule,
-    KafkaModule
+    KafkaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
