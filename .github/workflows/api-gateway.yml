@@ -37,7 +37,7 @@ jobs:
         working-directory: api-gateway/
   
   build:
-    needs: [test]
+    needs: [eslint]
     if: success()
     name: Build staging
     runs-on: ubuntu-latest
