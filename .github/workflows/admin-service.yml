@@ -36,21 +36,21 @@ jobs:
         run: npm run lint:check
         working-directory: admin-service/
 
-  # build:
-  #   needs: [eslint]
-  #   if: success()
-  #   name: Build staging
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v1
+  build:
+    needs: [eslint]
+    if: success()
+    name: Build staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
 
-  #     - name: Build and Push
-  #       uses: ./.github/workflows/composite/build
-  #       with:
-  #         service_name: ${{ env.SERVICE_NAME }}
-  #         project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
-  #         registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
+      - name: Build and Push
+        uses: ./.github/workflows/composite/build
+        with:
+          service_name: ${{ env.SERVICE_NAME }}
+          project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
+          registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
 
   deploy:
       needs: [eslint]
