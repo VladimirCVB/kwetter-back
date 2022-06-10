@@ -12,7 +12,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_ZONE: europe-west4
   DEPLOYMENT_NAME: user-service-deployment
-  GKE_CLUSTER: kwetter
+  GKE_CLUSTER: autopilot-cluster-1
 
 jobs:
   eslint:
