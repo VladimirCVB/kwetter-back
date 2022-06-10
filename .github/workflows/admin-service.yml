@@ -36,18 +36,36 @@ jobs:
         run: npm run lint:check
         working-directory: admin-service/
 
-  build:
+  # build:
+  #   needs: [eslint]
+  #   if: success()
+  #   name: Build staging
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v1
+
+  #     - name: Build and Push
+  #       uses: ./.github/workflows/composite/build
+  #       with:
+  #         service_name: ${{ env.SERVICE_NAME }}
+  #         project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
+  #         registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
+
+deploy:
     needs: [eslint]
     if: success()
-    name: Build staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
 
-      - name: Build and Push
-        uses: ./.github/workflows/composite/build
+      - name: Deploy to GKE
+        uses: ./.github/workflows/composite/deploy
         with:
-          service_name: ${{ env.SERVICE_NAME }}
+          service_account_key: ${{ secrets.GOOGLE_KUBERNETES_SERVICE_ACCOUNT }}
           project_id: ${{ secrets.GOOGLE_CONTAINER_PROJECT_ID }}
-          registry_token: ${{ secrets.GOOGLE_CONTAINER_REGISTRY_TOKEN }}
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GOOGLE_KUBERNETES_SERVICE_ACCOUNT }}
+          deploy_name: ${{ env.DEPLOYMENT_NAME }}
