@@ -32,13 +32,28 @@ export class UserLog extends BaseEntity {
   @Property({ columnType: 'text', default: 'regular' })
   userRole: string;
 
-  @OneToOne({ entity: () => UserData, mappedBy: 'userId', nullable: true, onDelete: 'cascade' })
+  @OneToOne({
+    entity: () => UserData,
+    mappedBy: 'userId',
+    nullable: true,
+    onDelete: 'cascade',
+  })
   userData: UserData;
 
-  @OneToOne({ entity: () => UserFollow, mappedBy: 'userId', nullable: true, onDelete: 'cascade' })
+  @OneToOne({
+    entity: () => UserFollow,
+    mappedBy: 'userId',
+    nullable: true,
+    onDelete: 'cascade',
+  })
   userFollow: UserFollow;
 
-  @OneToOne({ entity: () => UserMention, mappedBy: 'userId', nullable: true, onDelete: 'cascade' })
+  @OneToOne({
+    entity: () => UserMention,
+    mappedBy: 'userId',
+    nullable: true,
+    onDelete: 'cascade',
+  })
   userMention: UserMention;
 
   @OneToMany({

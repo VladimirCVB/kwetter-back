@@ -9,13 +9,27 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class UserFollow extends BaseEntity {
-  @OneToOne({ entity: () => UserLog, wrappedReference: true, onDelete: 'cascade' })
+  @OneToOne({
+    entity: () => UserLog,
+    wrappedReference: true,
+    onDelete: 'cascade',
+  })
   userId!: UserLog;
 
-  @ManyToOne({ entity: () => UserLog, wrappedReference: true, nullable: true, onDelete: 'cascade' })
+  @ManyToOne({
+    entity: () => UserLog,
+    wrappedReference: true,
+    nullable: true,
+    onDelete: 'cascade',
+  })
   userFollowed: UserLog[];
 
-  @ManyToOne({ entity: () => UserLog, wrappedReference: true, nullable: true, onDelete: 'cascade'  })
+  @ManyToOne({
+    entity: () => UserLog,
+    wrappedReference: true,
+    nullable: true,
+    onDelete: 'cascade',
+  })
   userFollowing: UserLog[];
 
   @Property({ nullable: true })

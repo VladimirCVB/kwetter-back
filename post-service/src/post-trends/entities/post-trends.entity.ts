@@ -9,7 +9,11 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class PostTrends extends BaseEntity {
-  @ManyToOne({ entity: () => PostData, wrappedReference: true, onDelete: 'cascade'  })
+  @ManyToOne({
+    entity: () => PostData,
+    wrappedReference: true,
+    onDelete: 'cascade',
+  })
   postId!: PostData;
 
   @Property()
