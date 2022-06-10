@@ -9,10 +9,10 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class UserMention extends BaseEntity {
-  @OneToOne({ entity: () => UserLog, wrappedReference: true })
+  @OneToOne({ entity: () => UserLog, wrappedReference: true, onDelete: 'cascade' })
   userId!: UserLog;
 
-  @ManyToOne({ entity: () => UserLog, wrappedReference: true })
+  @ManyToOne({ entity: () => UserLog, wrappedReference: true, onDelete: 'cascade' })
   userMentiones!: UserLog[];
 
   @Property()

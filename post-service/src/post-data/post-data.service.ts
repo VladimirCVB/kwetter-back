@@ -126,13 +126,7 @@ export class PostDataService {
     const postData = await this.postDataRepository.find({ user_id: userId });
 
     for (let i = 0; i < postData.length; i++) {
-      postData[i].userName = '';
-      postData[i].text = '';
-
-      wrap(postData[i]).assign({
-        ...postData[i],
-        deletedAt: new Date(),
-      } as PostData);
+      this.postDataRepository.remove(postData[i]);
     }
 
     return await this.postDataRepository.flush();

@@ -9,7 +9,7 @@ import { BaseEntity } from '../../database/entities/base-entity.entity';
   default: true,
 })
 export class UserData extends BaseEntity {
-  @OneToOne({ entity: () => UserLog, wrappedReference: true })
+  @OneToOne({ entity: () => UserLog, wrappedReference: true, onDelete: 'cascade' })
   userId!: UserLog;
 
   @Property({ nullable: true })
