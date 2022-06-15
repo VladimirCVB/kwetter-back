@@ -1,4 +1,4 @@
-import { EntityRepository, wrap } from '@mikro-orm/core';
+import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserData } from 'src/user-data/entities/user-data.entity';
@@ -89,6 +89,7 @@ export class UserLogService {
       userName: userLogCreatedEvent.userName,
       email: userLogCreatedEvent.email,
       password: hash,
+      userRole: 'regular',
     });
     const userData = this.userDataRepository.create({
       userId: userLog.id,
@@ -151,21 +152,6 @@ export class UserLogService {
     const userLog = await this.handleGetUserByUserName(userName);
     if (!userLog) throw new NotFoundException('User log not found');
 
-    const userData = await this.userDataRepository.findOne({
-      userId: userLog.id,
-    });
-
-    userLog.email = '';
-    userLog.userName = '';
-    userData.bio = '';
-    userData.school = '';
-    userData.firstName = '';
-    userData.lastName = '';
-    userData.web = '';
-
-    wrap(userLog).assign({ ...userLog, deletedAt: new Date() } as UserLog);
-    wrap(userData).assign({ ...userData, deletedAt: new Date() } as UserData);
-
     await this.producerService.produce({
       topic: 'deleteUser',
       messages: [
@@ -175,7 +161,10 @@ export class UserLogService {
       ],
     });
 
-    // await this.userDataRepository.flush();
-    return true; // await this.userLogRepository.flush();
+    this.userLogRepository.remove(userLog);
+
+    await this.userLogRepository.flush();
+
+    return true;
   }
 }

@@ -92,7 +92,7 @@ export class UserLogGatewayController {
     return this.userLogGatewayService.changeAdminRights(status, userName);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete user log data' })
   @ApiResponse({
     status: 200,

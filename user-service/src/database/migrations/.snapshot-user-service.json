@@ -157,139 +157,6 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "user_followed_id": {
-          "name": "user_followed_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "string"
-        },
-        "user_following_id": {
-          "name": "user_following_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "string"
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 6,
-          "mappedType": "datetime"
-        }
-      },
-      "name": "user_follow",
-      "schema": "public",
-      "indexes": [
-        {
-          "columnNames": [
-            "user_id_id"
-          ],
-          "composite": false,
-          "keyName": "user_follow_user_id_id_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "user_follow_pkey",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "user_follow_user_id_id_foreign": {
-          "constraintName": "user_follow_user_id_id_foreign",
-          "columnNames": [
-            "user_id_id"
-          ],
-          "localTableName": "public.user_follow",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.user_log",
-          "updateRule": "cascade"
-        },
-        "user_follow_user_followed_id_foreign": {
-          "constraintName": "user_follow_user_followed_id_foreign",
-          "columnNames": [
-            "user_followed_id"
-          ],
-          "localTableName": "public.user_follow",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.user_log",
-          "deleteRule": "set null",
-          "updateRule": "cascade"
-        },
-        "user_follow_user_following_id_foreign": {
-          "constraintName": "user_follow_user_following_id_foreign",
-          "columnNames": [
-            "user_following_id"
-          ],
-          "localTableName": "public.user_follow",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.user_log",
-          "deleteRule": "set null",
-          "updateRule": "cascade"
-        }
-      }
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 6,
-          "mappedType": "datetime"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 6,
-          "mappedType": "datetime"
-        },
-        "user_id_id": {
-          "name": "user_id_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
         "user_mentiones_id": {
           "name": "user_mentiones_id",
           "type": "varchar(255)",
@@ -353,6 +220,7 @@
             "id"
           ],
           "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         },
         "user_mention_user_mentiones_id_foreign": {
@@ -365,6 +233,141 @@
             "id"
           ],
           "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "user_id_id": {
+          "name": "user_id_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "user_followed_id": {
+          "name": "user_followed_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "user_following_id": {
+          "name": "user_following_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "user_follow",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "user_id_id"
+          ],
+          "composite": false,
+          "keyName": "user_follow_user_id_id_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "user_follow_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_follow_user_id_id_foreign": {
+          "constraintName": "user_follow_user_id_id_foreign",
+          "columnNames": [
+            "user_id_id"
+          ],
+          "localTableName": "public.user_follow",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "user_follow_user_followed_id_foreign": {
+          "constraintName": "user_follow_user_followed_id_foreign",
+          "columnNames": [
+            "user_followed_id"
+          ],
+          "localTableName": "public.user_follow",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "user_follow_user_following_id_foreign": {
+          "constraintName": "user_follow_user_following_id_foreign",
+          "columnNames": [
+            "user_following_id"
+          ],
+          "localTableName": "public.user_follow",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }
@@ -499,6 +502,7 @@
             "id"
           ],
           "referencedTableName": "public.user_log",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }

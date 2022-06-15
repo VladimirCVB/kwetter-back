@@ -146,7 +146,7 @@ export default {
 
       feedPosts: [],
 
-      trends: ["#Lorem", "#Ipsum", "#Nice", "#Awesome"],
+      trends: ["#MyFirstPost", "#ThisIsAwesome", "#Kwetter", "#NewToHere"],
     };
   },
 

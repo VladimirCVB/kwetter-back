@@ -72,7 +72,6 @@ export default {
       const validFields = this.completedFields(registrationFields, 0);
       const validEmail = this.isValidEmail(this.register.email, 0);
 
-
       if (validEmail && validFields) {
         const apiHost = import.meta.env.VITE_API_HOST;
         axios

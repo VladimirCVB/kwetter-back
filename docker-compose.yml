@@ -2,17 +2,19 @@ version: '3'
 services:
   gateway:
     build: ./api-gateway
-    image: vladimirab/gateway
+    # image: vladimirab/gateway
     restart: always
     hostname: api-gateway
     env_file:
       - ./api-gateway/.env
     environment:
       USER_SERVICE_HOST: user-service
+      ADMIN_SERVICE_HOST: admin-service
+      POST_SERVICE_HOST: post-service
       KAFKA_HOST: kafka
       KAFKA_PORT: 9092
     ports:
-      - "8000:3000"
+      - 2999
     networks:
       - backend
       - frontend
@@ -20,43 +22,41 @@ services:
       - user-service
       - admin-service
       - post-service
-    labels:
-      kompose.service.type: LoadBalancer
-      kompose.service.expose: 'gateway'
 
-  frontend-service:
-    # build: ./front
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    command:
-      sh -c "npm run dev"
-    restart: always
-    hostname: frontend-service
-    ports:
-      - "8080:8080"
-    networks:
-      - frontend
-    labels:
-      kompose.service.type: LoadBalancer
-      kompose.service.expose: 'font-end'
+  # frontend-service:
+  #   build:
+  #     context: ./front
+  #     dockerfile: Dockerfile
+  #   command:
+  #     sh -c "npm run dev"
+  #   restart: always
+  #   hostname: frontend-service
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - frontend
+  #   labels:
+  #     kompose.service.type: LoadBalancer
+  #     kompose.service.expose: 'font-end'
 
   user-service:
     build: ./user-service
-    image: vladimirab/user-service
+    # image: vladimirab/user-service
     restart: always
     hostname: user-service
     env_file:
       - ./user-service/.env
     environment:
       SECRET: ${SECRET:-MyRandomSecret}
-      DB_HOST: postgres
+      DB_HOST: 34.90.122.185
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
       DB_NAME: ${DB_NAME:-user-service}
       PORT: ${PORT:-3501}
       TCP: ${PORT:-3500}
       USER_SERVICE_HOST: user-service
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9092
     ports:
       - 3501
     networks:
@@ -78,9 +78,9 @@ services:
     env_file:
       - ./admin-service/.env
     environment:
-      DB_HOST: postgres
+      DB_HOST: 34.90.122.185
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
       DB_NAME: ${DB_NAME:-admin-service}
       PORT: ${PORT:-3502}
       TCP: ${PORT:-3003}
@@ -102,13 +102,15 @@ services:
     env_file:
       - ./post-service/.env
     environment:
-      DB_HOST: postgres
+      DB_HOST: 34.90.122.185
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
       DB_NAME: ${DB_NAME:-post-service}
       PORT: ${PORT:-3503}
       TCP: ${PORT:-3001}
       POST_SERVICE_HOST: post-service
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9092
     networks:
       - backend
     links:

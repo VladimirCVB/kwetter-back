@@ -183,6 +183,7 @@
             "id"
           ],
           "referencedTableName": "public.post_data",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }

@@ -213,8 +213,7 @@ export default {
       .then((res) => {
         axios
           .get(
-            `http://${apiHost}/api/user-gateway/user-profile/` +
-              res.data.id,
+            `http://${apiHost}/api/user-gateway/user-profile/` + res.data.id,
             tokenConfig
           )
           .then((profileRes) => {

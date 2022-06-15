@@ -76,14 +76,6 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AdminView.vue"),
     },
-    // {
-    //   path: '/second',
-    //   name: 'registration',
-    //   component: RegistrationView,
-    //   meta: {
-    //     header: 1
-    //   }
-    // },
   ],
 });
 

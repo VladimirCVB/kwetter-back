@@ -15,6 +15,14 @@
         <span>{{ kweets }} Kweets</span><br />
         <span>{{ following }} Following</span><br />
         <span>{{ followers }} Followers</span><br />
+        <router-link
+          @click="deleteAccount"
+          v-if="ownProfile"
+          to="/"
+          class="bg-red-500 px-2 py-1 rounded-lg text-white hover:bg-green-500 duration-200"
+        >
+          Delete Account
+        </router-link>
         <button
           v-if="followStatus == 0 && !ownProfile"
           class="bg-blue-600 px-2 py-1 rounded-lg text-white hover:bg-green-500 duration-200"
@@ -52,10 +60,31 @@ export default {
     };
   },
 
+  methods: {
+    deleteAccount() {
+      const tokenConfig = {
+        headers: {
+          Authorization: "Bearer " + this.$cookie.get("kwetterToken"),
+        },
+      };
+
+      const apiHost = import.meta.env.VITE_API_HOST;
+
+      axios
+        .delete(
+          `http://${apiHost}/api/user-log-gateway/delete-log/` + this.userName,
+          tokenConfig
+        )
+        .then(() => {
+          alert("Your account has been deleted!");
+          this.$cookie.delete("kwetterToken");
+        });
+    },
+  },
+
   mounted() {
     this.userName = this.$route.params.userName;
     const userName = this.$route.params.userName;
-    //console.log(jwt_decode(this.$cookie.get("kwetterToken")))
 
     const tokenConfig = {
       headers: {
@@ -72,8 +101,7 @@ export default {
       .then((res) => {
         axios
           .get(
-            `http://${apiHost}/api/user-gateway/user-profile/` +
-              res.data.id,
+            `http://${apiHost}/api/user-gateway/user-profile/` + res.data.id,
             tokenConfig
           )
           .then((userRes) => {
